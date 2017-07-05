@@ -1,29 +1,29 @@
 <?xml version='1.0'?>
 <adtree>
 	<node refinement="disjunctive">
-		<label>[compromise a tree
-]</label>
+		<label>compromise a tree
+</label>
 		<node refinement="disjunctive">
-			<label>[delete a file
-]</label>
+			<label>delete a file
+</label>
 			<node refinement="disjunctive">
-				<label>[delete on disk
-]</label>
+				<label>delete on disk
+</label>
 				<node refinement="conjunctive">
 					<label>root access</label>
 				</node>
 				<node refinement="conjunctive">
-					<label>[impersionate an admin
-]</label>
+					<label>impersionate an admin
+</label>
 				</node>
 			</node>
 		</node>
 		<node refinement="disjunctive">
-			<label>[tamper with a file
-]</label>
+			<label>tamper with a file
+</label>
 			<node refinement="conjunctive">
-				<label>[on client
-]</label>
+				<label>on client
+</label>
 			</node>
 			<node refinement="conjunctive">
 				<label>internal communication</label>
@@ -47,15 +47,15 @@
 		<node refinement="disjunctive">
 			<label>read a file</label>
 			<node refinement="conjunctive">
-				<label>[client
-]</label>
+				<label>client
+</label>
 			</node>
 			<node refinement="conjunctive">
-				<label>internal commu.</label>
+				<label>internal communication</label>
 			</node>
 			<node refinement="conjunctive">
-				<label>[blocker memory
-]</label>
+				<label>blocker memory
+</label>
 			</node>
 			<node refinement="disjunctive">
 				<label>N_27</label>
@@ -77,8 +77,8 @@
 			</node>
 		</node>
 		<node refinement="disjunctive">
-			<label>[copy a file
-]</label>
+			<label>copy a file
+</label>
 		</node>
 	</node>
 </adtree>
