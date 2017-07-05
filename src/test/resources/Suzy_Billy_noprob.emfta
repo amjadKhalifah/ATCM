@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<emfta:FTAModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:emfta="http://cmu.edu/emfta" root="//@events.0" name="BillySuzy" description="">
+  <events name="BS" description="Bottle Shatters">
+    <gate description="" events="//@events.1 //@events.2"/>
+  </events>
+  <events name="BH" description="Billy Hits">
+    <gate type="AND" events="//@events.3 //@events.4"/>
+  </events>
+  <events name="SH" description="Suzy Hits">
+    <gate type="AND" events="//@events.5"/>
+  </events>
+  <events name="BT" description="Billy Throws"/>
+  <events name="-SH"  description="Suzy does not hit"/>
+  <events name="ST" description="Suzy throws"/>
+</emfta:FTAModel>

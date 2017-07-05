@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE opsa-mef>
+<opsa-mef>
+    <define-fault-tree name="BillySuzy">
+        <define-gate name="BS">
+            <or>
+                <gate name="BH"/>
+                <gate name="SH"/>
+            </or>
+        </define-gate>
+        <define-gate name="BH">
+            <and>
+                <basic-event name="BT"/>
+                <basic-event name="-SH"/>
+            </and>
+        </define-gate>
+        <define-gate name="SH">
+            <and>
+                <basic-event name="ST"/>
+            </and>
+        </define-gate>
+        <define-basic-event name="BT">
+            <float value="1.0e-3"/>
+        </define-basic-event>
+        <define-basic-event name="-SH">
+            <float value="1.1e-3"/>
+        </define-basic-event>
+        <define-basic-event name="ST">
+            <float value="1.2e-3"/>
+        </define-basic-event>
+    </define-fault-tree>
+</opsa-mef>

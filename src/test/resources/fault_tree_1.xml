@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE opsa-mef>
+<opsa-mef>
+    <define-fault-tree name="FT1">
+        <define-gate name="top">
+            <or>
+                <gate name="g1"/>
+                <gate name="g2"/>
+            </or>
+        </define-gate>
+        <define-gate name="g1">
+            <and>
+                <house-event name="h1"/>
+                <gate name="g3"/>
+                <gate name="g4"/>
+            </and>
+        </define-gate>
+        <define-gate name="g2">
+            <and>
+                <not>
+                    <house-event name="h1"/>
+                </not>
+                <basic-event name="e2"/>
+                <gate name="g4"/>
+            </and>
+        </define-gate>
+        <define-gate name="g3">
+            <or>
+                <basic-event name="e1"/>
+                <basic-event name="e3"/>
+            </or>
+        </define-gate>
+        <define-gate name="g4">
+            <or>
+                <basic-event name="e3"/>
+                <basic-event name="e4"/>
+            </or>
+        </define-gate>
+        <define-house-event name="h1">
+            <constant value="true"/>
+        </define-house-event>
+    </define-fault-tree>
+</opsa-mef>
