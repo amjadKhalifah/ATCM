@@ -34,7 +34,7 @@ public class ADTParser extends Parser {
         FaultTreeDefinition faultTreeDefinition = null;
         ADTNode adtree = fromAD(file);
         if (adtree.getLabel() != null) {
-            String name = adtree.getLabel();
+            String name = adtree.getLabel().replace("\n","").replace("\r","");
             List<ElementDefinition> elementDefinitions = parseNodeToElementDefinition(adtree);
             faultTreeDefinition = new FaultTreeDefinition(name, null, null, elementDefinitions);
         }
@@ -77,7 +77,7 @@ public class ADTParser extends Parser {
         for (Iterator i = element.elementIterator(); i.hasNext(); ) {
             Element e = (Element) i.next();
             if (e.getName().equals("label")) {
-                label = e.getText();
+                label = e.getText().replace("\n","").replace("\r","");
             } else if (e.getName().equals("node")) {
                 ADTNode node = parseNode(e);
                 children.add(node);
