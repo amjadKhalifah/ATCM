@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ArgsHandler {
     public static void handle(String[] args) {
-        // get command line options
+        // get command line options based on which the command line will be parsed
         Options options = getOptions();
         // instantiate new command line parser
         CommandLineParser parser = new DefaultParser();
