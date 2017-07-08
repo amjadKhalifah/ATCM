@@ -5,6 +5,7 @@ import causality.CausalModel;
 import graph.GraphBuilder;
 import mef.faulttree.FaultTreeDefinition;
 import org.apache.commons.cli.*;
+import org.apache.commons.io.FileUtils;
 import parser.Parser;
 
 import java.io.File;
@@ -49,7 +50,7 @@ public class ArgsHandler {
             String report = causalModel.toReport();
             System.out.println(report);
 
-            // if option 'e' (i.e. -e <path>) exists, the user wants to export the causal model graph as .dot file
+            // if option 'e' (i.e. -e <path>) exists, the user wants to export the causal model and the report
             if (line.hasOption('e')) {
                 // get file path specified with option e
                 String path = line.getOptionValue('e');
@@ -61,6 +62,8 @@ public class ArgsHandler {
                     File graphFile = new File(dir.getAbsolutePath() + "/causal_graph.dot");
                     // export the graph
                     GraphBuilder.export(causalModel, graphFile.getAbsolutePath());
+                    // export report
+                    FileUtils.write(new File(dir.getAbsolutePath() + "/report.txt"), report, "UTF-8");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
