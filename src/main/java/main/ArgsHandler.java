@@ -5,6 +5,7 @@ import causality.CausalModel;
 import graph.GraphBuilder;
 import mef.faulttree.FaultTreeDefinition;
 import org.apache.commons.cli.*;
+import org.apache.commons.io.FileUtils;
 import parser.Parser;
 
 import java.io.File;
@@ -49,12 +50,20 @@ public class ArgsHandler {
             String report = causalModel.toReport();
             System.out.println(report);
 
-            // if option 'e' (i.e. -e <path>) exists, the user wants to export the causal model graph as .dot file
+            // if option 'e' (i.e. -e <path>) exists, the user wants to export the causal model and the report
             if (line.hasOption('e')) {
                 // get file path specified with option e
-                String filePath = line.getOptionValue('e');
+                String path = line.getOptionValue('e');
+                File dir = new File(path);
+                if (!dir.isDirectory())
+                    throw new ParseException("Cannot export output. The specified export path is not a directory or " +
+                            "does not exist.");
                 try {
-                    GraphBuilder.export(causalModel, filePath);
+                    File graphFile = new File(dir.getAbsolutePath() + "/causal_graph.dot");
+                    // export the graph
+                    GraphBuilder.export(causalModel, graphFile.getAbsolutePath());
+                    // export report
+                    FileUtils.write(new File(dir.getAbsolutePath() + "/report.txt"), report, "UTF-8");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -71,7 +80,7 @@ public class ArgsHandler {
         Options options = new Options();
 
         Option graphExport = Option.builder("e").hasArg().build();
-        graphExport.setDescription("path and filename of exported .dot-file containing the causal graph");
+        graphExport.setDescription("path to export directory");
         graphExport.setArgName("file");
 
         options.addOption(graphExport);
