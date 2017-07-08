@@ -1,4 +1,4 @@
-package parser;
+package parser.emfta;
 
 import mef.faulttree.FaultTreeDefinition;
 import org.junit.After;
