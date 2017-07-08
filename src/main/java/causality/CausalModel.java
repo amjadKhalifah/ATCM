@@ -24,7 +24,9 @@ public class CausalModel {
      * @return
      */
     public static CausalModel fromMEF(FaultTreeDefinition faultTreeDefinition) {
+        // get the name of the fault tree
         String name = faultTreeDefinition.getName();
+        // get all ElementDefinitions of the fault tree
         List<ElementDefinition> elementDefinitions = faultTreeDefinition.getElementDefinitions();
 
         // get all variables of the model
@@ -34,14 +36,21 @@ public class CausalModel {
         for (ElementDefinition elementDefinition : elementDefinitions) {
             if (elementDefinition instanceof GateDefinition) {
                 GateDefinition gateDefinition = (GateDefinition) elementDefinition;
+                // get the formula of the gate
                 Formula formula = gateDefinition.getFormula();
+                // convert formula
                 Formula formulaConverted = convertFormula(formula, variables);
-
+                /*
+                get the variable which will represent the gate from all the variables in the model.
+                This is important so that other variables referencing this current variable reuse the same object and
+                 therefore each variable object exist only once.
+                 */
                 EndogenousVariable correspondingVariable = (EndogenousVariable) variables.get(gateDefinition.getName());
+                // set the formula of this variable to the converted formula
                 correspondingVariable.setFormula(formulaConverted);
             }
         }
-
+        // create causal model using all the previously created variables
         CausalModel causalModel = new CausalModel(name, new HashSet<>(variables.values()));
         return causalModel;
     }
@@ -85,29 +94,40 @@ public class CausalModel {
         Each basic event must have a definition (can be empty)
          */
 
+        // create empty variables hash map
         HashMap<String, Variable> variables = new HashMap<>();
+        // get all element definitions from the fault tree
         List<ElementDefinition> elementDefinitions = faultTreeDefinition.getElementDefinitions();
 
+        // loop through all the element definitions
         for (ElementDefinition elementDefinition : elementDefinitions) {
             if (elementDefinition instanceof GateDefinition) {
                 GateDefinition g = (GateDefinition) elementDefinition;
+                // a gate will represent an endogeonous variable (with a formula)
                 EndogenousVariable endo = new EndogenousVariable(g.getName(), null);
                 variables.put(endo.getName(), endo);
             } else if (elementDefinition instanceof BasicEventDefinition) {
                 BasicEventDefinition b = (BasicEventDefinition) elementDefinition;
                 Constant expression = b.getExpression();
+                /*
+                An endogenous variable that is not defined any further by a specific formula, is defined by one
+                exogenous variable. Hence, we need to create the latter. We use the name of the corresponding
+                endogenous variable and append '_exo'.
+                 */
                 ExogenousVariable exo = new ExogenousVariable(b.getName() + "_exo");
                 EndogenousVariable endo = new EndogenousVariable(b.getName(), exo);
-                // set probability
+                // set probability (if it is specified)
                 if (expression instanceof FloatConstant) {
                     FloatConstant probability = (FloatConstant) expression;
                     if (probability.getValue() != 0D)
                         endo.setProbability(probability.getValue());
                 }
 
+                // add endo and exo variable to hash map
                 variables.put(endo.getName(), endo);
                 variables.put(exo.getName(), exo);
             } else if (elementDefinition instanceof HouseEventDefinition) {
+                // a house event represents an exogenous variable
                 HouseEventDefinition h = (HouseEventDefinition) elementDefinition;
                 ExogenousVariable exo = new ExogenousVariable(h.getName());
                 variables.put(exo.getName(), exo);
@@ -122,16 +142,21 @@ public class CausalModel {
      * @return
      */
     public String toReport() {
+        // get all exogenous variables
         Set<Variable> exogenousVariables = this.getVariables().stream()
                 .filter(v -> v instanceof ExogenousVariable).collect(Collectors.toSet());
+        // get endogenous variables
         Set<Variable> endogenousVariables = this.getVariables().stream()
                 .filter(v -> v instanceof EndogenousVariable).collect(Collectors.toSet());
+        // get all the variables that are only defined by an exogenous variable, i.e. the leafs
         Set<Variable> leafVariables = endogenousVariables.stream()
                 .filter(e -> ((EndogenousVariable) e).getFormula() instanceof ExogenousVariable)
                 .collect(Collectors.toSet());
+        // get all the variables that are defined by a more complex formula than a single exogenous variable
         Set<Variable> nonLeafVariables = endogenousVariables.stream()
                 .filter(e -> !(((EndogenousVariable) e).getFormula() instanceof ExogenousVariable))
                 .collect(Collectors.toSet());
+        // get all the variables where the probability is not specified and therefore 0
         Set<EndogenousVariable> variablesWithNonZeroProbabilities = endogenousVariables.stream()
                 .filter(e -> ((EndogenousVariable) e).getProbability() != 0D).map(v -> (EndogenousVariable) v)
                 .collect(Collectors.toSet());
