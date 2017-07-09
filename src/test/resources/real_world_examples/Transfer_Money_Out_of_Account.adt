@@ -1,0 +1,87 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="disjunctive">
+		<label>Transfer Money Out of Account</label>
+		<node refinement="disjunctive">
+			<label>Obtain Online Access to Account</label>
+			<node refinement="disjunctive">
+				<label>Guess ID and Password</label>
+				<node refinement="conjunctive">
+					<label>Dictionary Attack</label>
+					<node refinement="conjunctive">
+						<label>Guess ID</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>Guess Password</label>
+					</node>
+				</node>
+				<node refinement="conjunctive">
+					<label>Brute Force Attack</label>
+					<node refinement="conjunctive">
+						<label>Guess ID</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>Brute Force Password</label>
+					</node>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Steal ID and Password</label>
+				<node refinement="disjunctive">
+					<label>Social Engineering</label>
+					<node refinement="conjunctive">
+						<label>Phishing Attack</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>Obtain via Phone Call WIth User</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>Shoulder Surfing</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>Man in the Middle Attack</label>
+					<node refinement="conjunctive">
+						<label>Evil Twin Wireless</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>On Network</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>Buy ID or Password Set</label>
+					<node refinement="conjunctive">
+						<label>From Organized Crime</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>From Insider</label>
+					</node>
+				</node>
+				<node refinement="conjunctive">
+					<label>Trojan</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="disjunctive">
+			<label>Highjack Bank Server</label>
+			<node refinement="conjunctive">
+				<label>Inside Attack</label>
+			</node>
+			<node refinement="conjunctive">
+				<label>Outside Attack</label>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>Initiate Transfer via Debit Card</label>
+			<node refinement="conjunctive">
+				<label>Obtain Debit Card Number</label>
+			</node>
+			<node refinement="conjunctive">
+				<label>Obtain Pin</label>
+			</node>
+			<node refinement="conjunctive">
+				<label>Access Transfer Network</label>
+			</node>
+		</node>
+	</node>
+</adtree>
