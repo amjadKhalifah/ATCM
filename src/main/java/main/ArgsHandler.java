@@ -59,11 +59,11 @@ public class ArgsHandler {
                     throw new ParseException("Cannot export output. The specified export path is not a directory or " +
                             "does not exist.");
                 try {
-                    File graphFile = new File(dir.getAbsolutePath() + "/causal_graph.dot");
+                    File graphFile = new File(dir.getAbsolutePath() + "/"+f.getName()+"_causal_graph.dot");
                     // export the graph
                     GraphBuilder.export(causalModel, graphFile.getAbsolutePath());
                     // export report
-                    FileUtils.write(new File(dir.getAbsolutePath() + "/report.txt"), report, "UTF-8");
+                    FileUtils.write(new File(dir.getAbsolutePath() + "/"+f.getName()+"_report.txt"), report, "UTF-8");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
