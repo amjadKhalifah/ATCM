@@ -35,7 +35,7 @@ public class ADTParser extends Parser {
         ADTNode adtree = fromAD(file);
         if (adtree.getLabel() != null) {
             // get name of the tree
-            String name = adtree.getLabel();
+            String name = adtree.getLabel().replace("\n","").replace("\r","");
             // parse the definitions in the attack tree to element definitions
             List<ElementDefinition> elementDefinitions = parseNodeToElementDefinition(adtree);
             // create new fault tree
@@ -80,7 +80,7 @@ public class ADTParser extends Parser {
         for (Iterator i = element.elementIterator(); i.hasNext(); ) {
             Element e = (Element) i.next();
             if (e.getName().equals("label")) {
-                label = e.getText();
+                label = e.getText().replace("\n","").replace("\r","");
             } else if (e.getName().equals("node")) {
                 ADTNode node = parseNode(e);
                 children.add(node);

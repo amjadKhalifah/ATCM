@@ -1,0 +1,102 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="disjunctive">
+		<label>get cash</label>
+		<node refinement="conjunctive">
+			<label>get cash at ATM</label>
+			<node refinement="disjunctive">
+				<label>goto ATM</label>
+			</node>
+			<node refinement="disjunctive">
+				<label>get card and pin and input cash at ATM</label>
+				<node refinement="disjunctive">
+					<label>get Charlies credentials and perform action</label>
+					<node refinement="disjunctive">
+						<label>innput cash at ATM</label>
+						<node refinement="disjunctive">
+							<label>in cash at ATM</label>
+						</node>
+					</node>
+				</node>
+				<node refinement="conjunctive">
+					<label>get Alices credentials and perform action</label>
+					<node refinement="conjunctive">
+						<label>get credentials</label>
+						<node refinement="conjunctive">
+							<label>get card</label>
+							<node refinement="conjunctive">
+								<label>goto Home</label>
+								<node refinement="conjunctive">
+									<label>goto Door and get trust</label>
+									<node refinement="disjunctive">
+										<label>SE Alice move Door</label>
+									</node>
+									<node refinement="disjunctive">
+										<label>move Door</label>
+									</node>
+								</node>
+								<node refinement="disjunctive">
+									<label>move Home</label>
+								</node>
+							</node>
+							<node refinement="disjunctive">
+								<label>perform in at Alice</label>
+								<node refinement="disjunctive">
+									<label>in card at Alice</label>
+								</node>
+								<node refinement="disjunctive">
+									<label>SE Alice in Card</label>
+								</node>
+							</node>
+						</node>
+						<node refinement="conjunctive">
+							<label>get pin</label>
+							<node refinement="conjunctive">
+								<label>goto Home</label>
+								<node refinement="conjunctive">
+									<label>goto Door and get trust</label>
+									<node refinement="disjunctive">
+										<label>SE Alice move Door</label>
+									</node>
+									<node refinement="conjunctive">
+										<label>move Door</label>
+									</node>
+								</node>
+								<node refinement="disjunctive">
+									<label>move Home</label>
+								</node>
+							</node>
+							<node refinement="disjunctive">
+								<label>perform in at Alice</label>
+								<node refinement="disjunctive">
+									<label>SE Alice in Pin</label>
+								</node>
+								<node refinement="conjunctive">
+									<label>get card</label>
+									<node refinement="disjunctive">
+										<label>perform in at Alice</label>
+										<node refinement="disjunctive">
+											<label>in card at Alice</label>
+										</node>
+										<node refinement="disjunctive">
+											<label>SE Alice in Card</label>
+										</node>
+									</node>
+									<node refinement="disjunctive">
+										<label>in pin at card</label>
+									</node>
+								</node>
+							</node>
+						</node>
+					</node>
+					<node refinement="disjunctive">
+						<label>input cash at ATM</label>
+						<node refinement="disjunctive">
+							<label>in cash at ATM</label>
+						</node>
+					</node>
+				</node>
+			</node>
+		</node>
+	</node>
+</adtree>

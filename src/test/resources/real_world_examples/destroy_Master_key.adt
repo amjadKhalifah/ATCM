@@ -1,0 +1,43 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="disjunctive">
+		<label>Expose Master Key
+</label>
+		<node refinement="conjunctive">
+			<label>Decrypt the key</label>
+			<node refinement="disjunctive">
+				<label>Obtain the encrypted key</label>
+				<node refinement="conjunctive">
+					<label>From DB</label>
+					<node refinement="conjunctive">
+						<label>File access</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>Login</label>
+					</node>
+				</node>
+				<node refinement="conjunctive">
+					<label>Network</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>From KMS memory</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Obtain the passphrase</label>
+				<node refinement="conjunctive">
+					<label>From KMS memory</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>Others</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>Obtain the key from memory</label>
+			<node refinement="conjunctive">
+				<label>From KMS memory</label>
+			</node>
+		</node>
+	</node>
+</adtree>
