@@ -10,18 +10,22 @@
 					<label>Dictionary Attack</label>
 					<node refinement="conjunctive">
 						<label>Guess ID</label>
+						<parameter domainId="ProbSucc1" category="basic">0.7</parameter>
 					</node>
 					<node refinement="conjunctive">
 						<label>Guess Password</label>
+						<parameter domainId="ProbSucc1" category="basic">0.1</parameter>
 					</node>
 				</node>
 				<node refinement="conjunctive">
 					<label>Brute Force Attack</label>
 					<node refinement="conjunctive">
 						<label>Guess ID</label>
+						<parameter domainId="ProbSucc1" category="basic">0.7</parameter>
 					</node>
 					<node refinement="conjunctive">
 						<label>Brute Force Password</label>
+						<parameter domainId="ProbSucc1" category="basic">0.5</parameter>
 					</node>
 				</node>
 			</node>
@@ -31,34 +35,42 @@
 					<label>Social Engineering</label>
 					<node refinement="conjunctive">
 						<label>Phishing Attack</label>
+						<parameter domainId="ProbSucc1" category="basic">0.5</parameter>
 					</node>
 					<node refinement="conjunctive">
 						<label>Obtain via Phone Call WIth User</label>
+						<parameter domainId="ProbSucc1" category="basic">0.05</parameter>
 					</node>
 					<node refinement="conjunctive">
 						<label>Shoulder Surfing</label>
+						<parameter domainId="ProbSucc1" category="basic">0.1</parameter>
 					</node>
 				</node>
 				<node refinement="disjunctive">
 					<label>Man in the Middle Attack</label>
 					<node refinement="conjunctive">
 						<label>Evil Twin Wireless</label>
+						<parameter domainId="ProbSucc1" category="basic">0.2</parameter>
 					</node>
 					<node refinement="conjunctive">
 						<label>On Network</label>
+						<parameter domainId="ProbSucc1" category="basic">0.5</parameter>
 					</node>
 				</node>
 				<node refinement="disjunctive">
 					<label>Buy ID or Password Set</label>
 					<node refinement="conjunctive">
 						<label>From Organized Crime</label>
+						<parameter domainId="ProbSucc1" category="basic">0.5</parameter>
 					</node>
 					<node refinement="conjunctive">
 						<label>From Insider</label>
+						<parameter domainId="ProbSucc1" category="basic">0.9</parameter>
 					</node>
 				</node>
 				<node refinement="conjunctive">
 					<label>Trojan</label>
+					<parameter domainId="ProbSucc1" category="basic">0.1</parameter>
 				</node>
 			</node>
 		</node>
@@ -66,22 +78,31 @@
 			<label>Highjack Bank Server</label>
 			<node refinement="conjunctive">
 				<label>Inside Attack</label>
+				<parameter domainId="ProbSucc1" category="basic">0.1</parameter>
 			</node>
 			<node refinement="conjunctive">
 				<label>Outside Attack</label>
+				<parameter domainId="ProbSucc1" category="basic">0.005</parameter>
 			</node>
 		</node>
 		<node refinement="conjunctive">
 			<label>Initiate Transfer via Debit Card</label>
 			<node refinement="conjunctive">
 				<label>Obtain Debit Card Number</label>
+				<parameter domainId="ProbSucc1" category="basic">0.5</parameter>
 			</node>
 			<node refinement="conjunctive">
 				<label>Obtain Pin</label>
+				<parameter domainId="ProbSucc1" category="basic">0.7</parameter>
 			</node>
 			<node refinement="conjunctive">
 				<label>Access Transfer Network</label>
+				<parameter domainId="ProbSucc1" category="basic">0.1</parameter>
 			</node>
 		</node>
 	</node>
+	<domain id="ProbSucc1">
+		<class>lu.uni.adtool.domains.adtpredefined.ProbSucc</class>
+		<tool>ADTool2</tool>
+	</domain>
 </adtree>
