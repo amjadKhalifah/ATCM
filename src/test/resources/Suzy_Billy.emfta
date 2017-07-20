@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <emfta:FTAModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:emfta="http://cmu.edu/emfta" root="//@events.0" name="BillySuzy" description="">
-  <events name="BS" description="Bottle Shatters">
+  <events name="BS" probability="0.5" description="Bottle Shatters">
     <gate description="" events="//@events.1 //@events.2"/>
   </events>
-  <events name="BH" description="Billy Hits">
+  <events name="BH" probability="0.1" description="Billy Hits">
     <gate type="AND" events="//@events.3 //@events.4"/>
   </events>
-  <events name="SH" description="Suzy Hits">
+  <events name="SH" probability="0.01" description="Suzy Hits">
     <gate type="AND" events="//@events.5"/>
   </events>
   <events name="BT" probability="0.001" description="Billy Throws"/>
