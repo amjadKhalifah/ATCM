@@ -8,6 +8,7 @@ import mef.formula.BasicBooleanOperator;
 import mef.formula.BasicEvent;
 import mef.formula.Formula;
 import mef.formula.Gate;
+import mef.general.FloatConstant;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -135,7 +136,10 @@ public class ADTParser extends Parser {
             }
             // if there aren't any children, it is a leaf node -> BasicEventDefinition
             else {
-                BasicEventDefinition basicEventDefinition = new BasicEventDefinition(name);
+                FloatConstant f = null;
+                if (n.getProbability() > 0)
+                    f = new FloatConstant(n.getProbability());
+                BasicEventDefinition basicEventDefinition = new BasicEventDefinition(name, f);
                 elementDefinitions.add(basicEventDefinition);
             }
         }
