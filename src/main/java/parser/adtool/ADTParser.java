@@ -18,6 +18,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 import static mef.formula.BasicBooleanOperator.OperatorType.and;
 import static mef.formula.BasicBooleanOperator.OperatorType.or;
@@ -75,19 +76,28 @@ public class ADTParser extends Parser {
         Set<ADTNode> children = new HashSet<>();
         ADTNode.Refinement refinement =
                 ADTNode.Refinement.valueOf(element.attributeValue("refinement", "DISJUNCTIVE").toUpperCase());
+        double probability = 0D;
 
         // walk through elements and recursively parse child nodes
         for (Iterator i = element.elementIterator(); i.hasNext(); ) {
             Element e = (Element) i.next();
             if (e.getName().equals("label")) {
                 label = e.getText().replace("\n","").replace("\r","");
+            } else if (e.getName().equals("parameter")) {
+                if (e.attributeValue("domainId", "").equals("ProbSucc1")) {
+                    String probabilityStr = e.getText();
+                    try {
+                        probability = Double.parseDouble(probabilityStr);
+                    } catch (NumberFormatException ex) {
+                        System.err.println("Cannot parse probability of " + probabilityStr);
+                    }
+                }
             } else if (e.getName().equals("node")) {
                 ADTNode node = parseNode(e);
                 children.add(node);
             }
         }
-
-        ADTNode node = new ADTNode(label, children, refinement);
+        ADTNode node = new ADTNode(label, children, refinement, probability);
         return node;
     }
 

@@ -11,11 +11,13 @@ public class ADTNode {
     private String label;
     private Set<ADTNode> children;
     private  Refinement refinement;
+    private double probability;
 
-    public ADTNode(String label, Set<ADTNode> children, Refinement refinement) {
+    public ADTNode(String label, Set<ADTNode> children, Refinement refinement, double probability) {
         this.label = label;
         this.children = children;
         this.refinement = refinement;
+        this.probability = probability;
     }
 
     public String getLabel() {
@@ -28,5 +30,9 @@ public class ADTNode {
 
     public Refinement getRefinement() {
         return refinement;
+    }
+
+    public double getProbability() {
+        return probability;
     }
 }
