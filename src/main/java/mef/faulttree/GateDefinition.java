@@ -2,6 +2,7 @@ package mef.faulttree;
 
 import mef.general.Attribute;
 import mef.formula.Formula;
+import mef.general.Constant;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
@@ -10,10 +11,18 @@ import java.util.List;
 
 public class GateDefinition extends EventDefinition {
     private Formula formula;
+    // NOTE: custom parameter; not part of the specification
+    private Constant expression;
 
     public GateDefinition(String name, Formula formula) {
         super(name, Role.PUBLIC, null, null);
         this.formula = formula;
+    }
+
+    public GateDefinition(String name, Formula formula, Constant expression) {
+        super(name, Role.PUBLIC, null, null);
+        this.formula = formula;
+        this.expression = expression;
     }
 
     public GateDefinition(String name, Role role, String label, List<Attribute> attributes, Formula formula) {
@@ -50,5 +59,9 @@ public class GateDefinition extends EventDefinition {
 
     public Formula getFormula() {
         return formula;
+    }
+
+    public Constant getExpression() {
+        return expression;
     }
 }

@@ -103,8 +103,17 @@ public class CausalModel {
         for (ElementDefinition elementDefinition : elementDefinitions) {
             if (elementDefinition instanceof GateDefinition) {
                 GateDefinition g = (GateDefinition) elementDefinition;
-                // a gate will represent an endogeonous variable (with a formula)
+                Constant expression = g.getExpression();
                 EndogenousVariable endo = new EndogenousVariable(g.getName(), null);
+
+                if (expression instanceof FloatConstant) {
+                    FloatConstant probability = (FloatConstant) expression;
+                    if (probability.getValue() != 0D) {
+                        endo.setProbability(probability.getValue());
+                    }
+                }
+
+                // a gate will represent an endogeonous variable (with a formula)
                 variables.put(endo.getName(), endo);
             } else if (elementDefinition instanceof BasicEventDefinition) {
                 BasicEventDefinition b = (BasicEventDefinition) elementDefinition;
