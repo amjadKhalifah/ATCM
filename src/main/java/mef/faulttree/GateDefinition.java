@@ -47,13 +47,15 @@ public class GateDefinition extends EventDefinition {
 
         GateDefinition that = (GateDefinition) o;
 
-        return formula != null ? formula.equals(that.formula) : that.formula == null;
+        if (formula != null ? !formula.equals(that.formula) : that.formula != null) return false;
+        return expression != null ? expression.equals(that.expression) : that.expression == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (formula != null ? formula.hashCode() : 0);
+        result = 31 * result + (expression != null ? expression.hashCode() : 0);
         return result;
     }
 
