@@ -108,13 +108,13 @@ public class ModelProvider {
 
     public static EMFTAFTAModel billySuzyEMFTA() {
         EMFTAGate or1 = new EMFTAGate("", new HashSet<>(Arrays.asList(1,2)), EMFTAGate.EMFTAGateType.OR);
-        EMFTAEvent bs = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "BS", "Bottle Shatters", 0.0D, or1);
+        EMFTAEvent bs = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "BS", "Bottle Shatters", 0.5D, or1);
 
         EMFTAGate and1 = new EMFTAGate("", new HashSet<>(Arrays.asList(3,4)), EMFTAGate.EMFTAGateType.AND);
-        EMFTAEvent bh = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "BH", "Billy Hits", 0.0D, and1);
+        EMFTAEvent bh = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "BH", "Billy Hits", 0.1D, and1);
 
         EMFTAGate and2 = new EMFTAGate("", new HashSet<>(Arrays.asList(5)), EMFTAGate.EMFTAGateType.AND);
-        EMFTAEvent sh = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "SH", "Suzy Hits", 0.0, and2);
+        EMFTAEvent sh = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "SH", "Suzy Hits", 0.01D, and2);
         EMFTAEvent bt = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "BT", "Billy Throws", 0.001D, null);
         EMFTAEvent notSh = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "-SH", "Suzy does not hit", 0.0011D,
                 null);
