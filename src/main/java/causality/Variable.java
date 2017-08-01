@@ -6,6 +6,8 @@ import org.dom4j.Element;
 public abstract class Variable extends Formula {
 
     private String name;
+    // added by amjad
+    private boolean value;
 
     public Variable(String name) {
         this.name = name;
@@ -35,4 +37,21 @@ public abstract class Variable extends Formula {
     public String getName() {
         return name;
     }
+
+	public boolean getValue() {
+		return value;
+	}
+
+	public void setValue(boolean value) {
+		this.value = value;
+	}
+
+	@Override
+	public String toString() {
+		return "Variable [name=" + name + ", value=" + value + "]";
+	}
+    
+	
+	
+    
 }

@@ -53,4 +53,13 @@ public class EndogenousVariable extends Variable{
     public void setProbability(double probability) {
         this.probability = probability;
     }
+
+	@Override
+	public String toString() {
+	 
+		return  super.toString()+" [formula=" + formula.print() + "]";
+	}
+    
+    
+    
 }

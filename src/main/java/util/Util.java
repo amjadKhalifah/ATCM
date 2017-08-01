@@ -20,4 +20,16 @@ public class Util {
         String file = new String(encoded, Charset.defaultCharset());
         return file;
     }
+    
+    /** Amjad: added this method to be able to alter the string path for failing tests on windows machines with spaces in path
+     * @param url
+     * @return
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    public static String fileToString(String url) throws URISyntaxException, IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(url));
+        String file = new String(encoded, Charset.defaultCharset());
+        return file;
+    }
 }

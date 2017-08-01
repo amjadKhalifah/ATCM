@@ -216,4 +216,21 @@ public class CausalModel {
     public Set<Variable> getVariables() {
         return variables;
     }
+    
+    public Variable getVariableByName(String varName){
+    	
+        Variable variable = this.getVariables().stream()
+                .filter(v -> varName.equals(v.getName())).findAny().orElse(null);
+        
+        System.out.println("get var by name "+varName+" "+ variable);
+        return variable;
+    }
+  public Set<Variable> getVariablesByName(List<String> names){
+    	
+	  Set<Variable> variables = this.getVariables().stream()
+                .filter(v -> names.contains(v.getName())).collect(Collectors.toSet());;
+        
+                System.out.println("get var by name "+names+" "+ variables);
+        return variables;
+    }
 }
