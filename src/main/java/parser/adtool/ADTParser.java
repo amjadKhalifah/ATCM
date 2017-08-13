@@ -74,7 +74,7 @@ public class ADTParser extends Parser {
     // parse a node and recursively its children
     private ADTNode parseNode(Element element) {
         String label = "";
-        Set<ADTNode> children = new HashSet<>();
+        List<ADTNode> children = new ArrayList<>();
         ADTNode.Refinement refinement =
                 ADTNode.Refinement.valueOf(element.attributeValue("refinement", "DISJUNCTIVE").toUpperCase());
         double probability = 0D;
@@ -106,7 +106,7 @@ public class ADTParser extends Parser {
     private List<ElementDefinition> parseNodeToElementDefinition(ADTNode node) {
         List<ElementDefinition> elementDefinitions = new ArrayList<>();
         // get all the nodes in the tree
-        Set<ADTNode> nodes = unwrap(node);
+        List<ADTNode> nodes = unwrap(node);
         // iterate through nodes
         for (ADTNode n : nodes) {
             String name = n.getLabel();
@@ -149,8 +149,8 @@ public class ADTParser extends Parser {
     /*
     * The ADT xml is a very hierarchical structure. To simply working with it, this method unwraps this structure and
      * adds all the existing nodes into a set. */
-    private Set<ADTNode> unwrap(ADTNode node) {
-        Set<ADTNode> nodes = new HashSet<>();
+    private List<ADTNode> unwrap(ADTNode node) {
+        List<ADTNode> nodes = new ArrayList<>();
         nodes.add(node);
         // if there are child nodes, unwrap them as well
         if (node.getChildren().size() > 0) {

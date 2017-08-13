@@ -162,14 +162,14 @@ public class ModelProvider {
 
         BasicEvent e1 = new BasicEvent("get tan");
         BasicEvent e2 = new BasicEvent("get password");
-        List<Formula> f1 = Arrays.asList(e1, e2);
+        List<Formula> f1 = Arrays.asList(e2, e1);
         BasicBooleanOperator and1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, f1);
         GateDefinition gateDef1 = new GateDefinition("obtain online", and1);
 
         BasicEvent e3 = new BasicEvent("hijack bank server");
         BasicEvent e4 = new BasicEvent("initial transfer via debit card");
         Gate g0 = new Gate("obtain online");
-        List<Formula> f2 = Arrays.asList(e3, g0, e4);
+        List<Formula> f2 = Arrays.asList(g0, e3, e4);
         BasicBooleanOperator or1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.or, f2);
         GateDefinition gateDef2 = new GateDefinition("Transfer Money out of account", or1);
 
@@ -177,7 +177,7 @@ public class ModelProvider {
         BasicEventDefinition e2Def = new BasicEventDefinition("get password");
         BasicEventDefinition e3Def = new BasicEventDefinition("hijack bank server");
         BasicEventDefinition e4Def = new BasicEventDefinition("initial transfer via debit card");
-        List<ElementDefinition> elementDefinitions = Arrays.asList(gateDef2,gateDef1, e1Def, e2Def, e3Def, e4Def);
+        List<ElementDefinition> elementDefinitions = Arrays.asList(gateDef2,gateDef1, e2Def, e1Def, e3Def, e4Def);
         FaultTreeDefinition banking = new FaultTreeDefinition("Transfer Money out of account", null, null, elementDefinitions);
         return banking;
     }
