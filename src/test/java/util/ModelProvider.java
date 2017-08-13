@@ -130,18 +130,24 @@ public class ModelProvider {
         Gate sh = new Gate("SH");
         List<Formula> formulasBs = new ArrayList<>(Arrays.asList(bh, sh));
         BasicBooleanOperator or1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.or, formulasBs);
-        GateDefinition bsDef = new GateDefinition("BS", or1);
+
+        FloatConstant fBS = new FloatConstant(0.5);
+        GateDefinition bsDef = new GateDefinition("BS", or1, fBS);
 
         BasicEvent bt = new BasicEvent("BT");
         BasicEvent notSh = new BasicEvent("-SH");
         List<Formula> formulasBh = new ArrayList<>(Arrays.asList(bt, notSh));
         BasicBooleanOperator and1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, formulasBh);
-        GateDefinition bhDef = new GateDefinition("BH", and1);
+
+        FloatConstant fBH = new FloatConstant(0.1);
+        GateDefinition bhDef = new GateDefinition("BH", and1, fBH);
 
         BasicEvent st = new BasicEvent("ST");
         List<Formula> formulasSh = new ArrayList<>(Arrays.asList(st));
         BasicBooleanOperator and2 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, formulasSh);
-        GateDefinition shDef = new GateDefinition("SH", and2);
+
+        FloatConstant fSH = new FloatConstant(0.01);
+        GateDefinition shDef = new GateDefinition("SH", and2, fSH);
 
         FloatConstant f1 = new FloatConstant(0.001);
         BasicEventDefinition btDef = new BasicEventDefinition("BT", f1);
