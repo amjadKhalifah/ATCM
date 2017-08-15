@@ -152,12 +152,15 @@ public class EMFTAParser extends Parser {
                 // create boolean operator object using the type and the formulas
                 BasicBooleanOperator o = new BasicBooleanOperator(t, formulas);
 
+                // get probability
+                FloatConstant f = null;
+                if (emftaEvent.getProbability() > 0)
+                    f = new FloatConstant(emftaEvent.getProbability());
+
                 // create new GateDefinition
-                GateDefinition gateDefinition = new GateDefinition(emftaEvent.getName(), o);
+                GateDefinition gateDefinition = new GateDefinition(emftaEvent.getName(), o, f);
                 elementDefinitions.add(gateDefinition);
             } else {
-                // NOTE: events can only have a probability, if they are not gates
-
                 // convert probability of event to FloatConstant object
                 FloatConstant f = null;
                 if (emftaEvent.getProbability() > 0)
