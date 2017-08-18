@@ -13,7 +13,7 @@ import util.ModelProvider;
 public class ModifiedCheckerTest {
 
 	CausalModel billySuzyCausalModel;
-    HPChecker checker;
+	ModifiedChecker checker;
 
     @Before
     public void setUp() throws Exception {
@@ -27,16 +27,26 @@ public class ModifiedCheckerTest {
 	public void tearDown() throws Exception {
 	}
 
+	
+	@Test
+	public void testFindCause() {
+	
+		assertFalse("find cause failed",checker.findCause(billySuzyCausalModel.getVariableByName("BS")).isEmpty());
+	}
+	
 	@Test
 	public void testCheckConditionOne() {
-		
-		assertTrue("condition one failed",checker.checkConditionOne("ST", "BS", true, true));
+	
+		assertTrue("condition one failed",checker.checkConditionOne(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"), true));
 	}
 	@Test
 	public void testCheckConditionTwo() {
-		assertFalse("condition one failed",checker.checkConditionTwo("ST", "BS", true, true));
-
 		
+		assertFalse("condition one failed",!checker.checkConditionTwo(billySuzyCausalModel.getVariableByName("BT"),true,billySuzyCausalModel.getVariableByName("BS"), true).isEmpty());
+		
+		assertTrue("condition one failed",!checker.checkConditionTwo(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"), true).isEmpty());
+		
+
 		
 	}
 	@Ignore

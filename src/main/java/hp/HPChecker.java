@@ -1,12 +1,15 @@
 package hp;
 
+import java.util.List;
+
 import causality.CausalModel;
+import causality.Variable;
 
 public interface HPChecker {
 	CausalModel getCausalModel();	
-	//TODO add params
-	boolean checkConditionOne(String var1, String var2, boolean value1, boolean value2);
-	boolean checkConditionTwo(String cause, String effect, boolean causeValue, boolean effectValue);
+	
+	boolean checkConditionOne(Variable cause, boolean causeValue, Variable effect, boolean effectValue);
+	List<Witness> checkConditionTwo(Variable cause, boolean causeValue, Variable effect, boolean effectValue);
 	boolean checkConditionThree();
 	
 

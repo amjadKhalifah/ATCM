@@ -221,7 +221,7 @@ public class ModelProvider {
         
         BasicBooleanOperator and2 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, Arrays.asList(st));
         EndogenousVariable sh = new EndogenousVariable("SH", and2);
-        // TODO problem here of specifiying !
+  
         
         BasicBooleanOperator not1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.not, Arrays.asList(sh));
         BasicBooleanOperator and1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and,

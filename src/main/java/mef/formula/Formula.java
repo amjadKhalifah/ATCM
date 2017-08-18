@@ -38,7 +38,6 @@ public abstract class Formula {
 		}
 		// EXO
 		else if (this instanceof ExogenousVariable) {
-			//TODO ??
 			parents.add((ExogenousVariable) this);
 			return ((ExogenousVariable) this).getName();
 		}

@@ -114,7 +114,7 @@ public class EndogenousVariable extends Variable {
 		if (this == x) {
 			return this.getValue();
 		}
-		if (w.contains(this)) {// TODO check that this works
+		if (w.contains(this)) {
 			return this.getValue();
 		}
 		if (this.getFormula() instanceof ExogenousVariable) {// assuming this is
