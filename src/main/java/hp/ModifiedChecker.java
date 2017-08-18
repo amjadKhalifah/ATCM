@@ -18,6 +18,7 @@ import causality.EndogenousVariable;
 import causality.ExogenousVariable;
 import causality.Variable;
 import mef.formula.Formula;
+import util.PowerSetUtil;
 
 /**
  * Will try some experiments with HP implementation here // we want to check of
@@ -78,23 +79,22 @@ public class ModifiedChecker implements HPChecker {
 
 		
 		// three options to get the powerset
-		// TODO should remove x and y from v before powerset 
+		// remove x and y from v before powerset 
+		Set<Variable> possibleWElements = model.getEndogenousVars();
+		possibleWElements.remove(x);
+		possibleWElements.remove(y);
 		
-		Set<Set<Variable>> gPowerSet = getPowerSetUsingGuava(model.getEndogenousVars());
-
-//		System.out.println(gPowerSet.size());
+		Set<Set<Variable>> gPowerSet = PowerSetUtil.getPowerSetUsingGuava(possibleWElements);
 //		gPowerSet.forEach(name -> System.out.println(name));
-//
-//		Set<Set<Variable>> recPowerSet = getPowerSetUsingRec(model.getEndogenousVars());
-//
-//		System.out.println(recPowerSet.size());
-//		recPowerSet.forEach(name -> System.out.println(name));
-//		
-//		Set<UnsortedSetIterable<Variable>> ecPowerSet = getPowerSetUsingEC(model.getEndogenousVars());
-//
-//		System.out.println(ecPowerSet.size());
-//		ecPowerSet.forEach(name -> System.out.println(name));
 		
+//		Set<Set<Variable>> recPowerSet = PowerSetUtil.getPowerSetUsingRec(possibleWElements);
+//		recPowerSet.forEach(name -> System.out.println(name));
+		
+		
+		// apparently the worst performance
+//		Set<UnsortedSetIterable<Variable>> ecPowerSet = PowerSetUtil.getPowerSetUsingEC(possibleWElements);
+//		ecPowerSet.forEach(name -> System.out.println(name));
+
 		
 		//TODO first impl is a brute force of the w
 		checkButForTopDown(x, y, model, gPowerSet);
@@ -110,47 +110,7 @@ public class ModifiedChecker implements HPChecker {
 	}
 
 
-	// for the first implementation we need all the combinations of the
-	// variables, which is the powerset
-	// should be
-	// 2powN//https://www.quora.com/What-is-the-most-efficient-algorithm-to-calculate-a-power-set
-	// option one to use for the power set generation
-	public Set<Set<Variable>> getPowerSetUsingGuava(Set<Variable> variables) {
-		// this method is limited to 30 vars
-		Set<Set<Variable>> variablePowerSet = Sets.powerSet(variables);
-
-		return variablePowerSet;
-	}
-
-	// option two for the powerset generation
-	// adapted from
-	// https://stackoverflow.com/questions/1670862/obtaining-a-powerset-of-a-set-in-java
-	public Set<Set<Variable>> getPowerSetUsingRec(Set<Variable> originalSet) {
-		Set<Set<Variable>> sets = new HashSet<Set<Variable>>();
-		if (originalSet.isEmpty()) {
-			sets.add(new HashSet<Variable>());
-			return sets;
-		}
-		List<Variable> list = new ArrayList<Variable>(originalSet);
-		Variable head = list.get(0);
-		Set<Variable> rest = new HashSet<Variable>(list.subList(1, list.size()));
-		for (Set<Variable> set : getPowerSetUsingRec(rest)) {
-			Set<Variable> newSet = new HashSet<Variable>();
-			newSet.add(head);
-			newSet.addAll(set);
-			sets.add(newSet);
-			sets.add(set);
-		}
-		return sets;
-	}
-
-	// option 3 using eclipse collections
-	public MutableSet<UnsortedSetIterable<Variable>> getPowerSetUsingEC(Set<Variable> originalSet) {
-		UnifiedSet<Variable> set = new UnifiedSet<>(originalSet);
-
-		return set.powerSet();
-
-	}
+	
 
 
 	@Override
@@ -161,7 +121,6 @@ public class ModifiedChecker implements HPChecker {
 	private CausalModel setvalues(CausalModel model, Map<String, Boolean> values) {
 
 		for (Variable v : model.getVariables()) {
-			System.out.println(v.getName());
 			v.setValue(values.get(v.getName()));
 		}
 		return model;
@@ -173,7 +132,7 @@ public class ModifiedChecker implements HPChecker {
 	
 	
 	// simple top down implemenattion without any optimizataion 
-	public boolean checkButForTopDown(Variable x, Variable y, CausalModel model, Set<Set<Variable>> wPowerSet){
+	public boolean checkButForTopDown(Variable x, Variable y, CausalModel model, Set<? extends Iterable<Variable>> wPowerSet){
 		
 		/* 1- set the value of the potential cause
 		 * 2- recursively get the value of each variable in the formula 
@@ -193,7 +152,7 @@ public class ModifiedChecker implements HPChecker {
 			//TODO think of the optimizations here.. we can filter the varaibles that should be interveined based on the cause and the effect 
 			// intervin in the model and change value of x and others and fix w
 			//2
-			boolean yValue = ((EndogenousVariable)y).evaluate(x, elem);
+			boolean yValue = ((EndogenousVariable)y).evaluate(x, (Set<Variable>)elem);
 			
 			if (yValue!=yOrigianl){// the result changes
 				System.out.println(x.getName() +"="+!x.getValue()+" is a cause of "+y.getName() +"="+yOrigianl+" with witness "+ elem );
@@ -205,27 +164,32 @@ public class ModifiedChecker implements HPChecker {
 	}
 
 	
-	public boolean checkButFor(Variable x, Variable y, CausalModel model, Set<Set<Variable>> wPowerSet){
-		// change x to x'
-		boolean xOriginal = x.getValue();
-		boolean xOrigianl = y.getValue();
-		// TODO when this is as long as it is boolean
-		boolean xPrime = !xOrigianl;
+	public boolean checkButForBottomUP(Variable x, Variable y, CausalModel model, Set<Set<Variable>> wPowerSet){
+		/* 1- set the value of the potential cause
+		 * 2- recursively get the value of each variable in the formula 
+		 * @getval@when getting the value of a variable: 
+		 * 	a) if it is in W then return the actual value
+		 *  b) else evaluate the formula 
+		 *  -- Possible optimization: if it is not going to be effected return its value.  
+		* To evaluate a formula redo @getval@ for each varible 
+		* 3- check but-for
+		*/
 		
+		// 1
+		 x.setValue(!x.getValue());
+		boolean yOrigianl = y.getValue();
 		wPowerSet.stream().forEach(elem->{// for one possibility of a w
-			System.out.println("checking w: " + elem);
+//			System.out.println("checking w: " + elem);
 			//TODO think of the optimizations here.. we can filter the varaibles that should be interveined based on the cause and the effect 
 			// intervin in the model and change value of x and others and fix w
-			// how do we ensure the order of intervening... 
-			// first should change the potential cause x to x' 
-			// then get all variables that depend on x (e.g z=x and y) and are not part of w and reevaluate their values
-			// then for each of dependant variables get their "parents" and redo the same untill there are no parents
-			// check the but for test
+			//2
+			boolean yValue = ((EndogenousVariable)y).evaluate(x, (Set<Variable>)elem);
 			
+			if (yValue!=yOrigianl){// the result changes
+				System.out.println(x.getName() +"="+!x.getValue()+" is a cause of "+y.getName() +"="+yOrigianl+" with witness "+ elem );
+			}
 			
 		});
-		
-		
 		
 		return false;
 	}

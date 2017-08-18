@@ -20,7 +20,6 @@ public class ModifiedCheckerTest {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
         System.out.println(billySuzyCausalModel.toReport());
          checker = new ModifiedChecker(billySuzyCausalModel);
-         
     }
 
 
