@@ -3,6 +3,8 @@ package mef.formula;
 import causality.EndogenousVariable;
 import causality.ExogenousVariable;
 import causality.Variable;
+import mef.formula.BasicBooleanOperator.OperatorType;
+
 import org.dom4j.Element;
 
 import java.util.List;
@@ -69,9 +71,12 @@ public abstract class Formula {
 			String formulasStr = "";
 			// print all formulas and connect them with the respective operator
 			for (Formula formula : formulas) {
-				if (formulasStr.equals(""))
+				if (formulasStr.equals("")){
 					// first formula does not need an operator on the left
+					 if (operator.getType()== OperatorType.not)
+						 formulasStr += operator.getType()+" ";
 					formulasStr += formula.printInnerFormula(parents);
+					}
 				else
 					formulasStr += " " + operator.getType() + " " + formula.printInnerFormula(parents);
 			}

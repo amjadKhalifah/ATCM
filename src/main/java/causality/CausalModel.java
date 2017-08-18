@@ -246,7 +246,7 @@ public class CausalModel {
   public Set<Variable> getEndogenousVars(){
         Set<Variable> endogenousVariables = this.getVariables().stream()
                 .filter(v -> v instanceof EndogenousVariable).collect(Collectors.toSet());
-                System.out.println("get endogenousVariables "+endogenousVariables+" "+ variables);
+//                System.out.println("get endogenousVariables "+endogenousVariables+" "+ variables);
         return endogenousVariables;
     }
   
@@ -255,7 +255,7 @@ public class CausalModel {
   public Set<Variable> getExogenousVars(){
         Set<Variable> exogenousVariables = this.getVariables().stream()
                 .filter(v -> v instanceof ExogenousVariable).collect(Collectors.toSet());
-                System.out.println("get getExogenousVars "+exogenousVariables+" "+ variables);
+//                System.out.println("get getExogenousVars "+exogenousVariables+" "+ variables);
         return exogenousVariables;
     }
 }

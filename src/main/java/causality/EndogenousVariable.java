@@ -16,20 +16,20 @@ import mef.formula.Formula;
 public class EndogenousVariable extends Variable {
 	private Formula formula;
 	private double probability;
-	private static  final JexlEngine jexl = new JexlBuilder().cache(512).strict(true).silent(false).create();
+	private static final JexlEngine jexl = new JexlBuilder().cache(512).strict(true).silent(false).create();
 
 	// check with simon if we can fill them earlier
-	private String formulaStr="";
+	private String formulaStr = "";
 	// list that contains the variables that affect this var
 	private Set<Variable> parents = new HashSet<>();
 
 	public String getFormulaStr() {
 		return formulaStr;
 	}
-	
+
 	public String getFormulaExpression() {
-		//TODO do it once
-		return formulaStr.replaceAll("and", "&&").replaceAll("or", "||").replaceAll("-", "!");
+		// TODO do it once
+		return formulaStr.replaceAll("and", "&&").replaceAll("or", "||").replaceAll("not", "!");
 	}
 
 	public void setFormulaStr(String formulaStr) {
@@ -82,7 +82,7 @@ public class EndogenousVariable extends Variable {
 
 	public void setFormula(Formula formula) {
 		this.formula = formula;
-		if  (formula != null) {
+		if (formula != null) {
 			this.formulaStr = formula.print(parents);
 		}
 
@@ -108,7 +108,8 @@ public class EndogenousVariable extends Variable {
 	 * @return
 	 */
 	public boolean evaluate(Variable x, Set<Variable> w) {
-		System.out.println("evaluating "+getName()+" parents are "+ parents );
+		// System.out.println("evaluating "+getName()+" parents are "+ parents
+		// );
 		// under the assumptions it was already set to its reverse
 		if (this == x) {
 			return this.getValue();
@@ -125,20 +126,20 @@ public class EndogenousVariable extends Variable {
 		Map<String, Object> parentValues = new HashMap<>();
 
 		for (Variable variable : parents) {
-			
+
 			if (variable instanceof ExogenousVariable)
 				parentValues.put(variable.getName(), variable.getValue());
 			else if (variable instanceof EndogenousVariable)
 				parentValues.put(variable.getName(), ((EndogenousVariable) variable).evaluate(x, w));
 		}
-		
-		
+
 		JexlExpression expression = jexl.createExpression(this.getFormulaExpression());
 		JexlContext parentCtxt = new MapContext(parentValues);
-		System.out.println("--"+getName()+" --"+this.getFormulaExpression()+" --"+ parentValues );
 
 		boolean result = ((Boolean) expression.evaluate(parentCtxt));
-		System.out.println(getName()+" value: "+ result);
+		// System.out.println("--"+getName()+" --"+this.getFormulaExpression()+"
+		// --"+ parentValues );
+		// System.out.println(getName()+" value: "+ result);
 		return result;
 	}
 

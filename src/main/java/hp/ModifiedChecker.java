@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.collections.api.set.MutableSet;
@@ -31,9 +32,18 @@ public class ModifiedChecker implements HPChecker {
 	public ModifiedChecker(CausalModel model) {
 		this.model = model;
 		// TODO get the model and set its actual values or it should be set
-		// already in the model
-		// hardcode the values in the model now
-		model = setvalues(model, new HashMap<>());
+		Map<String, Boolean> actualValues = new HashMap<String, Boolean>()
+		{{
+		     put("ST_exo", true);
+		     put("BT_exo", true);
+		     put("BT", true);
+		     put("ST", true);
+		     put("SH", true);
+		     put("BS", true);
+		     put("BH", false);
+		}};
+		
+		model = setvalues(model, actualValues);
 	}
 
 	@Override
@@ -91,6 +101,14 @@ public class ModifiedChecker implements HPChecker {
 		
 		return false;
 	}
+	
+	
+	@Override
+	public boolean checkConditionThree() {
+		// x should be minimal
+		return false;
+	}
+
 
 	// for the first implementation we need all the combinations of the
 	// variables, which is the powerset
@@ -134,25 +152,18 @@ public class ModifiedChecker implements HPChecker {
 
 	}
 
-	@Override
-	public boolean checkConditionThree() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public CausalModel getCausalModel() {
 		return model;
 	}
 
-	private CausalModel setvalues(CausalModel model, HashMap<String, Boolean> values) {
+	private CausalModel setvalues(CausalModel model, Map<String, Boolean> values) {
 
 		for (Variable v : model.getVariables()) {
-			// TODO set the values here or outside
-			v.setValue(true);
-			// System.out.println(v);
+			System.out.println(v.getName());
+			v.setValue(values.get(v.getName()));
 		}
-
 		return model;
 
 	}
@@ -164,7 +175,6 @@ public class ModifiedChecker implements HPChecker {
 	// simple top down implemenattion without any optimizataion 
 	public boolean checkButForTopDown(Variable x, Variable y, CausalModel model, Set<Set<Variable>> wPowerSet){
 		
-		// form the effect formula
 		/* 1- set the value of the potential cause
 		 * 2- recursively get the value of each variable in the formula 
 		 * @getval@when getting the value of a variable: 
@@ -178,21 +188,18 @@ public class ModifiedChecker implements HPChecker {
 		// 1
 		 x.setValue(!x.getValue());
 		boolean yOrigianl = y.getValue();
-		
-
-			System.out.println(wPowerSet.size());
 		wPowerSet.stream().forEach(elem->{// for one possibility of a w
-			System.out.println("checking w: " + elem);
+//			System.out.println("checking w: " + elem);
 			//TODO think of the optimizations here.. we can filter the varaibles that should be interveined based on the cause and the effect 
 			// intervin in the model and change value of x and others and fix w
-			//System.out.println( "get value "+ getValue(y,elem));
+			//2
+			boolean yValue = ((EndogenousVariable)y).evaluate(x, elem);
 			
-			// set the intervined value
-			((EndogenousVariable)y).evaluate(x, elem);
+			if (yValue!=yOrigianl){// the result changes
+				System.out.println(x.getName() +"="+!x.getValue()+" is a cause of "+y.getName() +"="+yOrigianl+" with witness "+ elem );
+			}
 			
 		});
-		
-		
 		
 		return false;
 	}

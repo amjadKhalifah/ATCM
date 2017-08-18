@@ -219,14 +219,13 @@ public class ModelProvider {
         ExogenousVariable btExo = new ExogenousVariable("BT_exo");
         EndogenousVariable bt = new EndogenousVariable("BT", btExo, 0.001);
         
-//        ExogenousVariable noShExo = new ExogenousVariable("-SH_exo");
-//        EndogenousVariable notSh = new EndogenousVariable("-SH", noShExo, 0.0011);
-        
         BasicBooleanOperator and2 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, Arrays.asList(st));
         EndogenousVariable sh = new EndogenousVariable("SH", and2);
         // TODO problem here of specifiying !
+        
+        BasicBooleanOperator not1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.not, Arrays.asList(sh));
         BasicBooleanOperator and1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and,
-                Arrays.asList(bt, sh));
+                Arrays.asList(bt, not1));
         EndogenousVariable bh = new EndogenousVariable("BH", and1);
      
         BasicBooleanOperator or1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.or,
@@ -234,7 +233,7 @@ public class ModelProvider {
         EndogenousVariable bs = new EndogenousVariable("BS", or1);
 
         Set<Variable> variables = new HashSet<>(Arrays.asList(bs, bh, sh, bt,  st, btExo,  stExo));
-        CausalModel billySuzy = new CausalModel("BillySuzy", variables);
+        CausalModel billySuzy = new CausalModel("BillySuzyNoNegation", variables);
         return billySuzy;
     }
 }
