@@ -79,7 +79,7 @@ public class ModifiedChecker implements HPChecker {
 		
 		// three options to get the powerset
 		// TODO should remove x and y from v before powerset 
-				
+		
 		Set<Set<Variable>> gPowerSet = getPowerSetUsingGuava(model.getEndogenousVars());
 
 //		System.out.println(gPowerSet.size());
