@@ -8,6 +8,7 @@ import mef.formula.BasicBooleanOperator;
 import mef.formula.BasicEvent;
 import mef.formula.Formula;
 import mef.formula.Gate;
+import mef.general.FloatConstant;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -18,6 +19,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 import static mef.formula.BasicBooleanOperator.OperatorType.and;
 import static mef.formula.BasicBooleanOperator.OperatorType.or;
@@ -72,22 +74,31 @@ public class ADTParser extends Parser {
     // parse a node and recursively its children
     private ADTNode parseNode(Element element) {
         String label = "";
-        Set<ADTNode> children = new HashSet<>();
+        List<ADTNode> children = new ArrayList<>();
         ADTNode.Refinement refinement =
                 ADTNode.Refinement.valueOf(element.attributeValue("refinement", "DISJUNCTIVE").toUpperCase());
+        double probability = 0D;
 
         // walk through elements and recursively parse child nodes
         for (Iterator i = element.elementIterator(); i.hasNext(); ) {
             Element e = (Element) i.next();
             if (e.getName().equals("label")) {
                 label = e.getText().replace("\n","").replace("\r","");
+            } else if (e.getName().equals("parameter")) {
+                if (e.attributeValue("domainId", "").equals("ProbSucc1")) {
+                    String probabilityStr = e.getText();
+                    try {
+                        probability = Double.parseDouble(probabilityStr);
+                    } catch (NumberFormatException ex) {
+                        System.err.println("Cannot parse probability of " + probabilityStr);
+                    }
+                }
             } else if (e.getName().equals("node")) {
                 ADTNode node = parseNode(e);
                 children.add(node);
             }
         }
-
-        ADTNode node = new ADTNode(label, children, refinement);
+        ADTNode node = new ADTNode(label, children, refinement, probability);
         return node;
     }
 
@@ -95,7 +106,7 @@ public class ADTParser extends Parser {
     private List<ElementDefinition> parseNodeToElementDefinition(ADTNode node) {
         List<ElementDefinition> elementDefinitions = new ArrayList<>();
         // get all the nodes in the tree
-        Set<ADTNode> nodes = unwrap(node);
+        List<ADTNode> nodes = unwrap(node);
         // iterate through nodes
         for (ADTNode n : nodes) {
             String name = n.getLabel();
@@ -125,7 +136,10 @@ public class ADTParser extends Parser {
             }
             // if there aren't any children, it is a leaf node -> BasicEventDefinition
             else {
-                BasicEventDefinition basicEventDefinition = new BasicEventDefinition(name);
+                FloatConstant f = null;
+                if (n.getProbability() > 0)
+                    f = new FloatConstant(n.getProbability());
+                BasicEventDefinition basicEventDefinition = new BasicEventDefinition(name, f);
                 elementDefinitions.add(basicEventDefinition);
             }
         }
@@ -135,8 +149,8 @@ public class ADTParser extends Parser {
     /*
     * The ADT xml is a very hierarchical structure. To simply working with it, this method unwraps this structure and
      * adds all the existing nodes into a set. */
-    private Set<ADTNode> unwrap(ADTNode node) {
-        Set<ADTNode> nodes = new HashSet<>();
+    private List<ADTNode> unwrap(ADTNode node) {
+        List<ADTNode> nodes = new ArrayList<>();
         nodes.add(node);
         // if there are child nodes, unwrap them as well
         if (node.getChildren().size() > 0) {

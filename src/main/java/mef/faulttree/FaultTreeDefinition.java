@@ -46,12 +46,7 @@ public class FaultTreeDefinition {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (label != null ? !label.equals(that.label) : that.label != null) return false;
         if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null) return false;
-
-        Set<ElementDefinition> elementDefinitionsSet = new HashSet<>(elementDefinitions);
-        Set<ElementDefinition> thatElementDefinitionsSet = new HashSet<>(that.elementDefinitions);
-        boolean elementDefinitionsEqual = elementDefinitionsSet.equals(thatElementDefinitionsSet);
-
-        return elementDefinitions != null ? elementDefinitionsEqual : that.elementDefinitions == null;
+        return elementDefinitions != null ? elementDefinitions.equals(that.elementDefinitions) : that.elementDefinitions == null;
     }
 
     @Override

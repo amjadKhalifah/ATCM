@@ -108,13 +108,13 @@ public class ModelProvider {
 
     public static EMFTAFTAModel billySuzyEMFTA() {
         EMFTAGate or1 = new EMFTAGate("", new HashSet<>(Arrays.asList(1,2)), EMFTAGate.EMFTAGateType.OR);
-        EMFTAEvent bs = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "BS", "Bottle Shatters", 0.0D, or1);
+        EMFTAEvent bs = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "BS", "Bottle Shatters", 0.5D, or1);
 
         EMFTAGate and1 = new EMFTAGate("", new HashSet<>(Arrays.asList(3,4)), EMFTAGate.EMFTAGateType.AND);
-        EMFTAEvent bh = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "BH", "Billy Hits", 0.0D, and1);
+        EMFTAEvent bh = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "BH", "Billy Hits", 0.1D, and1);
 
         EMFTAGate and2 = new EMFTAGate("", new HashSet<>(Arrays.asList(5)), EMFTAGate.EMFTAGateType.AND);
-        EMFTAEvent sh = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "SH", "Suzy Hits", 0.0, and2);
+        EMFTAEvent sh = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "SH", "Suzy Hits", 0.01D, and2);
         EMFTAEvent bt = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "BT", "Billy Throws", 0.001D, null);
         EMFTAEvent notSh = new EMFTAEvent(EMFTAEvent.EMFTAEventType.Basic, "-SH", "Suzy does not hit", 0.0011D,
                 null);
@@ -130,18 +130,24 @@ public class ModelProvider {
         Gate sh = new Gate("SH");
         List<Formula> formulasBs = new ArrayList<>(Arrays.asList(bh, sh));
         BasicBooleanOperator or1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.or, formulasBs);
-        GateDefinition bsDef = new GateDefinition("BS", or1);
+
+        FloatConstant fBS = new FloatConstant(0.5);
+        GateDefinition bsDef = new GateDefinition("BS", or1, fBS);
 
         BasicEvent bt = new BasicEvent("BT");
         BasicEvent notSh = new BasicEvent("-SH");
         List<Formula> formulasBh = new ArrayList<>(Arrays.asList(bt, notSh));
         BasicBooleanOperator and1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, formulasBh);
-        GateDefinition bhDef = new GateDefinition("BH", and1);
+
+        FloatConstant fBH = new FloatConstant(0.1);
+        GateDefinition bhDef = new GateDefinition("BH", and1, fBH);
 
         BasicEvent st = new BasicEvent("ST");
         List<Formula> formulasSh = new ArrayList<>(Arrays.asList(st));
         BasicBooleanOperator and2 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, formulasSh);
-        GateDefinition shDef = new GateDefinition("SH", and2);
+
+        FloatConstant fSH = new FloatConstant(0.01);
+        GateDefinition shDef = new GateDefinition("SH", and2, fSH);
 
         FloatConstant f1 = new FloatConstant(0.001);
         BasicEventDefinition btDef = new BasicEventDefinition("BT", f1);
@@ -162,14 +168,14 @@ public class ModelProvider {
 
         BasicEvent e1 = new BasicEvent("get tan");
         BasicEvent e2 = new BasicEvent("get password");
-        List<Formula> f1 = Arrays.asList(e1, e2);
+        List<Formula> f1 = Arrays.asList(e2, e1);
         BasicBooleanOperator and1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, f1);
         GateDefinition gateDef1 = new GateDefinition("obtain online", and1);
 
         BasicEvent e3 = new BasicEvent("hijack bank server");
         BasicEvent e4 = new BasicEvent("initial transfer via debit card");
         Gate g0 = new Gate("obtain online");
-        List<Formula> f2 = Arrays.asList(e3, g0, e4);
+        List<Formula> f2 = Arrays.asList(g0, e3, e4);
         BasicBooleanOperator or1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.or, f2);
         GateDefinition gateDef2 = new GateDefinition("Transfer Money out of account", or1);
 
@@ -177,7 +183,7 @@ public class ModelProvider {
         BasicEventDefinition e2Def = new BasicEventDefinition("get password");
         BasicEventDefinition e3Def = new BasicEventDefinition("hijack bank server");
         BasicEventDefinition e4Def = new BasicEventDefinition("initial transfer via debit card");
-        List<ElementDefinition> elementDefinitions = Arrays.asList(gateDef2,gateDef1, e1Def, e2Def, e3Def, e4Def);
+        List<ElementDefinition> elementDefinitions = Arrays.asList(gateDef2,gateDef1, e2Def, e1Def, e3Def, e4Def);
         FaultTreeDefinition banking = new FaultTreeDefinition("Transfer Money out of account", null, null, elementDefinitions);
         return banking;
     }

@@ -35,11 +35,7 @@ public class BasicBooleanOperator extends BooleanOperator{
         BasicBooleanOperator that = (BasicBooleanOperator) o;
 
         if (type != that.type) return false;
-        Set<Formula> formulasSet = new HashSet<>(formulas);
-        Set<Formula> thatFormulasSet = new HashSet<>(that.formulas);
-        boolean formulasEqual = formulasSet.equals(thatFormulasSet);
-
-        return formulas != null ? formulasEqual : that.formulas == null;
+        return formulas != null ? formulas.equals(that.formulas) : that.formulas == null;
     }
 
     @Override

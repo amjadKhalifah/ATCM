@@ -34,7 +34,7 @@ public class ADTParserTest {
         String s2 = bankingActual.toXML().asXML().replace(" ", "")
                 .replace("\n", "")
                 .replace(">", ">\n");;
-        //assertEquals(s1, s2);
+        assertEquals(s1, s2);
         assertEquals(banking, bankingActual);
     }
 
