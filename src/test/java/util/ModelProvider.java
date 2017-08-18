@@ -205,4 +205,30 @@ public class ModelProvider {
         CausalModel billySuzy = new CausalModel("BillySuzy", variables);
         return billySuzy;
     }
+    
+    
+    public static CausalModel billySuzyCausalModelNoNegation() {
+        ExogenousVariable stExo = new ExogenousVariable("ST_exo");
+        EndogenousVariable st = new EndogenousVariable("ST", stExo, 0.0012);
+        ExogenousVariable btExo = new ExogenousVariable("BT_exo");
+        EndogenousVariable bt = new EndogenousVariable("BT", btExo, 0.001);
+        
+//        ExogenousVariable noShExo = new ExogenousVariable("-SH_exo");
+//        EndogenousVariable notSh = new EndogenousVariable("-SH", noShExo, 0.0011);
+        
+        BasicBooleanOperator and2 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, Arrays.asList(st));
+        EndogenousVariable sh = new EndogenousVariable("SH", and2);
+        // TODO problem here of specifiying !
+        BasicBooleanOperator and1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and,
+                Arrays.asList(bt, sh));
+        EndogenousVariable bh = new EndogenousVariable("BH", and1);
+     
+        BasicBooleanOperator or1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.or,
+                Arrays.asList(bh, sh));
+        EndogenousVariable bs = new EndogenousVariable("BS", or1);
+
+        Set<Variable> variables = new HashSet<>(Arrays.asList(bs, bh, sh, bt,  st, btExo,  stExo));
+        CausalModel billySuzy = new CausalModel("BillySuzy", variables);
+        return billySuzy;
+    }
 }

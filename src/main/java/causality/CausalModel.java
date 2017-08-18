@@ -176,7 +176,8 @@ public class CausalModel {
     private String printVariables(Set<Variable> variables) {
         String str = "";
         for (Variable variable : variables) {
-            str += variable.print() + "\n";
+        	//TODO we don't need the hashset here.. do we need to use the print again
+            str += variable.print(new HashSet<>()) + "\n";
         }
         return str;
     }
@@ -226,11 +227,26 @@ public class CausalModel {
         return variable;
     }
   public Set<Variable> getVariablesByName(List<String> names){
-    	
 	  Set<Variable> variables = this.getVariables().stream()
-                .filter(v -> names.contains(v.getName())).collect(Collectors.toSet());;
-        
+                .filter(v -> names.contains(v.getName())).collect(Collectors.toSet());
                 System.out.println("get var by name "+names+" "+ variables);
         return variables;
+    }
+  
+  
+  public Set<Variable> getEndogenousVars(){
+        Set<Variable> endogenousVariables = this.getVariables().stream()
+                .filter(v -> v instanceof EndogenousVariable).collect(Collectors.toSet());
+                System.out.println("get endogenousVariables "+endogenousVariables+" "+ variables);
+        return endogenousVariables;
+    }
+  
+  
+  
+  public Set<Variable> getExogenousVars(){
+        Set<Variable> exogenousVariables = this.getVariables().stream()
+                .filter(v -> v instanceof ExogenousVariable).collect(Collectors.toSet());
+                System.out.println("get getExogenousVars "+exogenousVariables+" "+ variables);
+        return exogenousVariables;
     }
 }

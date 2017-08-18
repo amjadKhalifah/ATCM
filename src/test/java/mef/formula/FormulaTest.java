@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
@@ -42,19 +43,19 @@ public class FormulaTest {
     @Test
     public void Should_PrintFormulaWithBasicBooleanOperator() throws Exception {
         String f1Expected = "(V1 and V2)";
-        assertEquals(f1Expected, f1.print());
+        assertEquals(f1Expected, f1.print(new HashSet<>()));
 
         String f2Expected = "((V1 and V2) or V3)";
-        assertEquals(f2Expected, f2.print());
+        assertEquals(f2Expected, f2.print(new HashSet<>()));
     }
 
     @Test
     public void Should_PrintFormulaWithMoreComplexOperators() throws Exception {
         String f3Expected = "(V1 -> V2)";
-        assertEquals(f3Expected, f3.print());
+        assertEquals(f3Expected, f3.print(new HashSet<>()));
 
         String f4Expected = "(((V1 and V2) or V3) -> V1)";
-        assertEquals(f4Expected, f4.print());
+        assertEquals(f4Expected, f4.print(new HashSet<>()));
     }
 
 }

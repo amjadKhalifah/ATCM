@@ -17,7 +17,7 @@ public class ModifiedCheckerTest {
 
     @Before
     public void setUp() throws Exception {
-        billySuzyCausalModel = ModelProvider.billySuzyCausalModel();
+        billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
          checker = new ModifiedChecker(billySuzyCausalModel);
          
     }
@@ -31,11 +31,14 @@ public class ModifiedCheckerTest {
 	public void testCheckConditionOne() {
 		
 		assertTrue("condition one failed",checker.checkConditionOne("SH", "BS", true, true));
+//		((ModifiedChecker)checker).getPowerSetUsingGuava();
 	}
-	@Ignore
 	@Test
 	public void testCheckConditionTwo() {
-		fail("Not yet implemented");
+		assertFalse("condition one failed",checker.checkConditionTwo("SH", "BS", true, true));
+
+		
+		
 	}
 	@Ignore
 	@Test
