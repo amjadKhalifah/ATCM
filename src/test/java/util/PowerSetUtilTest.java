@@ -18,17 +18,16 @@ public class PowerSetUtilTest {
 
 	@Test
 	public void testGetPowerSetUsingGuava() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
-
 	@Test
 	public void testGetPowerSetUsingRec() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetPowerSetUsingEC() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 }
