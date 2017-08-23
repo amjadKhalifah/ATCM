@@ -3,14 +3,20 @@ package causality;
 import mef.formula.Formula;
 import org.dom4j.Element;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public abstract class Variable extends Formula {
 
     private String name;
     // added by amjad
     private boolean value;
+    
+    protected BooleanProperty bindableProperty;
 
     public Variable(String name) {
         this.name = name;
+        
     }
 
     @Override
@@ -45,6 +51,19 @@ public abstract class Variable extends Formula {
 	public void setValue(boolean value) {
 		this.value = value;
 	}
+ 
+	public BooleanProperty getBindableProperty() {
+		return bindableProperty;
+	}
+
+	public void setBindableProperty(BooleanProperty bindableProperty) {
+		this.bindableProperty = bindableProperty;
+	}
+	
+	public void setBindablePropertyValue(boolean value) {
+		this.bindableProperty.set(value);
+	}
+
 
 	@Override
 	public String toString() {

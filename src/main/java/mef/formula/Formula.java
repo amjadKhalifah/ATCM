@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class Formula {
+
 	public abstract Element toXML(Element element);
+
 	/**
 	 * Convert formula to string; does not extend variables
 	 * 
@@ -19,8 +21,7 @@ public abstract class Formula {
 	 */
 	public String print(Set<Variable> parents) {
 		// ENDO
-		
-		
+
 		if (this instanceof EndogenousVariable) {
 			EndogenousVariable endo = (EndogenousVariable) this;
 			String formula = endo.getName() + " = ";
@@ -28,6 +29,8 @@ public abstract class Formula {
 			if (endo.getFormula() instanceof ExogenousVariable) {
 				ExogenousVariable exo = (ExogenousVariable) endo.getFormula();
 				parents.add(exo);
+
+				// TODO can we get parents from the endo instance
 				return formula + exo.getName();
 			}
 			// formula is more complex
@@ -38,6 +41,7 @@ public abstract class Formula {
 		}
 		// EXO
 		else if (this instanceof ExogenousVariable) {
+			// TODO should this be handled for binding
 			parents.add((ExogenousVariable) this);
 			return ((ExogenousVariable) this).getName();
 		}
@@ -70,14 +74,16 @@ public abstract class Formula {
 			String formulasStr = "";
 			// print all formulas and connect them with the respective operator
 			for (Formula formula : formulas) {
-				if (formulasStr.equals("")){
+				if (formulasStr.equals("")) {
 					// first formula does not need an operator on the left
-					 if (operator.getType()== OperatorType.not)
-						 formulasStr += operator.getType()+" ";
-					formulasStr += formula.printInnerFormula(parents);
+					// unless it was not
+					if (operator.getType() == OperatorType.not) {
+						formulasStr += operator.getType() ;
 					}
-				else
+					formulasStr += formula.printInnerFormula(parents);
+				} else
 					formulasStr += " " + operator.getType() + " " + formula.printInnerFormula(parents);
+
 			}
 
 			return "(" + formulasStr + ")";
@@ -87,13 +93,13 @@ public abstract class Formula {
 			Formula formulaRight = imply.getRightFormula();
 			// print left and right formula and connect them with "->" in
 			// between
-			String formulaStr = formulaLeft.printInnerFormula(parents) + " -> " + formulaRight.printInnerFormula(parents);
+			String formulaStr = formulaLeft.printInnerFormula(parents) + " -> "
+					+ formulaRight.printInnerFormula(parents);
 
 			return "(" + formulaStr + ")";
 		}
 		return null;
 	}
 
-	
 
 }

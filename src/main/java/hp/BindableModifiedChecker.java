@@ -18,25 +18,19 @@ import util.PowerSetUtil;
  * @author Ibrahim Amjad
  *
  */
-public class ModifiedChecker implements HPChecker {
+public class BindableModifiedChecker implements HPChecker {
 	private CausalModel model;
 
-	public ModifiedChecker(CausalModel model) {
+	public BindableModifiedChecker(CausalModel model) {
 		this.model = model;
-		// TODO get the model and set its actual values or it should be set
+		// in bindable version we only need to set the exogenous values
 		Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
 			{
 				put("ST_exo", true);
 				put("BT_exo", true);
-				put("BT", true);
-				put("ST", true);
-				put("SH", true);
-				put("BS", true);
-				put("BH", false);
 			}
 		};
-
-		model = setvalues(model, actualValues);
+		model = setExovalues(model, actualValues);
 	}
 
 	/**
@@ -57,8 +51,10 @@ public class ModifiedChecker implements HPChecker {
 		potentialCauses.remove(effect);
 		potentialCauses.stream().forEach(potentialCause -> {
 
-			if (checkConditionOne(potentialCause, potentialCause.getValue(), effect, effect.getValue())) {
-				proofs.addAll(checkConditionTwo(potentialCause, potentialCause.getValue(), effect, effect.getValue()));
+			if (checkConditionOne(potentialCause, potentialCause.getBindableProperty().get(), effect,
+					effect.getBindableProperty().get())) {
+				proofs.addAll(checkConditionTwo(potentialCause, potentialCause.getBindableProperty().get(), effect,
+						effect.getBindableProperty().get()));
 			}
 
 		});
@@ -71,9 +67,9 @@ public class ModifiedChecker implements HPChecker {
 	@Override
 	public boolean checkConditionOne(Variable cause, boolean causeValue, Variable effect, boolean effectValue) {
 
-		if (cause.getValue() != causeValue)
+		if (cause.getBindableProperty().get() != causeValue)
 			return false;
-		if (effect.getValue() != effectValue)
+		if (effect.getBindableProperty().get() != effectValue)
 			return false;
 		System.out.println("condition one is true");
 		return true;
@@ -104,6 +100,7 @@ public class ModifiedChecker implements HPChecker {
 		// ecPowerSet.forEach(name -> System.out.println(name));
 
 		// this will check but-for of x,y for all W
+
 		return checkButForTopDown(cause, effect, gPowerSet);
 	}
 
@@ -118,25 +115,18 @@ public class ModifiedChecker implements HPChecker {
 		return model;
 	}
 
-	private CausalModel setvalues(CausalModel model, Map<String, Boolean> values) {
+	private CausalModel setExovalues(CausalModel model, Map<String, Boolean> values) {
 
-		for (Variable v : model.getVariables()) {
-			v.setValue(values.get(v.getName()));
+		for (Variable v : model.getExogenousVars()) {
+			v.setBindablePropertyValue(values.get(v.getName()));
 		}
 		return model;
 
 	}
 
 	/**
-	 * this functions check but for of the inputs 1- set the value of the
-	 * potential cause 2- recursively get the value of each variable in the
-	 * formula
+	 * this function checks the but-for with bindable nature
 	 * 
-	 * @getval@when getting the value of a variable: a) if it is in W then
-	 *              return the actual value b) else evaluate the formula --
-	 *              Possible optimization: if it is not going to be effected
-	 *              return its value. To evaluate a formula redo @getval@ for
-	 *              each varible 3- check but-for
 	 * @param x
 	 * @param y
 	 * @param wPowerSet
@@ -144,17 +134,23 @@ public class ModifiedChecker implements HPChecker {
 	 */
 	public List<Witness> checkButForTopDown(Variable x, Variable y, Set<? extends Iterable<Variable>> wPowerSet) {
 		List<Witness> proofs = new ArrayList<>();
-		// 1
-		x.setValue(!x.getValue());
-		boolean yOrigianl = y.getValue();
+
+		boolean yOrigianl = y.getBindableProperty().get();
+		boolean xOrigianl = x.getBindableProperty().get();
 		wPowerSet.stream().forEach(elem -> {// for one possibility of a w
 			// TODO think of the optimizations here.. we can filter the
+			// first should unbind all the vars in W
+			unbindVars(elem);
+
 			// varaibles that should be interveined based on the cause and the
 			// effect
 			// intervin in the model and change value of x and others and fix w
-			// 2
-			boolean yValue = ((EndogenousVariable) y).evaluate(x, (Set<Variable>) elem);
-			// 3
+			((EndogenousVariable) x).unBind();// so that it wont be affected by
+												// others
+			x.setBindablePropertyValue(!xOrigianl);
+
+			boolean yValue = ((EndogenousVariable) y).getBindableProperty().get();
+
 			if (yValue != yOrigianl) {// the result changes
 				// System.out.println(x.getName() + "=" + !x.getValue() + " is a
 				// cause of " + y.getName() + "=" + yOrigianl
@@ -162,13 +158,26 @@ public class ModifiedChecker implements HPChecker {
 				proofs.add(new Witness(x, (Set<Variable>) elem));
 			}
 
+			// reset and clean up
+			bindVars(elem);
+			
+			x.setBindablePropertyValue(xOrigianl);
+			 ((EndogenousVariable)x).bind();// so that it wont be affected by
+						// others
 		});
 
-		// reset x
-		x.setValue(!x.getValue());
 		System.out.println(proofs);
-
 		return proofs;
+	}
+
+	private void unbindVars(Iterable<Variable> elem) {
+
+		elem.forEach(var -> ((EndogenousVariable) var).unBind());
+	}
+
+	private void bindVars(Iterable<Variable> elem) {
+
+		elem.forEach(var -> ((EndogenousVariable) var).bind());
 	}
 
 }

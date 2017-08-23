@@ -11,6 +11,6 @@ public interface HPChecker {
 	boolean checkConditionOne(Variable cause, boolean causeValue, Variable effect, boolean effectValue);
 	List<Witness> checkConditionTwo(Variable cause, boolean causeValue, Variable effect, boolean effectValue);
 	boolean checkConditionThree();
-	
+	 List<Witness> findCause(Variable effect);
 
 }

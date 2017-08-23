@@ -10,16 +10,16 @@ import org.junit.Test;
 import causality.CausalModel;
 import util.ModelProvider;
 
-public class ModifiedCheckerTest {
+public class BindableModifiedCheckerTest {
 
 	CausalModel billySuzyCausalModel;
-	ModifiedChecker checker;
+	BindableModifiedChecker checker;
 
     @Before
     public void setUp() throws Exception {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
 //        System.out.println(billySuzyCausalModel.toReport());
-         checker = new ModifiedChecker(billySuzyCausalModel);
+         checker = new BindableModifiedChecker(billySuzyCausalModel);
     }
 
 
@@ -38,13 +38,16 @@ public class ModifiedCheckerTest {
 	public void testCheckConditionOne() {
 	
 		assertTrue("condition one failed",checker.checkConditionOne(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"), true));
+		assertTrue("condition one failed",checker.checkConditionOne(billySuzyCausalModel.getVariableByName("BT"),true,billySuzyCausalModel.getVariableByName("BH"), false));
+		
+		
 	}
 	@Test
 	public void testCheckConditionTwo() {
 		
 		assertFalse("condition one failed",!checker.checkConditionTwo(billySuzyCausalModel.getVariableByName("BT"),true,billySuzyCausalModel.getVariableByName("BS"), true).isEmpty());
 		
-		assertTrue("condition one failed",!checker.checkConditionTwo(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"), true).isEmpty());
+		assertTrue("condition one failed",!checker.checkConditionTwo(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"),false).isEmpty());
 		
 
 		
