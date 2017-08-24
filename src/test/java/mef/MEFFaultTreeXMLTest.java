@@ -33,7 +33,7 @@ public class MEFFaultTreeXMLTest {
 
     @Before
     public void setUp() throws Exception {
-        faultTree1MEF = Util.fileToString(urlFaultTree1.toString())
+        faultTree1MEF = Util.fileToString(urlFaultTree1)
                 .replace(" ", "").replace("\r","");
         faultTree2MEF2 = Util.fileToString(urlFaultTree2)
                 .replace(" ", "").replace("\r","");
