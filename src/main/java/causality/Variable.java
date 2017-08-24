@@ -4,7 +4,6 @@ import mef.formula.Formula;
 import org.dom4j.Element;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 public abstract class Variable extends Formula {
 

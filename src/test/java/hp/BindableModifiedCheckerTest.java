@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import causality.CausalModel;
@@ -18,7 +17,6 @@ public class BindableModifiedCheckerTest {
     @Before
     public void setUp() throws Exception {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
-//        System.out.println(billySuzyCausalModel.toReport());
          checker = new BindableModifiedChecker(billySuzyCausalModel);
     }
 

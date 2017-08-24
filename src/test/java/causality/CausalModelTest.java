@@ -30,6 +30,5 @@ public class CausalModelTest {
     @Test
     public void test_Should_CreateReport() {
         String report = billySuzyCausalModel.toReport();
-        System.out.println(report);
     }
 }

@@ -2,7 +2,6 @@ package hp;
 
 import java.util.Set;
 
-import com.google.errorprone.annotations.Var;
 
 import causality.Variable;
 

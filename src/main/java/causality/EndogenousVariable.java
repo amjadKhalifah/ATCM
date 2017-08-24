@@ -2,7 +2,6 @@ package causality;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +27,7 @@ public class EndogenousVariable extends Variable {
 
 	// check with simon if we can fill them earlier
 	private String formulaStr = "";
+	private String formulaExpression="";
 	// list that contains the variables that affect this var
 	private Set<Variable> parents = new HashSet<>();
 
@@ -42,8 +42,7 @@ public class EndogenousVariable extends Variable {
 	}
 
 	public String getFormulaExpression() {
-		// TODO do it once
-		return formulaStr.replaceAll("and", "&&").replaceAll("or", "||").replaceAll("not", "!");
+		return formulaExpression;
 	}
 
 	public void setFormulaStr(String formulaStr) {
@@ -103,7 +102,7 @@ public class EndogenousVariable extends Variable {
 		this.formula = formula;
 		if (formula != null) {
 			this.formulaStr = formula.print(parents);
-
+			this.formulaExpression= formulaStr.replaceAll("and", "&&").replaceAll("or", "||").replaceAll("not", "!");
 			// TODO set the bindable formula based on the string, this should
 			// rather be done during the parsing and the creation
 			// the formula; could not do it
@@ -136,63 +135,11 @@ public class EndogenousVariable extends Variable {
 			} else // should be called for other than zero
 				this.setBindableFormula(createFormula(tokens, 1));
 
-			
-
 		}
 		// we already calculated the formula
 		// now we set the value to the formula and bind it
 		this.bindableProperty = new SimpleBooleanProperty(this.getBindableFormula().getValue());
 		this.getBindableProperty().bind(bindableFormula);
-//		printFormula();
-	}
-
-	private void printFormula() {
-		System.out.println("Var: "+ this.getName()+ " bindable val "+ bindableProperty.get() + " formstr "+ formulaStr+ " "+bindableFormula.getDependencies().size());
-		
-		
-	}
-
-	/**
-	 * should i only call it for operators?
-	 * 
-	 * @param tokens
-	 * @param j
-	 * @return
-	 */
-	public BooleanBinding createFormula(String[] tokens, int j) {
-		String token = tokens[j];
-		assert (token.equals("or") || token.equals("and"));
-		if (j < tokens.length - 2) // should exclude the last operator
-		{
-
-			if (token.equals("or"))
-				return Bindings.or(getProp(tokens[j - 1]), createFormula(tokens, j + 2));
-			if (token.equals("and"))
-				return Bindings.and(getProp(tokens[j - 1]), createFormula(tokens, j + 2));
-
-		}
-
-		// this should happen in the last operator
-		if (token.equals("or"))
-			return Bindings.or(getProp(tokens[j - 1]), getProp(tokens[j + 1]));
-		else
-			return Bindings.and(getProp(tokens[j - 1]), getProp(tokens[j + 1]));
-
-	}
-
-	/**
-	 * gets the property and negate it if needed
-	 * 
-	 * @param name
-	 * @param prop
-	 * @return
-	 */
-	private BooleanExpression getProp(String name) {
-		BooleanExpression operand = getParentByName(name.replace("not", "")).getBindableProperty();
-		if (name.startsWith("not")) {
-			return operand.not();
-		}
-		return operand;
 	}
 
 	public double getProbability() {
@@ -272,4 +219,48 @@ public class EndogenousVariable extends Variable {
 	public void unBind() {
 		getBindableProperty().unbind();
 	}
+
+	/**
+	 * should i only call it for operators?
+	 * 
+	 * @param tokens
+	 * @param j
+	 * @return
+	 */
+	public BooleanBinding createFormula(String[] tokens, int j) {
+		String token = tokens[j];
+		assert (token.equals("or") || token.equals("and"));
+		if (j < tokens.length - 2) // should exclude the last operator
+		{
+
+			if (token.equals("or"))
+				return Bindings.or(getProp(tokens[j - 1]), createFormula(tokens, j + 2));
+			if (token.equals("and"))
+				return Bindings.and(getProp(tokens[j - 1]), createFormula(tokens, j + 2));
+
+		}
+
+		// this should happen in the last operator
+		if (token.equals("or"))
+			return Bindings.or(getProp(tokens[j - 1]), getProp(tokens[j + 1]));
+		else
+			return Bindings.and(getProp(tokens[j - 1]), getProp(tokens[j + 1]));
+
+	}
+
+	/**
+	 * gets the property and negate it if needed
+	 * 
+	 * @param name
+	 * @param prop
+	 * @return
+	 */
+	private BooleanExpression getProp(String name) {
+		BooleanExpression operand = getParentByName(name.replace("not", "")).getBindableProperty();
+		if (name.startsWith("not")) {
+			return operand.not();
+		}
+		return operand;
+	}
+
 }

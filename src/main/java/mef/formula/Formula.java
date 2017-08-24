@@ -29,8 +29,6 @@ public abstract class Formula {
 			if (endo.getFormula() instanceof ExogenousVariable) {
 				ExogenousVariable exo = (ExogenousVariable) endo.getFormula();
 				parents.add(exo);
-
-				// TODO can we get parents from the endo instance
 				return formula + exo.getName();
 			}
 			// formula is more complex
