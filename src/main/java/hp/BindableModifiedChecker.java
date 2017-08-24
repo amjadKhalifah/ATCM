@@ -58,6 +58,7 @@ public class BindableModifiedChecker implements HPChecker {
 
 		});
 
+		logger.info("finding causes " + proofs);
 
 		return proofs;
 	}
