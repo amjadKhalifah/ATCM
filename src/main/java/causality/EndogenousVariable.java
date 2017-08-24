@@ -10,7 +10,10 @@ import org.apache.commons.jexl3.JexlContext;
 import org.apache.commons.jexl3.JexlEngine;
 import org.apache.commons.jexl3.JexlExpression;
 import org.apache.commons.jexl3.MapContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import hp.ModifiedChecker;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.BooleanExpression;
@@ -20,6 +23,8 @@ import mef.formula.BasicBooleanOperator;
 import mef.formula.Formula;
 
 public class EndogenousVariable extends Variable {
+	
+	private static final Logger logger = LogManager.getLogger(EndogenousVariable.class);
 	private final static BooleanProperty TRUE = new SimpleBooleanProperty(true);
 	private static final JexlEngine jexl = new JexlBuilder().cache(512).strict(true).silent(false).create();
 	private Formula formula;
@@ -162,8 +167,7 @@ public class EndogenousVariable extends Variable {
 	 * @return
 	 */
 	public boolean evaluate(Variable x, Set<Variable> w) {
-		// System.out.println("evaluating "+getName()+" parents are "+ parents
-		// );
+		 logger.debug("evaluating "+getName()+" parents are "+ parents );
 		// under the assumptions it was already set to its reverse
 		if (this == x) {
 			return this.getValue();
@@ -190,9 +194,8 @@ public class EndogenousVariable extends Variable {
 		JexlExpression expression = jexl.createExpression(this.getFormulaExpression());
 		JexlContext parentCtxt = new MapContext(parentValues);
 		boolean result = ((Boolean) expression.evaluate(parentCtxt));
-		// System.out.println("--"+getName()+" --"+this.getFormulaExpression()+"
-		// --"+ parentValues );
-		// System.out.println(getName()+" value: "+ result);
+		logger.debug("--"+getName()+" --"+this.getFormulaExpression()+" --"+ parentValues );
+		logger.debug(getName()+" value: "+ result);
 		return result;
 	}
 

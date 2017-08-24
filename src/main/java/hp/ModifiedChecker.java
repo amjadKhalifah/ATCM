@@ -1,10 +1,12 @@
 package hp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import causality.CausalModel;
 import causality.EndogenousVariable;
@@ -20,7 +22,7 @@ import util.PowerSetUtil;
  */
 public class ModifiedChecker implements HPChecker {
 	private CausalModel model;
-
+	private static final Logger logger = LogManager.getLogger(ModifiedChecker.class);
 	public ModifiedChecker(CausalModel model) {
 		this.model = model;
 		
@@ -50,7 +52,7 @@ public class ModifiedChecker implements HPChecker {
 
 		});
 
-		System.out.println("finding causes " + proofs);
+		logger.info("finding causes " + proofs);
 
 		return proofs;
 	}
@@ -62,7 +64,7 @@ public class ModifiedChecker implements HPChecker {
 			return false;
 		if (effect.getValue() != effectValue)
 			return false;
-		System.out.println("condition one is true");
+		logger.info("condition one is true");
 		return true;
 	}
 
@@ -141,9 +143,8 @@ public class ModifiedChecker implements HPChecker {
 			boolean yValue = ((EndogenousVariable) y).evaluate(x, (Set<Variable>) elem);
 			// 3
 			if (yValue != yOrigianl) {// the result changes
-				// System.out.println(x.getName() + "=" + !x.getValue() + " is a
-				// cause of " + y.getName() + "=" + yOrigianl
-				// + " with witness " + elem);
+				logger.debug(x.getName() + "=" + !x.getValue() + " is a cause of " + y.getName() + "=" + yOrigianl
+				 + " with witness " + elem);
 				proofs.add(new Witness(x, (Set<Variable>) elem));
 			}
 

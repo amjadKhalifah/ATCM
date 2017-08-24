@@ -1,10 +1,12 @@
 package hp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import causality.CausalModel;
 import causality.EndogenousVariable;
@@ -19,11 +21,13 @@ import util.PowerSetUtil;
  *
  */
 public class BindableModifiedChecker implements HPChecker {
+	
 	private CausalModel model;
+	private static final Logger logger = LogManager.getLogger(BindableModifiedChecker.class);
 
 	public BindableModifiedChecker(CausalModel model) {
 		this.model = model;
-	
+
 	}
 
 	/**
@@ -34,6 +38,8 @@ public class BindableModifiedChecker implements HPChecker {
 	 * @return
 	 */
 	public List<Witness> findCause(Variable effect) {
+		
+	
 		// holds the result
 		List<Witness> proofs = new ArrayList<>();
 		// start with all singleton endogenous vars
@@ -52,7 +58,6 @@ public class BindableModifiedChecker implements HPChecker {
 
 		});
 
-		System.out.println("finding causes " + proofs);
 
 		return proofs;
 	}
@@ -64,7 +69,7 @@ public class BindableModifiedChecker implements HPChecker {
 			return false;
 		if (effect.getBindableProperty().get() != effectValue)
 			return false;
-		System.out.println("condition one is true");
+		logger.info("condition one is true");
 		return true;
 	}
 
@@ -108,7 +113,7 @@ public class BindableModifiedChecker implements HPChecker {
 		return model;
 	}
 
-	public void setExovalues( Map<String, Boolean> values) {
+	public void setExovalues(Map<String, Boolean> values) {
 
 		for (Variable v : model.getExogenousVars()) {
 			v.setBindablePropertyValue(values.get(v.getName()));
@@ -144,18 +149,17 @@ public class BindableModifiedChecker implements HPChecker {
 			boolean yValue = ((EndogenousVariable) y).getBindableProperty().get();
 
 			if (yValue != yOrigianl) {// the result changes
-				// System.out.println(x.getName() + "=" + !x.getValue() + " is a
-				// cause of " + y.getName() + "=" + yOrigianl
-				// + " with witness " + elem);
+				 logger.debug(x.getName() + "=" + !x.getValue() + " is a cause of " + y.getName() + "=" + yOrigianl
+				 + " with witness " + elem);
 				proofs.add(new Witness(x, (Set<Variable>) elem));
 			}
 
 			// reset and clean up
 			bindVars(elem);
-			
+
 			x.setBindablePropertyValue(xOrigianl);
-			 ((EndogenousVariable)x).bind();// so that it wont be affected by
-						// others
+			((EndogenousVariable) x).bind();// so that it wont be affected by
+			// others
 		});
 
 		return proofs;

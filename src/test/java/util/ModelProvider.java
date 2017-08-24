@@ -236,4 +236,41 @@ public class ModelProvider {
         CausalModel billySuzy = new CausalModel("BillySuzyNoNegation", variables);
         return billySuzy;
     }
+    
+    
+    public static CausalModel testModel() {
+    	// endo1 = exo1 endo3=exo3 endo4=exo4
+    	
+    	
+        ExogenousVariable exo1 = new ExogenousVariable("exo1");
+        EndogenousVariable endo1 = new EndogenousVariable("endo1", exo1, 0.0012);
+   
+        ExogenousVariable exo3 = new ExogenousVariable("exo3");
+        EndogenousVariable endo3 = new EndogenousVariable("endo3", exo3, 0.0012);
+        ExogenousVariable exo4 = new ExogenousVariable("exo4");
+        EndogenousVariable endo4 = new EndogenousVariable("endo4", exo4, 0.001);
+        
+        // endo5= endo1
+        
+        BasicBooleanOperator and2 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, Arrays.asList(endo1));
+        EndogenousVariable endo5 = new EndogenousVariable("endo5", and2);
+     // endo2= endo1 and endo3 and endo4
+        BasicBooleanOperator and = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, Arrays.asList(endo3,endo4,endo1));
+        EndogenousVariable endo2 = new EndogenousVariable("endo2", and);
+        
+        BasicBooleanOperator not1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.not, Arrays.asList(endo5));
+        BasicBooleanOperator and1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and,
+                Arrays.asList(endo2, not1));
+        // endo6 = endo2 and not endo5
+        EndogenousVariable endo6 = new EndogenousVariable("endo6", and1);
+     
+        BasicBooleanOperator or1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.or,
+                Arrays.asList(endo6, endo5));
+        EndogenousVariable endo7 = new EndogenousVariable("endo7", or1);
+
+        Set<Variable> variables = new HashSet<>(Arrays.asList(endo1,endo2,endo3,endo4,endo5,endo6,endo7,exo1,exo3,exo4));
+        CausalModel billySuzy = new CausalModel("NewModel", variables);
+        return billySuzy;
+    }
+    
 }
