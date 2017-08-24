@@ -10,11 +10,13 @@ import static org.junit.Assert.assertEquals;
 
 public class CausalModelTest {
     CausalModel billySuzyCausalModel;
-
+    CausalModel billySuzyCausalModelNoNegation;
 
     @Before
     public void setUp() throws Exception {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModel();
+        
+        billySuzyCausalModelNoNegation = ModelProvider.billySuzyCausalModelNoNegation();
     }
 
     @After
@@ -24,7 +26,7 @@ public class CausalModelTest {
     @Test
     public void test_Should_CreateCausaModel() {
         FaultTreeDefinition billySuzyMEF = ModelProvider.billySuzyMEF();
-        assertEquals(billySuzyCausalModel, CausalModel.fromMEF(billySuzyMEF));
+        assertEquals(billySuzyCausalModelNoNegation, CausalModel.fromMEF(billySuzyMEF));
     }
 
     @Test
