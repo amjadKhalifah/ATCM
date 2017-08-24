@@ -2,6 +2,9 @@ package hp;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +20,22 @@ public class BindableModifiedCheckerTest {
     @Before
     public void setUp() throws Exception {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
-         checker = new BindableModifiedChecker(billySuzyCausalModel);
+        checker = new BindableModifiedChecker(billySuzyCausalModel);
+    	// in bindable version we only need to set the exogenous values
+		Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
+			{
+				put("ST_exo", true);
+				put("BT_exo", true);
+				
+//				put("exo1", true);
+//				put("exo2", true);
+//				put("exo3", true);
+//				put("exo2", true);
+			}
+		};
+		// in bindable version we only need to set the exogenous values
+		checker.setExovalues( actualValues);
+        
     }
 
 

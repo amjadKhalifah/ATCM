@@ -23,20 +23,7 @@ public class ModifiedChecker implements HPChecker {
 
 	public ModifiedChecker(CausalModel model) {
 		this.model = model;
-		// TODO get the model and set its actual values or it should be set
-		Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
-			{
-				put("ST_exo", true);
-				put("BT_exo", true);
-				put("BT", true);
-				put("ST", true);
-				put("SH", true);
-				put("BS", true);
-				put("BH", false);
-			}
-		};
-
-		model = setvalues(model, actualValues);
+		
 	}
 
 	/**
@@ -118,13 +105,11 @@ public class ModifiedChecker implements HPChecker {
 		return model;
 	}
 
-	private CausalModel setvalues(CausalModel model, Map<String, Boolean> values) {
+	public void setvalues( Map<String, Boolean> values) {
 
 		for (Variable v : model.getVariables()) {
 			v.setValue(values.get(v.getName()));
 		}
-		return model;
-
 	}
 
 	/**
@@ -166,7 +151,6 @@ public class ModifiedChecker implements HPChecker {
 
 		// reset x
 		x.setValue(!x.getValue());
-		System.out.println(proofs);
 
 		return proofs;
 	}

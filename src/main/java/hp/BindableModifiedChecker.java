@@ -23,14 +23,7 @@ public class BindableModifiedChecker implements HPChecker {
 
 	public BindableModifiedChecker(CausalModel model) {
 		this.model = model;
-		// in bindable version we only need to set the exogenous values
-		Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
-			{
-				put("ST_exo", true);
-				put("BT_exo", true);
-			}
-		};
-		model = setExovalues(model, actualValues);
+	
 	}
 
 	/**
@@ -115,12 +108,11 @@ public class BindableModifiedChecker implements HPChecker {
 		return model;
 	}
 
-	private CausalModel setExovalues(CausalModel model, Map<String, Boolean> values) {
+	public void setExovalues( Map<String, Boolean> values) {
 
 		for (Variable v : model.getExogenousVars()) {
 			v.setBindablePropertyValue(values.get(v.getName()));
 		}
-		return model;
 
 	}
 
@@ -166,7 +158,6 @@ public class BindableModifiedChecker implements HPChecker {
 						// others
 		});
 
-		System.out.println(proofs);
 		return proofs;
 	}
 

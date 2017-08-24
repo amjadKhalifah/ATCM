@@ -2,6 +2,10 @@ package hp;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +24,38 @@ public class CombinedModifiedCheckerTest {
         billySuzyCausalModel2 = ModelProvider.billySuzyCausalModelNoNegation();
         
         bindableChecker = new BindableModifiedChecker(billySuzyCausalModel);
-        checker = new ModifiedChecker(billySuzyCausalModel);
+        
+        
+     // in bindable version we only need to set the exogenous values
+     		Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
+     			{
+     				put("ST_exo", true);
+     				put("BT_exo", true);
+     				
+//     				put("exo1", true);
+//     				put("exo2", true);
+//     				put("exo3", true);
+//     				put("exo2", true);
+     			}
+     		};
+     		// in bindable version we only need to set the exogenous values
+     		bindableChecker.setExovalues( actualValues);
+        
+        checker = new ModifiedChecker(billySuzyCausalModel2);
+        
+        Map<String, Boolean> values = new HashMap<String, Boolean>() {
+ 			{
+ 				put("ST_exo", true);
+ 				put("BT_exo", true);
+ 				put("BT", true);
+ 				put("ST", true);
+ 				put("SH", true);
+ 				put("BS", true);
+ 				put("BH", false);
+ 			}
+ 		};
+
+ 		checker.setvalues( values);
     }
 
 
@@ -32,21 +67,21 @@ public class CombinedModifiedCheckerTest {
 	@Test
 	public void testFindCause() {
 	
-		assertFalse("find cause failed",checker.findCause(billySuzyCausalModel.getVariableByName("BS")).isEmpty());
+		assertTrue("find cause different between impls",new HashSet<>(checker.findCause(billySuzyCausalModel2.getVariableByName("BS"))).equals(new HashSet<>(bindableChecker.findCause(billySuzyCausalModel.getVariableByName("BS")))));
 	}
 	
 	@Test
 	public void testTwoImplsConiditonOne() {
 	
-		assertTrue("condition one is not equal in the two impls", checker.checkConditionOne(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"), true) == bindableChecker.checkConditionOne(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"), true));
-		assertTrue("condition one is not equal in the two impls", checker.checkConditionOne(billySuzyCausalModel.getVariableByName("BT"),true,billySuzyCausalModel.getVariableByName("BH"), false) == bindableChecker.checkConditionOne(billySuzyCausalModel.getVariableByName("BT"),true,billySuzyCausalModel.getVariableByName("BH"), false));
+		assertTrue("condition one is not equal in the two impls", checker.checkConditionOne(billySuzyCausalModel2.getVariableByName("ST"),true,billySuzyCausalModel2.getVariableByName("BS"), true) == bindableChecker.checkConditionOne(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"), true));
+		assertTrue("condition one is not equal in the two impls", checker.checkConditionOne(billySuzyCausalModel2.getVariableByName("BT"),true,billySuzyCausalModel2.getVariableByName("BH"), false) == bindableChecker.checkConditionOne(billySuzyCausalModel.getVariableByName("BT"),true,billySuzyCausalModel.getVariableByName("BH"), false));
 	}
 	@Test
 	public void testTwoImplsConiditonTwo() {
 		
-		assertTrue("condition one failed",checker.checkConditionTwo(billySuzyCausalModel.getVariableByName("BT"),true,billySuzyCausalModel.getVariableByName("BS"), true).containsAll(bindableChecker.checkConditionTwo(billySuzyCausalModel.getVariableByName("BT"),true,billySuzyCausalModel.getVariableByName("BS"), true)));
+		assertTrue("condition one failed",new HashSet<>( checker.checkConditionTwo(billySuzyCausalModel2.getVariableByName("BT"),true,billySuzyCausalModel2.getVariableByName("BS"), true)).equals(new HashSet<>(bindableChecker.checkConditionTwo(billySuzyCausalModel.getVariableByName("BT"),true,billySuzyCausalModel.getVariableByName("BS"), true))));
 		
-		assertTrue("condition one failed",checker.checkConditionTwo(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"),false).containsAll(bindableChecker.checkConditionTwo(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"),false)));
+		assertTrue("condition one failed",new HashSet<>(checker.checkConditionTwo(billySuzyCausalModel2.getVariableByName("ST"),true,billySuzyCausalModel2.getVariableByName("BS"),false)).equals(new HashSet<>(bindableChecker.checkConditionTwo(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"),false))));
 		
 		
 	}

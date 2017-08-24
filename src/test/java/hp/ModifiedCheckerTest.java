@@ -2,6 +2,9 @@ package hp;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +20,21 @@ public class ModifiedCheckerTest {
     @Before
     public void setUp() throws Exception {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
-//        System.out.println(billySuzyCausalModel.toReport());
          checker = new ModifiedChecker(billySuzyCausalModel);
+         Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
+ 			{
+ 				put("ST_exo", true);
+ 				put("BT_exo", true);
+ 				put("BT", true);
+ 				put("ST", true);
+ 				put("SH", true);
+ 				put("BS", true);
+ 				put("BH", false);
+ 			}
+ 		};
+
+ 		checker.setvalues( actualValues);
+         
     }
 
 
