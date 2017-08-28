@@ -19,7 +19,7 @@ public class ModifiedCheckerTest {
 
     @Before
     public void setUp() throws Exception {
-        billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
+        billySuzyCausalModel = ModelProvider.billySuzyCausalModelRealNegation();
          checker = new ModifiedChecker(billySuzyCausalModel);
          Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
  			{

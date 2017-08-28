@@ -20,8 +20,8 @@ public class CombinedModifiedCheckerTest {
 	ModifiedChecker checker;
     @Before
     public void setUp() throws Exception {
-        billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
-        billySuzyCausalModel2 = ModelProvider.billySuzyCausalModelNoNegation();
+        billySuzyCausalModel = ModelProvider.billySuzyCausalModelRealNegation();
+        billySuzyCausalModel2 = ModelProvider.billySuzyCausalModelRealNegation();
         
         bindableChecker = new BindableModifiedChecker(billySuzyCausalModel);
         

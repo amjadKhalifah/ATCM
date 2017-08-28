@@ -213,7 +213,7 @@ public class ModelProvider {
     }
     
     
-    public static CausalModel billySuzyCausalModelNoNegation() {
+    public static CausalModel billySuzyCausalModelRealNegation() {
         ExogenousVariable stExo = new ExogenousVariable("ST_exo");
         EndogenousVariable st = new EndogenousVariable("ST", stExo, 0.0012);
         ExogenousVariable btExo = new ExogenousVariable("BT_exo");
@@ -233,7 +233,42 @@ public class ModelProvider {
         EndogenousVariable bs = new EndogenousVariable("BS", or1);
 
         Set<Variable> variables = new HashSet<>(Arrays.asList(bs, bh, sh, bt,  st, btExo,  stExo));
-        CausalModel billySuzy = new CausalModel("BillySuzyNoNegation", variables);
+        CausalModel billySuzy = new CausalModel("BillySuzyNegation", variables);
+        return billySuzy;
+    }
+
+    public static FaultTreeDefinition billySuzyRealNegationMEF() {
+        Gate bh = new Gate("BH");
+        Gate sh = new Gate("SH");
+        List<Formula> formulasBs = new ArrayList<>(Arrays.asList(bh, sh));
+        BasicBooleanOperator or1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.or, formulasBs);
+
+        FloatConstant fBS = new FloatConstant(0.5);
+        GateDefinition bsDef = new GateDefinition("BS", or1, fBS);
+
+        BasicEvent bt = new BasicEvent("BT");
+        BasicBooleanOperator not1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.not, Arrays.asList(sh));
+        List<Formula> formulasBh = new ArrayList<>(Arrays.asList(bt, not1));
+        BasicBooleanOperator and1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, formulasBh);
+
+        FloatConstant fBH = new FloatConstant(0.1);
+        GateDefinition bhDef = new GateDefinition("BH", and1, fBH);
+
+        BasicEvent st = new BasicEvent("ST");
+        List<Formula> formulasSh = new ArrayList<>(Arrays.asList(st));
+        BasicBooleanOperator and2 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, formulasSh);
+
+        FloatConstant fSH = new FloatConstant(0.01);
+        GateDefinition shDef = new GateDefinition("SH", and2, fSH);
+
+        FloatConstant f1 = new FloatConstant(0.001);
+        BasicEventDefinition btDef = new BasicEventDefinition("BT", f1);
+
+        FloatConstant f3 = new FloatConstant(0.0012);
+        BasicEventDefinition stDef = new BasicEventDefinition("ST", f3);
+
+        List<ElementDefinition> elementDefinitions = new ArrayList<>(Arrays.asList(bsDef, bhDef, shDef, btDef, stDef));
+        FaultTreeDefinition billySuzy = new FaultTreeDefinition("BillySuzyNegation", null, null, elementDefinitions);
         return billySuzy;
     }
     
