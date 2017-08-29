@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import causality.CausalModel;
+import util.GuavaPowerSet;
 import util.ModelProvider;
 
 public class TopDownCheckerTest {
@@ -20,7 +21,7 @@ public class TopDownCheckerTest {
     @Before
     public void setUp() throws Exception {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
-         checker = new TopDownChecker(billySuzyCausalModel);
+         checker = new TopDownChecker(billySuzyCausalModel,new GuavaPowerSet());
          Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
  			{
  				put("ST_exo", true);

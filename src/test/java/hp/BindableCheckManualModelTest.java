@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import causality.CausalModel;
+import util.GuavaPowerSet;
 import util.ModelProvider;
 
 public class BindableCheckManualModelTest {
@@ -22,7 +23,7 @@ public class BindableCheckManualModelTest {
     @Before
     public void setUp() throws Exception {
         manualModel = ModelProvider.testModel();
-         checker = new BindableModifiedChecker(manualModel);
+         checker = new BindableModifiedChecker(manualModel, new GuavaPowerSet());
          Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
  			{
  				put("exo1", true);

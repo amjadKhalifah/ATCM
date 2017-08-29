@@ -23,8 +23,9 @@ import util.PowerSetUtil;
 public class TopDownChecker extends HPChecker {
 	private CausalModel model;
 	private static final Logger logger = LogManager.getLogger(TopDownChecker.class);
-	public TopDownChecker(CausalModel model) {
+	public TopDownChecker(CausalModel model, PowerSetUtil powerset) {
 		this.model = model;
+		this.powersetUtil = powerset;
 		
 	}
 
@@ -80,17 +81,8 @@ public class TopDownChecker extends HPChecker {
 		possibleWElements.remove(cause);
 		possibleWElements.remove(effect);
 
-		Set<Set<Variable>> gPowerSet = PowerSetUtil.getPowerSetUsingGuava(possibleWElements);
+		Set<? extends Iterable<Variable>> gPowerSet = powersetUtil.getPowerSet(possibleWElements);
 		// gPowerSet.forEach(name -> System.out.println(name));
-
-		// Set<Set<Variable>> recPowerSet =
-		// PowerSetUtil.getPowerSetUsingRec(possibleWElements);
-		// recPowerSet.forEach(name -> System.out.println(name));
-
-		// apparently the worst performance
-		// Set<UnsortedSetIterable<Variable>> ecPowerSet =
-		// PowerSetUtil.getPowerSetUsingEC(possibleWElements);
-		// ecPowerSet.forEach(name -> System.out.println(name));
 
 		// this will check but-for of x,y for all W
 		return checkButForTopDown(cause, effect, gPowerSet);

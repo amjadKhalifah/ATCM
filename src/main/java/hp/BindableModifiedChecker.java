@@ -25,8 +25,9 @@ public class BindableModifiedChecker extends HPChecker {
 	private CausalModel model;
 	private static final Logger logger = LogManager.getLogger(BindableModifiedChecker.class);
 
-	public BindableModifiedChecker(CausalModel model) {
+	public BindableModifiedChecker(CausalModel model, PowerSetUtil powerSet) {
 		this.model = model;
+		this.powersetUtil=powerSet;
 
 	}
 
@@ -86,17 +87,8 @@ public class BindableModifiedChecker extends HPChecker {
 		possibleWElements.remove(cause);
 		possibleWElements.remove(effect);
 
-		Set<Set<Variable>> gPowerSet = PowerSetUtil.getPowerSetUsingGuava(possibleWElements);
-		// gPowerSet.forEach(name -> System.out.println(name));
+		Set<? extends Iterable<Variable>> gPowerSet = powersetUtil.getPowerSet(possibleWElements);
 
-		// Set<Set<Variable>> recPowerSet =
-		// PowerSetUtil.getPowerSetUsingRec(possibleWElements);
-		// recPowerSet.forEach(name -> System.out.println(name));
-
-		// apparently the worst performance
-		// Set<UnsortedSetIterable<Variable>> ecPowerSet =
-		// PowerSetUtil.getPowerSetUsingEC(possibleWElements);
-		// ecPowerSet.forEach(name -> System.out.println(name));
 
 		// this will check but-for of x,y for all W
 

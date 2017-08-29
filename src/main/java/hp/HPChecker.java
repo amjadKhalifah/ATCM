@@ -5,9 +5,18 @@ import java.util.List;
 
 import causality.CausalModel;
 import causality.Variable;
+import util.PowerSetUtil;
 
+/**
+ * @author Ibrahim Amjad
+ *
+ */
 public abstract class HPChecker {
 	
+	 /**
+	 * we have different implementations of how to get the powerset, so this will be set by the caller 
+	 */
+	PowerSetUtil powersetUtil; 
 	abstract CausalModel getCausalModel();
 
 	abstract boolean checkConditionOne(Variable cause, boolean causeValue, Variable effect, boolean effectValue);

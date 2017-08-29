@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import causality.CausalModel;
+import util.GuavaPowerSet;
 import util.ModelProvider;
 
 public class CombinedModifiedCheckerTest {
@@ -23,7 +24,7 @@ public class CombinedModifiedCheckerTest {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
         billySuzyCausalModel2 = ModelProvider.billySuzyCausalModelNoNegation();
         
-        bindableChecker = new BindableModifiedChecker(billySuzyCausalModel);
+        bindableChecker = new BindableModifiedChecker(billySuzyCausalModel, new GuavaPowerSet());
         
         
      // in bindable version we only need to set the exogenous values
@@ -41,7 +42,7 @@ public class CombinedModifiedCheckerTest {
      		// in bindable version we only need to set the exogenous values
      		bindableChecker.setExovalues( actualValues);
         
-        checker = new TopDownChecker(billySuzyCausalModel2);
+        checker = new TopDownChecker(billySuzyCausalModel2, new GuavaPowerSet());
         
         Map<String, Boolean> values = new HashMap<String, Boolean>() {
  			{

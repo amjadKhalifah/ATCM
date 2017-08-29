@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import causality.CausalModel;
+import util.GuavaPowerSet;
 import util.ModelProvider;
 
 public class BindableModifiedCheckerTest {
@@ -20,7 +21,7 @@ public class BindableModifiedCheckerTest {
     @Before
     public void setUp() throws Exception {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
-        checker = new BindableModifiedChecker(billySuzyCausalModel);
+        checker = new BindableModifiedChecker(billySuzyCausalModel,new GuavaPowerSet());
     	// in bindable version we only need to set the exogenous values
 		Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
 			{
