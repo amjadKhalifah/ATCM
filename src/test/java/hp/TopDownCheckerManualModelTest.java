@@ -14,15 +14,15 @@ import org.junit.Test;
 import causality.CausalModel;
 import util.ModelProvider;
 
-public class ModifiedCheckManualModelTest {
+public class TopDownCheckerManualModelTest {
 
 	CausalModel manualModel;
-	ModifiedChecker checker;
-	private static final Logger logger = LogManager.getLogger(ModifiedCheckManualModelTest.class);
+	TopDownChecker checker;
+	private static final Logger logger = LogManager.getLogger(TopDownCheckerManualModelTest.class);
     @Before
     public void setUp() throws Exception {
         manualModel = ModelProvider.testModel();
-         checker = new ModifiedChecker(manualModel);
+         checker = new TopDownChecker(manualModel);
          Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
  			{
  				put("exo1", true);
@@ -49,7 +49,12 @@ public class ModifiedCheckManualModelTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	@Test
+	public void testIsCause() {
+	
+		assertFalse("is cause failed",checker.isCause(manualModel.getVariableByName("endo1"),true,manualModel.getVariableByName("endo5"), true).isEmpty());
+		assertTrue("is cause failed",checker.isCause(manualModel.getVariableByName("endo1"),true,manualModel.getVariableByName("endo6"), true).isEmpty());
+	}
 	
 	@Test
 	public void testFindCause() {
@@ -65,7 +70,7 @@ public class ModifiedCheckManualModelTest {
 	@Test
 	public void testCheckConditionTwo() {
 		
-		assertFalse("condition one failed",!checker.checkConditionTwo(manualModel.getVariableByName("endo1"),true,manualModel.getVariableByName("endo6"), true).isEmpty());
+//		assertFalse("condition one failed",!checker.checkConditionTwo(manualModel.getVariableByName("endo1"),true,manualModel.getVariableByName("endo6"), true).isEmpty());
 		
 		assertTrue("condition one failed",!checker.checkConditionTwo(manualModel.getVariableByName("endo1"),true,manualModel.getVariableByName("endo6"), true).isEmpty());
 		

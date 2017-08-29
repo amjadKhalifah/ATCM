@@ -17,7 +17,7 @@ public class CombinedModifiedCheckerTest {
 
 	CausalModel billySuzyCausalModel, billySuzyCausalModel2;
 	BindableModifiedChecker bindableChecker;
-	ModifiedChecker checker;
+	TopDownChecker checker;
     @Before
     public void setUp() throws Exception {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
@@ -41,7 +41,7 @@ public class CombinedModifiedCheckerTest {
      		// in bindable version we only need to set the exogenous values
      		bindableChecker.setExovalues( actualValues);
         
-        checker = new ModifiedChecker(billySuzyCausalModel2);
+        checker = new TopDownChecker(billySuzyCausalModel2);
         
         Map<String, Boolean> values = new HashMap<String, Boolean>() {
  			{

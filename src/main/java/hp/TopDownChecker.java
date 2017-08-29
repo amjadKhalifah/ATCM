@@ -20,10 +20,10 @@ import util.PowerSetUtil;
  * @author Ibrahim Amjad
  *
  */
-public class ModifiedChecker implements HPChecker {
+public class TopDownChecker extends HPChecker {
 	private CausalModel model;
-	private static final Logger logger = LogManager.getLogger(ModifiedChecker.class);
-	public ModifiedChecker(CausalModel model) {
+	private static final Logger logger = LogManager.getLogger(TopDownChecker.class);
+	public TopDownChecker(CausalModel model) {
 		this.model = model;
 		
 	}

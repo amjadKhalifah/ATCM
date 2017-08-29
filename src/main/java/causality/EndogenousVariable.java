@@ -13,7 +13,7 @@ import org.apache.commons.jexl3.MapContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import hp.ModifiedChecker;
+import hp.TopDownChecker;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.BooleanExpression;

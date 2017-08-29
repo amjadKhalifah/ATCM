@@ -20,7 +20,7 @@ import util.PowerSetUtil;
  * @author Ibrahim Amjad
  *
  */
-public class BindableModifiedChecker implements HPChecker {
+public class BindableModifiedChecker extends HPChecker {
 	
 	private CausalModel model;
 	private static final Logger logger = LogManager.getLogger(BindableModifiedChecker.class);
@@ -175,5 +175,7 @@ public class BindableModifiedChecker implements HPChecker {
 
 		elem.forEach(var -> ((EndogenousVariable) var).bind());
 	}
+
+
 
 }

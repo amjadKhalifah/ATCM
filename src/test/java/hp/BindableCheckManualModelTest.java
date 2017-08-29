@@ -50,7 +50,12 @@ public class BindableCheckManualModelTest {
 	public void tearDown() throws Exception {
 	}
 
+	@Test
+	public void testIsCause() {
 	
+		assertFalse("is cause failed",checker.isCause(manualModel.getVariableByName("endo1"),true,manualModel.getVariableByName("endo5"), true).isEmpty());
+		assertTrue("is cause failed",checker.isCause(manualModel.getVariableByName("endo1"),true,manualModel.getVariableByName("endo6"), true).isEmpty());
+	}
 	@Test
 	public void testFindCause() {
 	

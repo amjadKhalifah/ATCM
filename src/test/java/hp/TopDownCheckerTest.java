@@ -12,15 +12,15 @@ import org.junit.Test;
 import causality.CausalModel;
 import util.ModelProvider;
 
-public class ModifiedCheckerTest {
+public class TopDownCheckerTest {
 
 	CausalModel billySuzyCausalModel;
-	ModifiedChecker checker;
+	TopDownChecker checker;
 
     @Before
     public void setUp() throws Exception {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
-         checker = new ModifiedChecker(billySuzyCausalModel);
+         checker = new TopDownChecker(billySuzyCausalModel);
          Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
  			{
  				put("ST_exo", true);
@@ -47,6 +47,12 @@ public class ModifiedCheckerTest {
 	public void testFindCause() {
 	
 		assertFalse("find cause failed",checker.findCause(billySuzyCausalModel.getVariableByName("BS")).isEmpty());
+	}
+	@Test
+	public void testIsCause() {
+	
+		assertFalse("is cause failed",checker.isCause(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"), true).isEmpty());
+		assertTrue("is cause failed",checker.isCause(billySuzyCausalModel.getVariableByName("BT"),true,billySuzyCausalModel.getVariableByName("BS"), true).isEmpty());
 	}
 	
 	@Test

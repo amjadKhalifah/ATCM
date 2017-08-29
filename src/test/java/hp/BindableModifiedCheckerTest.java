@@ -43,7 +43,12 @@ public class BindableModifiedCheckerTest {
 	public void tearDown() throws Exception {
 	}
 
+	@Test
+	public void testIsCause() {
 	
+		assertFalse("is cause failed",checker.isCause(billySuzyCausalModel.getVariableByName("ST"),true,billySuzyCausalModel.getVariableByName("BS"), true).isEmpty());
+		assertTrue("is cause failed",checker.isCause(billySuzyCausalModel.getVariableByName("BT"),true,billySuzyCausalModel.getVariableByName("BS"), true).isEmpty());
+	}
 	@Test
 	public void testFindCause() {
 	
