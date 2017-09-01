@@ -26,7 +26,8 @@ public class CausalModelTest {
     @Test
     public void test_Should_CreateCausaModel() {
         FaultTreeDefinition billySuzyNegationMEF = ModelProvider.billySuzyRealNegationMEF();
-        assertEquals(billySuzyCausalModelNoNegation, CausalModel.fromMEF(billySuzyNegationMEF));
+        CausalModel actual = CausalModel.fromMEF(billySuzyNegationMEF);
+        assertEquals(billySuzyCausalModelNoNegation, actual);
     }
 
     @Test

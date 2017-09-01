@@ -1,5 +1,6 @@
 package causality;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import mef.formula.Formula;
 import org.dom4j.Element;
 
@@ -11,7 +12,7 @@ public abstract class Variable extends Formula {
     // added by amjad
     private boolean value;
     
-    protected BooleanProperty bindableProperty;
+    protected BooleanProperty bindableProperty = new SimpleBooleanProperty(false);;
 
     public Variable(String name) {
         this.name = name;

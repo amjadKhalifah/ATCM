@@ -105,8 +105,7 @@ public class EndogenousVariable extends Variable {
 
 	public void setFormula(Formula formula) {
 		this.formula = formula;
-		// TODO remove or uncomment [Simon]
-		/*if (formula != null) {
+		if (formula != null) {
 			this.formulaStr = formula.print(parents);
 			this.formulaExpression= formulaStr.replaceAll("and", "&&").replaceAll("or", "||").replaceAll("not", "!");
 			// TODO set the bindable formula based on the string, this should
@@ -116,7 +115,7 @@ public class EndogenousVariable extends Variable {
 			// with true
 			setBindableFormulaFromStr();
 
-		}*/
+		}
 
 	}
 
