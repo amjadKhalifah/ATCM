@@ -20,7 +20,7 @@ public class TopDownCheckerTest {
 
     @Before
     public void setUp() throws Exception {
-        billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
+        billySuzyCausalModel = ModelProvider.billySuzyCausalModelRealNegation();
          checker = new TopDownChecker(billySuzyCausalModel,new GuavaPowerSet());
          Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
  			{

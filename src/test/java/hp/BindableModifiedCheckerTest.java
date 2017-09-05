@@ -20,8 +20,9 @@ public class BindableModifiedCheckerTest {
 
     @Before
     public void setUp() throws Exception {
-        billySuzyCausalModel = ModelProvider.billySuzyCausalModelNoNegation();
+        billySuzyCausalModel = ModelProvider.billySuzyCausalModelRealNegation();
         checker = new BindableModifiedChecker(billySuzyCausalModel,new GuavaPowerSet());
+
     	// in bindable version we only need to set the exogenous values
 		Map<String, Boolean> actualValues = new HashMap<String, Boolean>() {
 			{
