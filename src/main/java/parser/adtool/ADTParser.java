@@ -47,7 +47,7 @@ public class ADTParser extends Parser {
     }
 
     // convert a ADTools xml file to object representation
-    private ADTNode fromAD(File file) {
+    public ADTNode fromAD(File file) {
         ADTNode adtree = null;
         try {
             // get file URL

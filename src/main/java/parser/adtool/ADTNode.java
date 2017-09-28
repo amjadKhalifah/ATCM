@@ -23,7 +23,7 @@ public class ADTNode {
         this.probability = probability;
     }
 
-    public ADTNode unfold(ADTNode node, Set<User> users) {
+    public ADTNode unfold(Set<User> users) {
         return null;
     }
 
