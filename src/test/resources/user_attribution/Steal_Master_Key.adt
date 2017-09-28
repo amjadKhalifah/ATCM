@@ -3,20 +3,20 @@
 	<node refinement="disjunctive">
 		<label>Steal Master Key</label>
 		<node refinement="conjunctive">
-			<label>Decrypt the key</label>
+			<label>Decrypt The Key</label>
 			<node refinement="disjunctive">
-				<label>Get the passphrase</label>
+				<label>Get The Passphrase</label>
 				<node refinement="conjunctive">
-					<label>From script</label>
+					<label>From Script</label>
 				</node>
 				<node refinement="conjunctive">
 					<label>From Network</label>
 				</node>
 			</node>
 			<node refinement="disjunctive">
-				<label>Get the key</label>
+				<label>Get The Key</label>
 				<node refinement="conjunctive">
-					<label>From file</label>
+					<label>From File</label>
 				</node>
 				<node refinement="conjunctive">
 					<label>From DB</label>
@@ -24,14 +24,14 @@
 			</node>
 		</node>
 		<node refinement="conjunctive">
-			<label>Steal decrypted</label>
+			<label>Steal Decrypted</label>
 			<node refinement="conjunctive">
-				<label>From Key management service</label>
+				<label>From Key Management Service</label>
 				<node refinement="conjunctive">
-					<label>access</label>
+					<label>Access</label>
 				</node>
 				<node refinement="conjunctive">
-					<label>attach debugger</label>
+					<label>Attach Debugger</label>
 				</node>
 			</node>
 		</node>
