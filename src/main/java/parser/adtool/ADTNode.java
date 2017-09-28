@@ -24,8 +24,41 @@ public class ADTNode {
         this.probability = probability;
     }
 
+    // copy constructor
+    public ADTNode(ADTNode adtNode) {
+        List<ADTNode> childrenCloned;
+        if (adtNode.children == null)
+            childrenCloned = null;
+        else if (adtNode.children.size() == 0)
+            childrenCloned = new ArrayList<>();
+        else {
+            childrenCloned = new ArrayList<>();
+            adtNode.children.forEach(n -> childrenCloned.add(new ADTNode(n)));
+        }
+        this.label = new String(adtNode.label);
+        this.children = childrenCloned;
+        this.refinement = adtNode.refinement;
+        this.probability = adtNode.probability;
+    }
+
     public ADTNode unfold(Set<User> users) {
-        return new ADTNode(this.label, new ArrayList<>(), Refinement.DISJUNCTIVE, 0);
+        List<ADTNode> userNodes = new ArrayList<>();
+        for (User user : users) {
+            ADTNode userNode = new ADTNode(this);
+            userNode.annotate(user.getName());
+            userNodes.add(userNode);
+        }
+        return new ADTNode(this.label, userNodes, Refinement.DISJUNCTIVE, 0);
+    }
+
+    private ADTNode annotate(String annotation) {
+        this.label = annotation + "." + this.label;
+        if (this.children != null) {
+            for (ADTNode child : this.children) {
+                child.annotate(annotation);
+            }
+        }
+        return this;
     }
 
     @Override

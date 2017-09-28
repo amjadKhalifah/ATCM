@@ -1,6 +1,78 @@
 <?xml version='1.0'?>
 <adtree>
-	<node refinement="disjunctive">
-		<label>Steal Master Key</label>
-	</node>
+    <node refinement="disjunctive">
+        <label>Steal Master Key</label>
+        <node refinement="disjunctive">
+            <label>U2.Steal Master Key</label>
+            <node refinement="conjunctive">
+                <label>U2.Decrypt The Key</label>
+                <node refinement="disjunctive">
+                    <label>U2.Get The Passphrase</label>
+                    <node refinement="conjunctive">
+                        <label>U2.From Script</label>
+                    </node>
+                    <node refinement="conjunctive">
+                        <label>U2.From Network</label>
+                    </node>
+                </node>
+                <node refinement="disjunctive">
+                    <label>U2.Get The Key</label>
+                    <node refinement="conjunctive">
+                        <label>U2.From File</label>
+                    </node>
+                    <node refinement="conjunctive">
+                        <label>U2.From DB</label>
+                    </node>
+                </node>
+            </node>
+            <node refinement="conjunctive">
+                <label>U2.Steal Decrypted</label>
+                <node refinement="conjunctive">
+                    <label>U2.From Key Management Service</label>
+                    <node refinement="conjunctive">
+                        <label>U2.Access</label>
+                    </node>
+                    <node refinement="conjunctive">
+                        <label>U2.Attach Debugger</label>
+                    </node>
+                </node>
+            </node>
+        </node>
+        <node refinement="disjunctive">
+            <label>U1.Steal Master Key</label>
+            <node refinement="conjunctive">
+                <label>U1.Decrypt The Key</label>
+                <node refinement="disjunctive">
+                    <label>U1.Get The Passphrase</label>
+                    <node refinement="conjunctive">
+                        <label>U1.From Script</label>
+                    </node>
+                    <node refinement="conjunctive">
+                        <label>U1.From Network</label>
+                    </node>
+                </node>
+                <node refinement="disjunctive">
+                    <label>U1.Get The Key</label>
+                    <node refinement="conjunctive">
+                        <label>U1.From File</label>
+                    </node>
+                    <node refinement="conjunctive">
+                        <label>U1.From DB</label>
+                    </node>
+                </node>
+            </node>
+            <node refinement="conjunctive">
+                <label>U1.Steal Decrypted</label>
+                <node refinement="conjunctive">
+                    <label>U1.From Key Management Service</label>
+                    <node refinement="conjunctive">
+                        <label>U1.Access</label>
+                    </node>
+                    <node refinement="conjunctive">
+                        <label>U1.Attach Debugger</label>
+                    </node>
+                </node>
+            </node>
+        </node>
+    </node>
 </adtree>
