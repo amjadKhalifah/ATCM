@@ -1,14 +1,14 @@
 package attacker_attribution;
 
-import java.util.List;
+import java.util.Set;
 
 public class User {
     private String ID;
     private String name;
     private String role;
-    private List<String> attacks;
+    private Set<String> attacks;
 
-    public User(String ID, String name, String role, List<String> attacks) {
+    public User(String ID, String name, String role, Set<String> attacks) {
         this.ID = ID;
         this.name = name;
         this.role = role;
@@ -39,11 +39,11 @@ public class User {
         this.role = role;
     }
 
-    public List<String> getAttacks() {
+    public Set<String> getAttacks() {
         return attacks;
     }
 
-    public void setAttacks(List<String> attacks) {
+    public void setAttacks(Set<String> attacks) {
         this.attacks = attacks;
     }
 }

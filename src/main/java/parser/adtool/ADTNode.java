@@ -1,5 +1,7 @@
 package parser.adtool;
 
+import attacker_attribution.User;
+
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +21,10 @@ public class ADTNode {
         this.children = children;
         this.refinement = refinement;
         this.probability = probability;
+    }
+
+    public ADTNode unfold(ADTNode node, Set<User> users) {
+        return null;
     }
 
     public String getLabel() {
