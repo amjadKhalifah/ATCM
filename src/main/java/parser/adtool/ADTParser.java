@@ -62,7 +62,7 @@ public class ADTParser extends Parser {
                 throw new DocumentException("XML is not valid ADTree XML.");
 
             // parse
-            adtree = parseNode((Element) root.elements().get(0));
+            adtree = parseNode((Element) root.elements().get(0), "0");
 
         } catch (MalformedURLException | DocumentException e) {
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class ADTParser extends Parser {
     }
 
     // parse a node and recursively its children
-    private ADTNode parseNode(Element element) {
+    private ADTNode parseNode(Element element, String ID) {
         String label = "";
         List<ADTNode> children = new ArrayList<>();
         ADTNode.Refinement refinement =
@@ -80,6 +80,7 @@ public class ADTParser extends Parser {
         double probability = 0D;
 
         // walk through elements and recursively parse child nodes
+        int counter=0;
         for (Iterator i = element.elementIterator(); i.hasNext(); ) {
             Element e = (Element) i.next();
             if (e.getName().equals("label")) {
@@ -94,11 +95,12 @@ public class ADTParser extends Parser {
                     }
                 }
             } else if (e.getName().equals("node")) {
-                ADTNode node = parseNode(e);
+                counter++;
+                ADTNode node = parseNode(e, ID + "." + counter);
                 children.add(node);
             }
         }
-        ADTNode node = new ADTNode(label, children, refinement, probability);
+        ADTNode node = new ADTNode(""+ID, label, children, refinement, probability);
         return node;
     }
 

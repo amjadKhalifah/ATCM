@@ -12,12 +12,14 @@ public class ADTNode {
         CONJUNCTIVE, DISJUNCTIVE
     }
 
+    private String ID;
     private String label;
     private List<ADTNode> children;
     private  Refinement refinement;
     private double probability;
 
-    public ADTNode(String label, List<ADTNode> children, Refinement refinement, double probability) {
+    public ADTNode(String ID, String label, List<ADTNode> children, Refinement refinement, double probability) {
+        this.ID = ID;
         this.label = label;
         this.children = children;
         this.refinement = refinement;
@@ -35,6 +37,7 @@ public class ADTNode {
             childrenCloned = new ArrayList<>();
             adtNode.children.forEach(n -> childrenCloned.add(new ADTNode(n)));
         }
+        this.ID = adtNode.ID;
         this.label = new String(adtNode.label);
         this.children = childrenCloned;
         this.refinement = adtNode.refinement;
@@ -48,7 +51,7 @@ public class ADTNode {
             userNode.annotate(user.getName());
             userNodes.add(userNode);
         }
-        return new ADTNode(this.label, userNodes, Refinement.DISJUNCTIVE, 0);
+        return new ADTNode(this.ID, this.label, userNodes, Refinement.DISJUNCTIVE, 0);
     }
 
     private ADTNode annotate(String annotation) {
@@ -69,6 +72,7 @@ public class ADTNode {
         ADTNode adtNode = (ADTNode) o;
 
         if (Double.compare(adtNode.probability, probability) != 0) return false;
+        if (ID != null ? !ID.equals(adtNode.ID) : adtNode.ID != null) return false;
         if (label != null ? !label.equals(adtNode.label) : adtNode.label != null) return false;
         if (children != null ? !children.equals(adtNode.children) : adtNode.children != null) return false;
         return refinement == adtNode.refinement;
@@ -78,12 +82,17 @@ public class ADTNode {
     public int hashCode() {
         int result;
         long temp;
-        result = label != null ? label.hashCode() : 0;
+        result = ID != null ? ID.hashCode() : 0;
+        result = 31 * result + (label != null ? label.hashCode() : 0);
         result = 31 * result + (children != null ? children.hashCode() : 0);
         result = 31 * result + (refinement != null ? refinement.hashCode() : 0);
         temp = Double.doubleToLongBits(probability);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    public String getID() {
+        return ID;
     }
 
     public String getLabel() {
