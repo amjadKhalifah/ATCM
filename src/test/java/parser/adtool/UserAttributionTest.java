@@ -20,10 +20,10 @@ public class UserAttributionTest {
     @Before
     public void setUp() throws Exception {
         stealMasterKeyXML = new File(this.getClass().getClassLoader()
-                .getResource("user_attribution/Steal_Master_Key.adt").getPath()
+                .getResource("user_attribution/Steal_Master_Key.xml").getPath()
                 .replaceAll("%20", " "));
         stealMasterKeyUnfoldedXML = new File(this.getClass().getClassLoader()
-                .getResource("user_attribution/Steal_Master_Key_unfolded.adt").getPath()
+                .getResource("user_attribution/Steal_Master_Key_unfolded.xml").getPath()
                 .replaceAll("%20", " "));
         ADTParser = new ADTParser();
 
@@ -46,6 +46,6 @@ public class UserAttributionTest {
         ADTNode tree = ADTParser.fromAD(stealMasterKeyXML);
         ADTNode treeUnfolded = ADTParser.fromAD(stealMasterKeyUnfoldedXML);
         ADTNode treeUnfoldedActual = tree.unfold(users);
-        //assertEquals(treeUnfolded, treeUnfoldedActual);
+        assertEquals(treeUnfolded, treeUnfoldedActual);
     }
 }

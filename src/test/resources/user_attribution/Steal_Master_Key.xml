@@ -23,7 +23,7 @@
 				</node>
 			</node>
 		</node>
-		<node refinement="conjunctive">
+		<node refinement="disjunctive">
 			<label>Steal Decrypted</label>
 			<node refinement="conjunctive">
 				<label>From Key Management Service</label>

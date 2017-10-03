@@ -3,6 +3,7 @@ package parser.adtool;
 import attacker_attribution.User;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -44,6 +45,22 @@ public class ADTNode {
         this.probability = adtNode.probability;
     }
 
+    public ADTNode getByID(String ID) {
+        Set<ADTNode> allNodes = this.getAllNodes();
+        for (ADTNode node : allNodes) {
+            if (node.ID.equals(ID))
+                return node;
+        }
+        return null;
+    }
+
+    private Set<ADTNode> getAllNodes() {
+        Set<ADTNode> allNodes = new HashSet<>();
+        allNodes.add(this);
+        this.children.forEach(n -> allNodes.addAll(n.getAllNodes()));
+        return allNodes;
+    }
+
     public ADTNode unfold(Set<User> users) {
         List<ADTNode> userNodes = new ArrayList<>();
         for (User user : users) {
@@ -51,7 +68,10 @@ public class ADTNode {
             userNode.annotate(user.getName());
             userNodes.add(userNode);
         }
-        return new ADTNode(this.ID, this.label, userNodes, Refinement.DISJUNCTIVE, 0);
+
+        this.connect(userNodes);
+        // TODO IDs
+        return new ADTNode(this.ID, this.label, this.children, Refinement.DISJUNCTIVE, 0);
     }
 
     private ADTNode annotate(String annotation) {
@@ -64,6 +84,30 @@ public class ADTNode {
         return this;
     }
 
+    private void connect(List<ADTNode> userNodes) {
+        if (this.children == null || this.children.size() == 0) {
+            this.children = userNodes;
+        } else if (this.children.size() == 1) {
+            this.children.get(0).connect(userNodes);
+        } else {
+            for (ADTNode childNode : this.children) {
+                if (childNode.children.size() == 1 && childNode.children.get(0).children.size() <= 1) {
+                    childNode.connect(userNodes);
+                } else {
+                    if (childNode.children.size() == 1 && childNode.children.get(0).children.size() >= 1)
+                        childNode = childNode.children.get(0);
+                    childNode.refinement = Refinement.DISJUNCTIVE;
+                    List<ADTNode> childUserNodes = new ArrayList<>();
+                    for (ADTNode userNode : userNodes) {
+                        ADTNode node = userNode.getByID(childNode.ID);
+                        childUserNodes.add(node);
+                    }
+                    childNode.children = childUserNodes;
+                }
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,7 +116,6 @@ public class ADTNode {
         ADTNode adtNode = (ADTNode) o;
 
         if (Double.compare(adtNode.probability, probability) != 0) return false;
-        if (ID != null ? !ID.equals(adtNode.ID) : adtNode.ID != null) return false;
         if (label != null ? !label.equals(adtNode.label) : adtNode.label != null) return false;
         if (children != null ? !children.equals(adtNode.children) : adtNode.children != null) return false;
         return refinement == adtNode.refinement;
@@ -82,8 +125,7 @@ public class ADTNode {
     public int hashCode() {
         int result;
         long temp;
-        result = ID != null ? ID.hashCode() : 0;
-        result = 31 * result + (label != null ? label.hashCode() : 0);
+        result = label != null ? label.hashCode() : 0;
         result = 31 * result + (children != null ? children.hashCode() : 0);
         result = 31 * result + (refinement != null ? refinement.hashCode() : 0);
         temp = Double.doubleToLongBits(probability);
