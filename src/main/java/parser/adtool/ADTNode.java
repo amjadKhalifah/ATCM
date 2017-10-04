@@ -16,7 +16,7 @@ public class ADTNode {
     private String ID;
     private String label;
     private List<ADTNode> children;
-    private  Refinement refinement;
+    private Refinement refinement;
     private double probability;
 
     public ADTNode(String ID, String label, List<ADTNode> children, Refinement refinement, double probability) {
@@ -70,8 +70,10 @@ public class ADTNode {
         }
         // connect user nodes at correct position such that tree is properly unfolded
         this.connect(userNodes);
-        // TODO IDs
-        return new ADTNode(this.ID, this.label, this.children, Refinement.DISJUNCTIVE, 0);
+        ADTNode unfolded = new ADTNode(this.ID, this.label, this.children, Refinement.DISJUNCTIVE, 0);
+        // set again unique IDs; before they are not unique as the nodes in the user trees may have the same ones
+        unfolded.setIDs(unfolded.ID);
+        return unfolded;
     }
 
     private ADTNode annotate(String annotation) {
@@ -131,15 +133,23 @@ public class ADTNode {
         }
     }
 
+    private void setIDs(String ID) {
+        this.ID = ID;
+        for (int i = 0; i < this.children.size(); i++) {
+            ADTNode child = this.children.get(i);
+            child.setIDs(ID + "." + (i + 1));
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
-        // IMPORTANT: does NOT take the ID property into account
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         ADTNode adtNode = (ADTNode) o;
 
         if (Double.compare(adtNode.probability, probability) != 0) return false;
+        if (ID != null ? !ID.equals(adtNode.ID) : adtNode.ID != null) return false;
         if (label != null ? !label.equals(adtNode.label) : adtNode.label != null) return false;
         if (children != null ? !children.equals(adtNode.children) : adtNode.children != null) return false;
         return refinement == adtNode.refinement;
@@ -149,7 +159,8 @@ public class ADTNode {
     public int hashCode() {
         int result;
         long temp;
-        result = label != null ? label.hashCode() : 0;
+        result = ID != null ? ID.hashCode() : 0;
+        result = 31 * result + (label != null ? label.hashCode() : 0);
         result = 31 * result + (children != null ? children.hashCode() : 0);
         result = 31 * result + (refinement != null ? refinement.hashCode() : 0);
         temp = Double.doubleToLongBits(probability);
