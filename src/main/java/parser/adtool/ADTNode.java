@@ -1,6 +1,11 @@
 package parser.adtool;
 
 import attacker_attribution.User;
+import mef.faulttree.ElementDefinition;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.tree.DefaultText;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -139,6 +144,27 @@ public class ADTNode {
             ADTNode child = this.children.get(i);
             child.setIDs(ID + "." + (i + 1));
         }
+    }
+
+    public Document toXML() {
+        Document document = DocumentHelper.createDocument();
+        Element root = document.addElement("adtree");
+        this.toXMLChild(root);
+
+        return document;
+    }
+
+    private Element toXMLChild(Element parent) {
+        Element node = parent.addElement("node");
+        node.addAttribute("refinement", this.refinement.toString().toLowerCase());
+        Element label = node.addElement("label");
+        label.add(new DefaultText(this.label));
+
+        for (ADTNode child : this.children) {
+            child.toXMLChild(node);
+        }
+
+        return node;
     }
 
     @Override

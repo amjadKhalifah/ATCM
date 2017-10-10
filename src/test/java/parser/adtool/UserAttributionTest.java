@@ -3,6 +3,7 @@ package parser.adtool;
 import attacker_attribution.User;
 import org.junit.Before;
 import org.junit.Test;
+import util.Util;
 
 import java.io.File;
 import java.util.Arrays;
@@ -47,5 +48,27 @@ public class UserAttributionTest {
         ADTNode treeUnfolded = ADTParser.fromAD(stealMasterKeyUnfoldedXML);
         ADTNode treeUnfoldedActual = tree.unfold(users);
         assertEquals(treeUnfolded, treeUnfoldedActual);
+    }
+
+    @Test
+    public void shouldGenerateXML() throws Exception {
+        String stealMasterKeyXMLStr = Util.fileToString(stealMasterKeyXML.toURI().toURL())
+                .replace(" ", "").replace("\t","");
+        String stealMasterKeyUnfoldedXMLStr = Util.fileToString(stealMasterKeyUnfoldedXML.toURI().toURL())
+                .replace(" ", "").replace("\t","");
+
+        String stealMasterKeyXMLStrActual = ADTParser.fromAD(stealMasterKeyXML).toXML().asXML()
+                .replace(" ", "")
+                .replace("\n", "")
+                .replace(">", ">\n")
+                .replace("<label>\n", "<label>").trim();
+        String stealMasterKeyXMLUnfoldedStrActual = ADTParser.fromAD(stealMasterKeyUnfoldedXML).toXML().asXML()
+                .replace(" ", "")
+                .replace("\n", "")
+                .replace(">", ">\n")
+                .replace("<label>\n", "<label>").trim();
+
+        assertEquals(stealMasterKeyXMLStr, stealMasterKeyXMLStrActual);
+        assertEquals(stealMasterKeyUnfoldedXMLStr, stealMasterKeyXMLUnfoldedStrActual);
     }
 }
