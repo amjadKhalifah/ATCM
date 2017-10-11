@@ -21,10 +21,10 @@ public class UserAttributionTest {
     @Before
     public void setUp() throws Exception {
         stealMasterKeyXML = new File(this.getClass().getClassLoader()
-                .getResource("user_attribution/Steal_Master_Key.xml").getPath()
+                .getResource("user_attribution/Steal_Master_Key.adt").getPath()
                 .replaceAll("%20", " "));
         stealMasterKeyUnfoldedXML = new File(this.getClass().getClassLoader()
-                .getResource("user_attribution/Steal_Master_Key_unfolded.xml").getPath()
+                .getResource("user_attribution/Steal_Master_Key_unfolded.adt").getPath()
                 .replaceAll("%20", " "));
         ADTParser = new ADTParser();
 

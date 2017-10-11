@@ -27,7 +27,7 @@ public class ADTParserTest {
 
     @Test
     public void Should_ReturnFaultTreeDefinition() throws Exception {
-        FaultTreeDefinition bankingActual = ADTParser.toMEF(bankingXML);
+        FaultTreeDefinition bankingActual = ADTParser.toMEF(bankingXML, null);
         String s1 = banking.toXML().asXML().replace(" ", "")
                 .replace("\n", "")
                 .replace(">", ">\n");;

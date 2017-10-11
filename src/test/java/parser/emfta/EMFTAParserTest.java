@@ -36,7 +36,7 @@ public class EMFTAParserTest {
 
     @Test
     public void test_toMEF() throws Exception {
-        FaultTreeDefinition ftDefActual = emftaParser.toMEF(billySuzy);
+        FaultTreeDefinition ftDefActual = emftaParser.toMEF(billySuzy, null);
         FaultTreeDefinition ftDefExpected = ModelProvider.billySuzyMEF();
 
         assertEquals(ftDefExpected, ftDefActual);

@@ -1,5 +1,6 @@
 package parser.adtool;
 
+import attacker_attribution.User;
 import mef.faulttree.BasicEventDefinition;
 import mef.faulttree.ElementDefinition;
 import mef.faulttree.FaultTreeDefinition;
@@ -32,9 +33,19 @@ public class ADTParser extends Parser {
      * @return
      */
     @Override
-    public FaultTreeDefinition toMEF(File file) {
+    public FaultTreeDefinition toMEF(File file, File users) {
         FaultTreeDefinition faultTreeDefinition = null;
         ADTNode adtree = fromAD(file);
+
+        if (users != null) {
+            // TODO parse user file
+            User u1 = new User("1", "U1", "admin", null);
+            User u2 = new User("2", "U2", "admin", null);
+            Set <User> userSet = new HashSet<>(Arrays.asList(u1, u2));
+
+            adtree.unfold(userSet);
+        }
+
         if (adtree.getLabel() != null) {
             // get name of the tree
             String name = adtree.getLabel().replace("\n","").replace("\r","");

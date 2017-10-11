@@ -126,11 +126,12 @@ public class EMFTAParser extends Parser {
 
     /**
      * Convert an EMTFA file to a Open-PSA conformant fault tree representation
-     * @param file .emfta file
+     * @param file file .emfta file
+     * @param users NOT USED FOR THIS PARSER
      * @return
      */
     @Override
-    public FaultTreeDefinition toMEF(File file) {
+    public FaultTreeDefinition toMEF(File file, File users) {
         // get object representation of EMFTA file
         EMFTAFTAModel emftaftaModel = fromEMFTA(file);
 

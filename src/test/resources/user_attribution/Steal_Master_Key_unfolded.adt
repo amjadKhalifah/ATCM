@@ -5,44 +5,44 @@
 		<node refinement="disjunctive">
 			<label>Decrypt The Key</label>
 			<node refinement="conjunctive">
-				<label>U2.Decrypt The Key</label>
+				<label>U2 Decrypt The Key</label>
 				<node refinement="disjunctive">
-					<label>U2.Get The Passphrase</label>
+					<label>U2 Get The Passphrase</label>
 					<node refinement="conjunctive">
-						<label>U2.From Script</label>
+						<label>U2 From Script</label>
 					</node>
 					<node refinement="conjunctive">
-						<label>U2.From Network</label>
+						<label>U2 From Network</label>
 					</node>
 				</node>
 				<node refinement="disjunctive">
-					<label>U2.Get The Key</label>
+					<label>U2 Get The Key</label>
 					<node refinement="conjunctive">
-						<label>U2.From File</label>
+						<label>U2 From File</label>
 					</node>
 					<node refinement="conjunctive">
-						<label>U2.From DB</label>
+						<label>U2 From DB</label>
 					</node>
 				</node>
 			</node>
 			<node refinement="conjunctive">
-				<label>U1.Decrypt The Key</label>
+				<label>U1 Decrypt The Key</label>
 				<node refinement="disjunctive">
-					<label>U1.Get The Passphrase</label>
+					<label>U1 Get The Passphrase</label>
 					<node refinement="conjunctive">
-						<label>U1.From Script</label>
+						<label>U1 From Script</label>
 					</node>
 					<node refinement="conjunctive">
-						<label>U1.From Network</label>
+						<label>U1 From Network</label>
 					</node>
 				</node>
 				<node refinement="disjunctive">
-					<label>U1.Get The Key</label>
+					<label>U1 Get The Key</label>
 					<node refinement="conjunctive">
-						<label>U1.From File</label>
+						<label>U1 From File</label>
 					</node>
 					<node refinement="conjunctive">
-						<label>U1.From DB</label>
+						<label>U1 From DB</label>
 					</node>
 				</node>
 			</node>
@@ -52,21 +52,21 @@
 			<node refinement="disjunctive">
 				<label>From Key Management Service</label>
 				<node refinement="conjunctive">
-					<label>U2.From Key Management Service</label>
+					<label>U2 From Key Management Service</label>
 					<node refinement="conjunctive">
-						<label>U2.Access</label>
+						<label>U2 Access</label>
 					</node>
 					<node refinement="conjunctive">
-						<label>U2.Attach Debugger</label>
+						<label>U2 Attach Debugger</label>
 					</node>
 				</node>
 				<node refinement="conjunctive">
-					<label>U1.From Key Management Service</label>
+					<label>U1 From Key Management Service</label>
 					<node refinement="conjunctive">
-						<label>U1.Access</label>
+						<label>U1 Access</label>
 					</node>
 					<node refinement="conjunctive">
-						<label>U1.Attach Debugger</label>
+						<label>U1 Attach Debugger</label>
 					</node>
 				</node>
 			</node>
