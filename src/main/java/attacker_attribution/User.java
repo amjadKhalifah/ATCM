@@ -15,6 +15,28 @@ public class User {
         this.attacks = attacks;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (ID != null ? !ID.equals(user.ID) : user.ID != null) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (role != null ? !role.equals(user.role) : user.role != null) return false;
+        return attacks != null ? attacks.equals(user.attacks) : user.attacks == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = ID != null ? ID.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (attacks != null ? attacks.hashCode() : 0);
+        return result;
+    }
+
     public String getID() {
         return ID;
     }

@@ -1,6 +1,7 @@
 package parser.adtool;
 
 import attacker_attribution.User;
+import attacker_attribution.UserParser;
 import org.junit.Before;
 import org.junit.Test;
 import util.Util;
@@ -15,6 +16,7 @@ import static junit.framework.TestCase.*;
 public class UserAttributionTest {
     File stealMasterKeyXML;
     File stealMasterKeyUnfoldedXML;
+    File usersXML;
     ADTParser ADTParser;
     Set<User> users;
 
@@ -26,6 +28,9 @@ public class UserAttributionTest {
         stealMasterKeyUnfoldedXML = new File(this.getClass().getClassLoader()
                 .getResource("user_attribution/Steal_Master_Key_unfolded.adt").getPath()
                 .replaceAll("%20", " "));
+        usersXML = new File(this.getClass().getClassLoader()
+                .getResource("user_attribution/users.xml").getPath().replaceAll("%20", " "));
+
         ADTParser = new ADTParser();
 
         User u1 = new User("1", "U1", "admin", null);
@@ -70,5 +75,11 @@ public class UserAttributionTest {
 
         assertEquals(stealMasterKeyXMLStr, stealMasterKeyXMLStrActual);
         assertEquals(stealMasterKeyUnfoldedXMLStr, stealMasterKeyXMLUnfoldedStrActual);
+    }
+
+    @Test
+    public void shouldReturnUsers() throws Exception {
+        Set<User> usersActual = UserParser.parse(usersXML);
+        assertEquals(users, usersActual);
     }
 }
