@@ -76,7 +76,11 @@ public class ArgsHandler {
 
 
         } catch (ParseException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
+            HelpFormatter helpFormatter = new HelpFormatter();
+            String header = "Extract causal model from ATTACK or FAULT TREE.\n";
+            String footer = "Supported modelling tools: EMFTA, ADTool";
+            helpFormatter.printHelp("extractr [ATTACK/FAULT TREE]", header, options, footer, true);
         }
     }
 
