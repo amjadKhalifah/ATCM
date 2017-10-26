@@ -83,7 +83,7 @@ public class ADTNode {
 
     private ADTNode annotate(String annotation) {
         // prefix current label with annotation
-        this.label = annotation + " " + this.label;
+        this.label = annotation + "_" + this.label;
         if (this.children != null) {
             // prefix all children
             for (ADTNode child : this.children) {

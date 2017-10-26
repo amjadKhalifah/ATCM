@@ -67,7 +67,7 @@ public abstract class Variable extends Formula {
 
 	@Override
 	public String toString() {
-		return "Variable [name=" + name + ", value=" + value + "]";
+		return "Variable [name=" + name + ", value(bind)=" + value + "("+ bindableProperty.get() +") ]";
 	}
     
 	

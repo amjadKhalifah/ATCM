@@ -255,6 +255,7 @@ public class CausalModel {
 	}
 
 	public Set<Variable> getEndogenousVars() {
+		//sorted(Comparator.comparing(Variable::getName))
 		Set<Variable> endogenousVariables = this.getVariables().stream().filter(v -> v instanceof EndogenousVariable)
 				.collect(Collectors.toSet());
 		return endogenousVariables;

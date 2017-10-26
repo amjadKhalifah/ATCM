@@ -66,7 +66,10 @@ public class BindableModifiedChecker extends HPChecker {
 
 	@Override
 	public boolean checkConditionOne(Variable cause, boolean causeValue, Variable effect, boolean effectValue) {
-
+		
+		logger.info("condition one: checking value of cause {} {}", cause, causeValue);
+		logger.info("condition one: checking value of effect {} {}", effect, effectValue);
+		
 		if (cause.getBindableProperty().get() != causeValue)
 			return false;
 		if (effect.getBindableProperty().get() != effectValue)
@@ -111,6 +114,8 @@ public class BindableModifiedChecker extends HPChecker {
 		for (Variable v : model.getExogenousVars()) {
 			v.setBindablePropertyValue(values.get(v.getName()));
 		}
+
+	
 
 	}
 

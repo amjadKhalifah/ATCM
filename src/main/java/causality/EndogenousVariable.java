@@ -143,7 +143,7 @@ public class EndogenousVariable extends Variable {
 		}
 		// we already calculated the formula
 		// now we set the value to the formula and bind it
-		this.bindableProperty = new SimpleBooleanProperty(this.getBindableFormula().getValue());
+		this.bindableProperty.set(this.getBindableFormula().getValue());
 		this.getBindableProperty().bind(bindableFormula);
 	}
 
@@ -153,12 +153,6 @@ public class EndogenousVariable extends Variable {
 
 	public void setProbability(double probability) {
 		this.probability = probability;
-	}
-
-	@Override
-	public String toString() {
-
-		return super.toString() + " [formula=" + formulaStr + "]";
 	}
 
 	/**
@@ -264,6 +258,12 @@ public class EndogenousVariable extends Variable {
 			return operand.not();
 		}
 		return operand;
+	}
+
+	@Override
+	public String toString() {
+
+		return super.toString() + " [formula=" + formulaStr + "]";
 	}
 
 }
