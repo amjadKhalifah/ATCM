@@ -1,0 +1,17 @@
+<?xml version='1.0'?>
+<adtree>
+
+		<node refinement="disjunctive">
+			<label>Steal_Decrypted</label>
+			<node refinement="conjunctive">
+				<label>From_Key_Management_Service</label>
+				<node refinement="conjunctive">
+					<label>Access</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>Attach_Debugger</label>
+				</node>
+			</node>
+		</node>
+
+</adtree>

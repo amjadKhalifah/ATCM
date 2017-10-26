@@ -1,0 +1,39 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="disjunctive">
+		<label>Steal_Master_Key</label>
+		<node refinement="conjunctive">
+			<label>Decrypt_The_Key</label>
+			<node refinement="disjunctive">
+				<label>Get_The_Passphrase</label>
+				<node refinement="conjunctive">
+					<label>From_Script</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>From_Network</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Get_The_Key</label>
+				<node refinement="conjunctive">
+					<label>From_File</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>From_DB</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="disjunctive">
+			<label>Steal_Decrypted</label>
+			<node refinement="conjunctive">
+				<label>From_Key_Management_Service</label>
+				<node refinement="conjunctive">
+					<label>Access</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>Attach_Debugger</label>
+				</node>
+			</node>
+		</node>
+	</node>
+</adtree>
