@@ -71,18 +71,18 @@ public class BindableKeysTest {
 	public void tearDown() throws Exception {
 	}
 
-	// @Test
+	 @Test
 	public void testIsCause() {
 
-		assertFalse("is cause failed", checker.isCause(causalModel.getVariableByName("U2_Access"), true,
-				causalModel.getVariableByName("Steal_Decrypted)"), true).isEmpty());
-		// assertTrue("is cause failed", checker
-		// .isCause(causalModel.getVariableByName("endo1"), true,
-		// causalModel.getVariableByName("endo6"), true)
-		// .isEmpty());
+		assertFalse("is cause failed", checker.isCause(causalModel.getVariableByName("U1_Access"), true,
+				causalModel.getVariableByName("Steal_Master_Key"), true).isEmpty());
+		 assertTrue("is cause failed", checker
+		 .isCause(causalModel.getVariableByName("U2_Access"), false,
+		 causalModel.getVariableByName("Steal_Master_Key"), true)
+		 .isEmpty());
 	}
 
-	// @Test
+	@Test
 	public void testFindCause() {
 
 		assertFalse("find cause failed",
@@ -93,10 +93,10 @@ public class BindableKeysTest {
 	public void testCheckConditionOne() {
 
 		assertTrue("condition one failed", checker.checkConditionOne(causalModel.getVariableByName("U1_Access"), true,
-				causalModel.getVariableByName("From_Key_Management_Service"), true));
+				causalModel.getVariableByName("Steal_Master_Key"), true));
 	}
 
-	// @Test
+	 @Test
 	public void testCheckConditionTwo() {
 		// assertFalse("condition one
 		// failed",!checker.checkConditionTwo(manualModel.getVariableByName("endo1"),true,manualModel.getVariableByName("endo6"),

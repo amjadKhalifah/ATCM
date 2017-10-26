@@ -59,7 +59,7 @@ public class BindableModifiedChecker extends HPChecker {
 
 		});
 
-		logger.info("finding causes " + proofs);
+		logger.info("finding causes " + proofs.get(0));
 
 		return proofs;
 	}
@@ -159,7 +159,7 @@ public class BindableModifiedChecker extends HPChecker {
 			((EndogenousVariable) x).bind();// so that it wont be affected by
 			// others
 		});
-
+		
 		return proofs;
 	}
 
