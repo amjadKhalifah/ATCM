@@ -59,7 +59,7 @@ public class BindableModifiedChecker extends HPChecker {
 
 		});
 
-		logger.info("finding causes " + proofs.get(0));
+		logger.info("finding causes " + proofs);
 
 		return proofs;
 	}
@@ -132,7 +132,9 @@ public class BindableModifiedChecker extends HPChecker {
 
 		boolean yOrigianl = y.getBindableProperty().get();
 		boolean xOrigianl = x.getBindableProperty().get();
-		wPowerSet.stream().forEach(elem -> {// for one possibility of a w
+//		wPowerSet.stream().forEach(elem -> {
+			for(  Iterable<Variable> elem: wPowerSet ) // for one possibility of a w
+			{
 			// TODO think of the optimizations here.. we can filter the
 			// first should unbind all the vars in W
 			unbindVars(elem);
@@ -150,6 +152,13 @@ public class BindableModifiedChecker extends HPChecker {
 				 logger.debug(x.getName() + "=" + !x.getValue() + " is a cause of " + y.getName() + "=" + yOrigianl
 				 + " with witness " + elem);
 				proofs.add(new Witness(x, (Set<Variable>) elem));
+				
+				// OPT-1- if we find an witness about this variable then we stop checking the w set
+				//TODO have this optimization as a configuration param
+				bindVars(elem);
+				x.setBindablePropertyValue(xOrigianl);
+				((EndogenousVariable) x).bind();// so that it wont be affected by
+				break;
 			}
 
 			// reset and clean up
@@ -158,7 +167,7 @@ public class BindableModifiedChecker extends HPChecker {
 			x.setBindablePropertyValue(xOrigianl);
 			((EndogenousVariable) x).bind();// so that it wont be affected by
 			// others
-		});
+		}
 		
 		return proofs;
 	}
