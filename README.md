@@ -11,10 +11,12 @@ mvn install -DskipTests
 
 ### General
 ```
-usage: extractr [ATTACK/FAULT TREE] [-e <file>] [-u <users>]
+usage: extractr [ATTACK/FAULT TREE] [-e <file>] [-u <users>] [-c <variable name>] [-v <varibale file>]
 Extract causal model from ATTACK or FAULT TREE.
  -e <file>    path to export directory
  -u <users>   unfold attack tree using passed user file
+ -c <variable name> variable name of the effect
+ -v <varibale file> path to the properties file that contains the variable values
 Supported modelling tools: EMFTA, ADTool
 Simons-MBP:extractr simon$ D
 ```
@@ -26,6 +28,10 @@ Simons-MBP:extractr simon$ D
 ### Example
 ```
 $ java -jar target/extractr-0.1.jar src/test/resources/user_attribution/Steal_Master_Key.adt -u src/test/resources/user_attribution/users.xml -e /Users/simon/Desktop/extractr
+```
+
+```
+$ java -jar target/extractr-0.1.jar src\test\resources\user_attribution\Steal_Master_Key_unfolded_trimmed.adt  -c Steal_Master_Key -v vars.properties
 ```
 
 ### Convert Causal Graph to PDF
