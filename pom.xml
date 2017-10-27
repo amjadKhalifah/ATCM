@@ -62,9 +62,7 @@
 						<configuration>
 							<archive>
 								<manifest>
-									<mainClass>
-										org.baeldung.executable.ExecutableMavenJar
-									</mainClass>
+								<mainClass>main.Main</mainClass>
 								</manifest>
 							</archive>
 							<descriptorRefs>
