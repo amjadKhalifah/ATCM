@@ -18,7 +18,6 @@ Extract causal model from ATTACK or FAULT TREE.
  -c <variable name> variable name of the effect
  -v <varibale file> path to the properties file that contains the variable values
 Supported modelling tools: EMFTA, ADTool
-Simons-MBP:extractr simon$ D
 ```
 
 - Export attack and fault tree as XML using ADTool and EMFTA, respectively. The former needs to have `.adt` and the latter `.emfta` as file extension.
