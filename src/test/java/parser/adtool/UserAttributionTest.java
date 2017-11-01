@@ -53,6 +53,21 @@ public class UserAttributionTest {
         ADTNode treeUnfolded = ADTParser.fromAD(stealMasterKeyUnfoldedXML);
         ADTNode treeUnfoldedActual = tree.unfold(users);
         assertEquals(treeUnfolded, treeUnfoldedActual);
+
+        // compare strings; helpful if previous assertion fails
+        String treeUnfoldedStr = treeUnfolded.toXML().asXML();
+        treeUnfoldedStr = treeUnfoldedStr
+                .replace(" ", "")
+                .replace("\n", "")
+                .replace(">", ">\n")
+                .replace("<label>\n", "<label>").trim();
+        String treeUnfoldedActualStr = treeUnfoldedActual.toXML().asXML();
+        treeUnfoldedActualStr = treeUnfoldedActualStr
+                .replace(" ", "")
+                .replace("\n", "")
+                .replace(">", ">\n")
+                .replace("<label>\n", "<label>").trim();
+        assertEquals(treeUnfoldedStr, treeUnfoldedActualStr);
     }
 
     @Test
