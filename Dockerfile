@@ -2,7 +2,7 @@ FROM openjdk:8-jdk
 
 EXPOSE 4567
 
-VOLUME /data
+VOLUME /home/amjad/hp_data
 
 COPY build/*.jar /app/service.jar
 
