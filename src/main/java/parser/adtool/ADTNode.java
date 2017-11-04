@@ -98,16 +98,9 @@ public class ADTNode {
             // if node has no children at all, just connect all userNodes to current node
             this.children = userNodes;
         } else {
-            // TODO adapt
             /*
-            If the node has more than one child, we can unfold at this branch. Hence, we connect the respective parts
-             of the user-specific trees to the current childNode. However. It might be that this childNode itself has
-              only one child and this one child again has only one child; in this case, we do not want to unfold, and
-               recursively call the connect() method again. If however, the current childNode's child has more than 1
-               children, we want to unfold at exactly this one child of the current childNode. To ensure that this is
-                done properly, we re-define childNode to its 1 child.
-                In all other cases, we just set the children of the current childNode to the respective user-specific
-                 subtree.
+             * Loop through all children and find matching subtrees in userNodes
+             * Connect those subtrees to the current child. On that way, we properly unfold the tree.
              */
             for (ADTNode childNode : this.children) {
                 // set gate to OR
@@ -119,7 +112,7 @@ public class ADTNode {
                     // add to list of child user nodes
                     childUserNodes.add(node);
                 }
-                // set new children
+                // set children of current childNode to new children, i.e. the user-specific ones
                 childNode.children = childUserNodes;
             }
         }
