@@ -50,7 +50,7 @@
 		<node refinement="disjunctive">
 			<label>Steal Decrypted</label>
 			<node refinement="disjunctive">
-				<label>From Key Management Service</label>
+				<label>U1 Steal Decrypted</label>
 				<node refinement="conjunctive">
 					<label>U1 From Key Management Service</label>
 					<node refinement="conjunctive">
@@ -60,6 +60,9 @@
 						<label>U1 Attach Debugger</label>
 					</node>
 				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>U2 Steal Decrypted</label>
 				<node refinement="conjunctive">
 					<label>U2 From Key Management Service</label>
 					<node refinement="conjunctive">

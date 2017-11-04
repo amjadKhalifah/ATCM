@@ -97,13 +97,8 @@ public class ADTNode {
         if (this.children == null || this.children.size() == 0) {
             // if node has no children at all, just connect all userNodes to current node
             this.children = userNodes;
-        } else if (this.children.size() == 1) {
-            /*
-            if node has one children only, call connect method on this one child again.
-            we do this as we do not unfold at a node with only one child, i.e. no branches
-             */
-            this.children.get(0).connect(userNodes);
         } else {
+            // TODO adapt
             /*
             If the node has more than one child, we can unfold at this branch. Hence, we connect the respective parts
              of the user-specific trees to the current childNode. However. It might be that this childNode itself has
@@ -115,25 +110,17 @@ public class ADTNode {
                  subtree.
              */
             for (ADTNode childNode : this.children) {
-                if (childNode.children.size() == 1 && childNode.children.get(0).children.size() <= 1) {
-                    childNode.connect(userNodes);
-                } else {
-                    if (childNode.children.size() == 1 && childNode.children.get(0).children.size() >= 1) {
-                        // re-define childNode to current childNode's single child
-                        childNode = childNode.children.get(0);
-                    }
-                    // set gate to OR
-                    childNode.refinement = Refinement.DISJUNCTIVE;
-                    List<ADTNode> childUserNodes = new ArrayList<>();
-                    // get user-specific subtrees that fit, i.e. those that have the current childNode as root
-                    for (ADTNode userNode : userNodes) {
-                        ADTNode node = userNode.getByID(childNode.ID);
-                        // add to list of child user nodes
-                        childUserNodes.add(node);
-                    }
-                    // set new children
-                    childNode.children = childUserNodes;
+                // set gate to OR
+                childNode.refinement = Refinement.DISJUNCTIVE;
+                List<ADTNode> childUserNodes = new ArrayList<>();
+                // get user-specific subtrees that fit, i.e. those that have the current childNode as root
+                for (ADTNode userNode : userNodes) {
+                    ADTNode node = userNode.getByID(childNode.ID);
+                    // add to list of child user nodes
+                    childUserNodes.add(node);
                 }
+                // set new children
+                childNode.children = childUserNodes;
             }
         }
     }
