@@ -1,5 +1,6 @@
 package causality;
 
+import attacker_attribution.User;
 import mef.faulttree.*;
 import mef.formula.*;
 import mef.general.Constant;
@@ -52,6 +53,12 @@ public class CausalModel {
         }
         // create causal model using all the previously created variables
         CausalModel causalModel = new CausalModel(name, new HashSet<>(variables.values()));
+        return causalModel;
+    }
+
+    public static CausalModel fromMEF(FaultTreeDefinition faultTreeDefinition, Set<User> users) {
+        CausalModel causalModel = fromMEF(faultTreeDefinition);
+        // TODO handle preemption
         return causalModel;
     }
 
