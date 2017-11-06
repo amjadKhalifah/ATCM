@@ -8,7 +8,7 @@ import parser.emfta.EMFTAParser;
 import java.io.File;
 
 public abstract class Parser {
-    public static FaultTreeDefinition handle(File file) {
+    public static FaultTreeDefinition handle(File file, File users ) {
         FaultTreeDefinition faultTreeDefinition = null;
         // get the file extension: .<filetype>
         String extension = FilenameUtils.getExtension(file.getName());
@@ -16,14 +16,14 @@ public abstract class Parser {
         // depending on the file type set the correct parser
         if (extension.equals("emfta")) {
             Parser parser = new EMFTAParser();
-            faultTreeDefinition = parser.toMEF(file);
+            faultTreeDefinition = parser.toMEF(file, users);
         } else if (extension.equals("adt")) {
             Parser parser = new ADTParser();
-            faultTreeDefinition = parser.toMEF(file);
+            faultTreeDefinition = parser.toMEF(file, users);
         }
 
         return faultTreeDefinition;
     }
 
-    public abstract FaultTreeDefinition toMEF(File file);
+    public abstract FaultTreeDefinition toMEF(File file, File users);
 }

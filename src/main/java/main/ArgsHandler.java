@@ -36,8 +36,13 @@ public class ArgsHandler {
             if (!f.exists() || f.isDirectory())
                 throw new ParseException("Specified File '" + f.getPath() + "' does not exist or is directory.");
 
+            File users = null;
+            if (line.hasOption("u")) {
+                users = new File(line.getOptionValue("u"));
+            }
+
             // convert passed file to Open-PSA fault tree def
-            FaultTreeDefinition faultTreeDefinition = Parser.handle(f);
+            FaultTreeDefinition faultTreeDefinition = Parser.handle(f, users);
             // if result is null, something went wrong
             if (faultTreeDefinition == null) {
                 System.err.println("Error during parsing of file '" + f.getName() + "'.");
@@ -71,7 +76,11 @@ public class ArgsHandler {
 
 
         } catch (ParseException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
+            HelpFormatter helpFormatter = new HelpFormatter();
+            String header = "Extract causal model from ATTACK or FAULT TREE.\n";
+            String footer = "Supported modelling tools: EMFTA, ADTool";
+            helpFormatter.printHelp("extractr [ATTACK/FAULT TREE]", header, options, footer, true);
         }
     }
 
@@ -83,7 +92,12 @@ public class ArgsHandler {
         graphExport.setDescription("path to export directory");
         graphExport.setArgName("file");
 
+        Option unfold = Option.builder("u").hasArg().build();
+        unfold.setDescription("unfold attack tree using passed user file");
+        unfold.setArgName("users");
+
         options.addOption(graphExport);
+        options.addOption(unfold);
 
         return options;
     }
