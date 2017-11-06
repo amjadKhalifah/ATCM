@@ -11,16 +11,21 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 public class FormulaTest {
+    EndogenousVariable v1;
+    EndogenousVariable v2;
+    EndogenousVariable v3;
+
     Formula f1;
     Formula f2;
     Formula f3;
     Formula f4;
 
+
     @Before
     public void setUp() throws Exception {
-        EndogenousVariable v1 = new EndogenousVariable("V1", null);
-        EndogenousVariable v2 = new EndogenousVariable("V2", null);
-        EndogenousVariable v3 = new EndogenousVariable("V3", null);
+        v1 = new EndogenousVariable("V1", null);
+        v2 = new EndogenousVariable("V2", null);
+        v3 = new EndogenousVariable("V3", null);
 
         // (V1 and V2)
         f1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, Arrays.asList(v1, v2));
@@ -55,6 +60,18 @@ public class FormulaTest {
 
         String f4Expected = "(((V1 and V2) or V3) -> V1)";
         assertEquals(f4Expected, f4.print());
+    }
+
+    @Test
+    public void Should_ContainVariable() throws Exception {
+        assertTrue(f1.containsVariable(v1));
+        assertTrue(f1.containsVariable(v2));
+        assertFalse(f1.containsVariable(v3));
+        assertTrue(f2.containsVariable(v3));
+        assertFalse(f3.containsVariable(v3));
+        assertTrue(f4.containsVariable(v1));
+        assertTrue(f4.containsVariable(v2));
+        assertTrue(f4.containsVariable(v3));
     }
 
 }

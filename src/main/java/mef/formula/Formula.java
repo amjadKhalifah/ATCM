@@ -82,4 +82,30 @@ public abstract class Formula {
         }
         return null;
     }
+
+    /**
+     * Returns whether a formula contains the specified Variable. Only works for formulas using BasicBooleanOperators
+     * or ImplyOperators.
+     * @param variable
+     * @return
+     */
+    public boolean containsVariable(Variable variable) {
+        if (this instanceof EndogenousVariable) {
+            EndogenousVariable endogenousVariable = (EndogenousVariable) this;
+            return endogenousVariable.equals(variable) ||
+                    (endogenousVariable.getFormula() != null && endogenousVariable.getFormula().containsVariable(variable));
+        } else if (this instanceof ExogenousVariable) {
+            ExogenousVariable exogenousVariable = (ExogenousVariable) this;
+            return exogenousVariable.equals(variable);
+        } else if (this instanceof BasicBooleanOperator) {
+            BasicBooleanOperator basicBooleanOperator = (BasicBooleanOperator) this;
+            return basicBooleanOperator.getFormulas().stream().anyMatch(f -> f != null && f.containsVariable(variable));
+        } else if (this instanceof ImplyOperator) {
+            ImplyOperator implyOperator = (ImplyOperator) this;
+            return (implyOperator.getLeftFormula() != null && implyOperator.getLeftFormula().containsVariable
+                    (variable)) || (implyOperator.getRightFormula() != null && implyOperator.getRightFormula()
+                    .containsVariable(variable));
+        }
+        return false;
+    }
 }
