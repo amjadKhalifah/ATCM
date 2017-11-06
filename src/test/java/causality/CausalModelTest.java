@@ -6,6 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import util.ModelProvider;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
 
 public class CausalModelTest {
@@ -31,5 +35,14 @@ public class CausalModelTest {
     public void test_Should_CreateReport() {
         String report = billySuzyCausalModel.toReport();
         System.out.println(report);
+    }
+
+    @Test
+    public void Should_ReturnRootVariables() {
+        Variable bs = billySuzyCausalModel.getVariables().stream().filter(v-> v.getName().equals("BS"))
+                .findFirst().get();
+        Set<Variable> rootVariables = new HashSet<>(Arrays.asList(bs));
+        Set<Variable> rootVariablesActual = billySuzyCausalModel.getRootVariables();
+        assertEquals(rootVariables, rootVariablesActual);
     }
 }
