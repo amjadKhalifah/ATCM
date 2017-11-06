@@ -53,7 +53,13 @@ public class ArgsHandler {
             }
 
             // convert fault tree representation to causal model
-            CausalModel causalModel = CausalModel.fromMEF(faultTreeDefinition);
+            CausalModel causalModel;
+            if (users != null)
+                causalModel = CausalModel.fromMEF(faultTreeDefinition, users);
+            else
+                causalModel = CausalModel.fromMEF(faultTreeDefinition);
+
+
 
             // convert causal model to report and print it
             String report = causalModel.toReport();
