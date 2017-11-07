@@ -84,6 +84,40 @@ public abstract class Formula {
     }
 
     /**
+     * Finds a variable by name. Returns null, if no variable with the passed name can be found. Assumes that each
+     * variable has a unique name.
+     * @param name
+     * @return
+     */
+    public Variable findVariableByName(String name) {
+        Variable variable = null;
+        if (this instanceof Variable && ((Variable) this).getName().equals(name)) {
+            // if this is instance of Variable, we just need to check, if this Variable has the passed name
+            variable = (Variable) this;
+        } else if (this instanceof BasicBooleanOperator) {
+            /*
+            if this is an operator, we need to search through all the formulas in this operator and check, if we
+            find the veriable there
+             */
+            BasicBooleanOperator basicBooleanOperator = (BasicBooleanOperator) this;
+            for (Formula formula : basicBooleanOperator.getFormulas()) {
+                variable = formula.findVariableByName(name);
+                if (variable != null)
+                    break;
+            }
+        } else if (this instanceof ImplyOperator) {
+            /*
+            if this is an ImplyOperator, we need to check if we find the variable in the left or right side
+             */
+            ImplyOperator implyOperator = (ImplyOperator) this;
+            variable = implyOperator.getLeftFormula().findVariableByName(name);
+            if (variable == null)
+                variable = implyOperator.getRightFormula().findVariableByName(name);
+        }
+        return variable;
+    }
+
+    /**
      * Returns whether a formula contains the specified Variable. Only works for formulas using BasicBooleanOperators
      * or ImplyOperators.
      * @param variable

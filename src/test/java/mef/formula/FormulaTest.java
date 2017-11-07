@@ -63,6 +63,16 @@ public class FormulaTest {
     }
 
     @Test
+    public void Should_FindVariable() throws Exception {
+        assertEquals(v1, f1.findVariableByName("V1"));
+        assertEquals(v2, f1.findVariableByName("V2"));
+        assertEquals(null, f1.findVariableByName("V3"));
+        assertEquals(v3, f2.findVariableByName("V3"));
+        assertEquals(null, f3.findVariableByName("V3"));
+        assertEquals(v3, f4.findVariableByName("V3"));
+    }
+
+    @Test
     public void Should_ContainVariable() throws Exception {
         assertTrue(f1.containsVariable(v1));
         assertTrue(f1.containsVariable(v2));
