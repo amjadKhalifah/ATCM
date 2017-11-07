@@ -5,6 +5,27 @@
 		<node refinement="disjunctive">
 			<label>Decrypt The Key</label>
 			<node refinement="conjunctive">
+				<label>U3 Decrypt The Key</label>
+				<node refinement="disjunctive">
+					<label>U3 Get The Passphrase</label>
+					<node refinement="conjunctive">
+						<label>U3 From Script</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U3 From Network</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>U3 Get The Key</label>
+					<node refinement="conjunctive">
+						<label>U3 From File</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U3 From DB</label>
+					</node>
+				</node>
+			</node>
+			<node refinement="conjunctive">
 				<label>U2 Decrypt The Key</label>
 				<node refinement="disjunctive">
 					<label>U2 Get The Passphrase</label>
@@ -49,6 +70,18 @@
 		</node>
 		<node refinement="disjunctive">
 			<label>Steal Decrypted</label>
+			<node refinement="disjunctive">
+				<label>U3 Steal Decrypted</label>
+				<node refinement="conjunctive">
+					<label>U3 From Key Management Service</label>
+					<node refinement="conjunctive">
+						<label>U3 Access</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U3 Attach Debugger</label>
+					</node>
+				</node>
+			</node>
 			<node refinement="disjunctive">
 				<label>U2 Steal Decrypted</label>
 				<node refinement="conjunctive">

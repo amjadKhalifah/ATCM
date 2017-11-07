@@ -35,7 +35,8 @@ public class UserAttributionTest {
 
         User u1 = new User("1", "U1", "admin", 2, null);
         User u2 = new User("2", "U2", "admin", 1, null);
-        users = new HashSet<>(Arrays.asList(u1, u2));
+        User u3 = new User("3", "U3", "admin", 0, null);
+        users = new HashSet<>(Arrays.asList(u1, u2, u3));
     }
 
     @Test

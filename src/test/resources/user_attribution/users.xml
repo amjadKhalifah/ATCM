@@ -4,4 +4,6 @@
     </user>
     <user ID="2" name="U2" role="admin" score="1">
     </user>
+    <user ID="3" name="U3" role="admin" score="0">
+    </user>
 </users>
