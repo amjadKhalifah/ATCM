@@ -97,43 +97,23 @@ public class ADTNode {
         if (this.children == null || this.children.size() == 0) {
             // if node has no children at all, just connect all userNodes to current node
             this.children = userNodes;
-        } else if (this.children.size() == 1) {
-            /*
-            if node has one children only, call connect method on this one child again.
-            we do this as we do not unfold at a node with only one child, i.e. no branches
-             */
-            this.children.get(0).connect(userNodes);
         } else {
             /*
-            If the node has more than one child, we can unfold at this branch. Hence, we connect the respective parts
-             of the user-specific trees to the current childNode. However. It might be that this childNode itself has
-              only one child and this one child again has only one child; in this case, we do not want to unfold, and
-               recursively call the connect() method again. If however, the current childNode's child has more than 1
-               children, we want to unfold at exactly this one child of the current childNode. To ensure that this is
-                done properly, we re-define childNode to its 1 child.
-                In all other cases, we just set the children of the current childNode to the respective user-specific
-                 subtree.
+             * Loop through all children and find matching subtrees in userNodes
+             * Connect those subtrees to the current child. On that way, we properly unfold the tree.
              */
             for (ADTNode childNode : this.children) {
-                if (childNode.children.size() == 1 && childNode.children.get(0).children.size() <= 1) {
-                    childNode.connect(userNodes);
-                } else {
-                    if (childNode.children.size() == 1 && childNode.children.get(0).children.size() >= 1) {
-                        // re-define childNode to current childNode's single child
-                        childNode = childNode.children.get(0);
-                    }
-                    // set gate to OR
-                    childNode.refinement = Refinement.DISJUNCTIVE;
-                    List<ADTNode> childUserNodes = new ArrayList<>();
-                    // get user-specific subtrees that fit, i.e. those that have the current childNode as root
-                    for (ADTNode userNode : userNodes) {
-                        ADTNode node = userNode.getByID(childNode.ID);
-                        // add to list of child user nodes
-                        childUserNodes.add(node);
-                    }
-                    // set new children
-                    childNode.children = childUserNodes;
+                // set gate to OR
+                childNode.refinement = Refinement.DISJUNCTIVE;
+                List<ADTNode> childUserNodes = new ArrayList<>();
+                // get user-specific subtrees that fit, i.e. those that have the current childNode as root
+                for (ADTNode userNode : userNodes) {
+                    ADTNode node = userNode.getByID(childNode.ID);
+                    // add to list of child user nodes
+                    childUserNodes.add(node);
                 }
+                // set children of current childNode to new children, i.e. the user-specific ones
+                childNode.children = childUserNodes;
             }
         }
     }
