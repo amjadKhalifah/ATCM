@@ -58,10 +58,9 @@ public class CausalModel {
 
     public static CausalModel fromMEF(FaultTreeDefinition faultTreeDefinition, Set<User> users) {
         CausalModel causalModel = fromMEF(faultTreeDefinition);
-        // since a tree has exactly one root, we can safely assume that there is exactly one root variable
         // TODO special case that tree consists of root node only
-
-        // TODO check if really endo
+        
+        // since a tree has exactly one root, we can safely assume that there is exactly one root variable
         EndogenousVariable rootVariable = (EndogenousVariable) causalModel.getRootVariables().stream().findFirst().get();
         if (rootVariable.getFormula() instanceof EndogenousVariable) {
             EndogenousVariable endogenousVariable = (EndogenousVariable) rootVariable.getFormula();
