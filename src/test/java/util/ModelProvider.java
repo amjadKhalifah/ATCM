@@ -213,6 +213,14 @@ public class ModelProvider {
     }
 
     public static CausalModel stealMasterKeyUnfoldedWithPreemption() {
+        /*
+        Assume the following users:
+        U1 score: 2
+        U2 score: 1
+        U3 score: 0
+        -> defines preemption
+         */
+
         // Unfolded: U1 Decrypt The Key
         ExogenousVariable u1FSExo = new ExogenousVariable("U1 From Script_exo");
         EndogenousVariable u1FS = new EndogenousVariable("U1 From Script", u1FSExo);
@@ -261,6 +269,16 @@ public class ModelProvider {
         EndogenousVariable u3DTK = new EndogenousVariable("U3 Decrypt The Key", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.and, Arrays.asList(u3GTP, u3GTK)));
 
+        // Preemption Decrypt The Key
+        BasicBooleanOperator not1 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.not,
+                Arrays.asList(u1DTK));
+        BasicBooleanOperator not2 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.not,
+                Arrays.asList(u1DTK, u2DTK));
+        u2DTK.setFormula(new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and,
+                Arrays.asList(u2DTK.getFormula(), not1)));
+        u3DTK.setFormula(new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and,
+                Arrays.asList(u3DTK.getFormula(), not2)));
+
         // Unfolded: U1 Steal Decrypted
         ExogenousVariable u1AExo = new ExogenousVariable("U1 Access_exo");
         EndogenousVariable u1A = new EndogenousVariable("U1 Access", u1AExo);
@@ -290,6 +308,16 @@ public class ModelProvider {
                 BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, Arrays.asList(u3A, u3AD)));
         EndogenousVariable u3SD = new EndogenousVariable("U3 Steal Decrypted", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u3FKMS)));
+
+        // Preemption Steal Decrypted
+        BasicBooleanOperator not3 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.not,
+                Arrays.asList(u1SD));
+        BasicBooleanOperator not4 = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.not,
+                Arrays.asList(u1SD, u2SD));
+        u2SD.setFormula(new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and,
+                Arrays.asList(u2SD.getFormula(), not3)));
+        u3SD.setFormula(new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and,
+                Arrays.asList(u3SD.getFormula(), not4)));
 
         // Non-user-specific
         EndogenousVariable dtk = new EndogenousVariable("Decrypt The Key", new BasicBooleanOperator
