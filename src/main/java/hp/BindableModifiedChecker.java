@@ -153,7 +153,7 @@ public class BindableModifiedChecker extends HPChecker {
 				 + " with witness " + elem);
 				proofs.add(new Witness(x, (Set<Variable>) elem));
 				
-				// OPT-1- if we find an witness about this variable then we stop checking the w set
+				// OPT-1- if we find a witness about this variable then we stop checking the w set
 				//TODO have this optimization as a configuration param
 				bindVars(elem);
 				x.setBindablePropertyValue(xOrigianl);
