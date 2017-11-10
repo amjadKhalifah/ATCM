@@ -109,20 +109,23 @@ public class CausalModel {
                 // get those users that have a higher score than the current user
                 Set<User> usersWithHigherScore = users.stream().filter(u -> u.getScore() > user.getScore())
                         .collect(Collectors.toSet());
-                List<Formula> negatedVariables = new ArrayList<>();
-                // find the user-specific variables for the users with a higher score
-                for (User u : usersWithHigherScore) {
-                    EndogenousVariable userVar = endogenousVariables.stream().filter(v -> v.getName()
-                            .startsWith(u.getName() + " ")).findFirst().get();
-                    negatedVariables.add(userVar);
-                }
-                // create a new NOT-operator
-                BasicBooleanOperator not = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.not, negatedVariables);
+                // only add preemption if there exist users with a higher score
+                if (usersWithHigherScore.size() > 0) {
+                    List<Formula> negatedVariables = new ArrayList<>();
+                    // find the user-specific variables for the users with a higher score
+                    for (User u : usersWithHigherScore) {
+                        EndogenousVariable userVar = endogenousVariables.stream().filter(v -> v.getName()
+                                .startsWith(u.getName() + " ")).findFirst().get();
+                        negatedVariables.add(userVar);
+                    }
+                    // create a new NOT-operator
+                    BasicBooleanOperator not = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.not, negatedVariables);
                 /*
                 update the formula of the current variable by adding and AND NOT (user-specific vars with higher score
                  */
-                currentUserVar.setFormula(new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and,
-                        Arrays.asList(currentUserVar.getFormula(), not)));
+                    currentUserVar.setFormula(new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and,
+                            Arrays.asList(currentUserVar.getFormula(), not)));
+                }
             }
         }
     }
