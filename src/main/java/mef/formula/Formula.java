@@ -60,6 +60,11 @@ public abstract class Formula {
         else if (this instanceof BasicBooleanOperator) {
             BasicBooleanOperator operator = (BasicBooleanOperator) this;
             List<Formula> formulas = operator.getFormulas();
+
+            String negated = operator.getType() == BasicBooleanOperator.OperatorType.not ? "!" : "";
+            String operatorStr = operator.getType() == BasicBooleanOperator.OperatorType.not ?
+                    BasicBooleanOperator.OperatorType.and.toString() : operator.getType().toString();
+
             String formulasStr = "";
             // print all formulas and connect them with the respective operator
             for (Formula formula : formulas) {
@@ -67,10 +72,10 @@ public abstract class Formula {
                     // first formula does not need an operator on the left
                     formulasStr += formula.printInnerFormula();
                 else
-                    formulasStr += " " + operator.getType() + " " + formula.printInnerFormula();
+                    formulasStr += " " + operatorStr + " " + formula.printInnerFormula();
             }
 
-            return "(" + formulasStr + ")";
+            return negated + "(" + formulasStr + ")";
         } else if (this instanceof ImplyOperator) {
             ImplyOperator imply = (ImplyOperator) this;
             Formula formulaLeft = imply.getLeftFormula();
