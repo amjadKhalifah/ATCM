@@ -84,7 +84,7 @@ public class CausalModel {
         /*
         We assume that the passed endogenousVariable opens a branch that holds the respective user-specific subtrees
          */
-        if (!(endogenousVariable.getFormula() instanceof BasicBooleanOperator)) {
+        if (endogenousVariable.getFormula() instanceof BasicBooleanOperator) {
             BasicBooleanOperator basicBooleanOperator = (BasicBooleanOperator) endogenousVariable.getFormula();
             /*
             we assume that the operator contains endogenous variables only, but we filter just to make sure.
