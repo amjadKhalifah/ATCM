@@ -65,7 +65,6 @@ public class CausalModelTest {
         CausalModel stealMasterKeyUnfoldedCausalModel = ModelProvider.stealMasterKeyUnfoldedWithPreemption();
         FaultTreeDefinition stealMasterKeyMEF = adtParser.toMEF(stealMasterKeyXML, users);
         CausalModel stealMasterKeyUnfoldedCausalModelActual = CausalModel.fromMEF(stealMasterKeyMEF, users);
-        // TODO test case fails; propably ordering of formula (lists are used) differs (fix: list -> set)
-        //assertEquals(stealMasterKeyUnfoldedCausalModel, stealMasterKeyUnfoldedCausalModelActual);
+        assertEquals(stealMasterKeyUnfoldedCausalModel, stealMasterKeyUnfoldedCausalModelActual);
     }
 }
