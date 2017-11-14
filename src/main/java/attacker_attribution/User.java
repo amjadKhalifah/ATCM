@@ -6,12 +6,14 @@ public class User {
     private String ID;
     private String name;
     private String role;
+    private int score;
     private Set<String> attacks;
 
-    public User(String ID, String name, String role, Set<String> attacks) {
+    public User(String ID, String name, String role, int score, Set<String> attacks) {
         this.ID = ID;
         this.name = name;
         this.role = role;
+        this.score = score;
         this.attacks = attacks;
     }
 
@@ -22,6 +24,7 @@ public class User {
 
         User user = (User) o;
 
+        if (score != user.score) return false;
         if (ID != null ? !ID.equals(user.ID) : user.ID != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (role != null ? !role.equals(user.role) : user.role != null) return false;
@@ -33,6 +36,7 @@ public class User {
         int result = ID != null ? ID.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + score;
         result = 31 * result + (attacks != null ? attacks.hashCode() : 0);
         return result;
     }
@@ -59,6 +63,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public Set<String> getAttacks() {

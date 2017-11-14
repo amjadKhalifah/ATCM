@@ -51,21 +51,4 @@ stealMasterKeyXML = new File(this.getClass().getClassLoader()
     public void test_Should_CreateReport() {
         String report = billySuzyCausalModel.toReport();
     }
- @Test
-    public void Should_ReturnRootVariables() {
-        Variable bs = billySuzyCausalModel.getVariables().stream().filter(v-> v.getName().equals("BS"))
-                .findFirst().get();
-        Set<Variable> rootVariables = new HashSet<>(Arrays.asList(bs));
-        Set<Variable> rootVariablesActual = billySuzyCausalModel.getRootVariables();
-        assertEquals(rootVariables, rootVariablesActual);
-    }
-
-    @Test
-    public void Should_CreateCausalModelWithUserAttributionAndPreemption() throws Exception {
-        ADTParser adtParser = new ADTParser();
-        CausalModel stealMasterKeyUnfoldedCausalModel = ModelProvider.stealMasterKeyUnfoldedWithPreemption();
-        FaultTreeDefinition stealMasterKeyMEF = adtParser.toMEF(stealMasterKeyXML, users);
-        CausalModel stealMasterKeyUnfoldedCausalModelActual = CausalModel.fromMEF(stealMasterKeyMEF, users);
-        assertEquals(stealMasterKeyUnfoldedCausalModel, stealMasterKeyUnfoldedCausalModelActual);
-    }
 }

@@ -1,7 +1,6 @@
 package parser.adtool;
 
 import attacker_attribution.User;
-import attacker_attribution.UserParser;
 import mef.faulttree.BasicEventDefinition;
 import mef.faulttree.ElementDefinition;
 import mef.faulttree.FaultTreeDefinition;
@@ -34,13 +33,12 @@ public class ADTParser extends Parser {
      * @return
      */
     @Override
-    public FaultTreeDefinition toMEF(File file, File users) {
+    public FaultTreeDefinition toMEF(File file, Set<User> users) {
         FaultTreeDefinition faultTreeDefinition = null;
         ADTNode adtree = fromAD(file);
 
         if (users != null) {
-            Set<User> userSet = UserParser.parse(users);
-            adtree.unfold(userSet);
+            adtree.unfold(users);
         }
 
         if (adtree.getLabel() != null) {

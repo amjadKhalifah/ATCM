@@ -33,13 +33,15 @@ public class BasicBooleanOperator extends BooleanOperator{
         BasicBooleanOperator that = (BasicBooleanOperator) o;
 
         if (type != that.type) return false;
-        return formulas != null ? formulas.equals(that.formulas) : that.formulas == null;
+        // use sets to ignore ordering of list
+        return formulas != null ? new HashSet<>(formulas).equals(new HashSet<>(that.formulas)) : that.formulas == null;
     }
 
     @Override
     public int hashCode() {
         int result = type != null ? type.hashCode() : 0;
-        result = 31 * result + (formulas != null ? formulas.hashCode() : 0);
+        // use set to ignore ordering of list
+        result = 31 * result + (formulas != null ? new HashSet<>(formulas).hashCode() : 0);
         return result;
     }
 

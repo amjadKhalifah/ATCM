@@ -5,23 +5,23 @@
 		<node refinement="disjunctive">
 			<label>Decrypt The Key</label>
 			<node refinement="conjunctive">
-				<label>U1 Decrypt The Key</label>
+				<label>U3 Decrypt The Key</label>
 				<node refinement="disjunctive">
-					<label>U1 Get The Passphrase</label>
+					<label>U3 Get The Passphrase</label>
 					<node refinement="conjunctive">
-						<label>U1 From Script</label>
+						<label>U3 From Script</label>
 					</node>
 					<node refinement="conjunctive">
-						<label>U1 From Network</label>
+						<label>U3 From Network</label>
 					</node>
 				</node>
 				<node refinement="disjunctive">
-					<label>U1 Get The Key</label>
+					<label>U3 Get The Key</label>
 					<node refinement="conjunctive">
-						<label>U1 From File</label>
+						<label>U3 From File</label>
 					</node>
 					<node refinement="conjunctive">
-						<label>U1 From DB</label>
+						<label>U3 From DB</label>
 					</node>
 				</node>
 			</node>
@@ -46,18 +46,39 @@
 					</node>
 				</node>
 			</node>
+			<node refinement="conjunctive">
+				<label>U1 Decrypt The Key</label>
+				<node refinement="disjunctive">
+					<label>U1 Get The Passphrase</label>
+					<node refinement="conjunctive">
+						<label>U1 From Script</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U1 From Network</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>U1 Get The Key</label>
+					<node refinement="conjunctive">
+						<label>U1 From File</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U1 From DB</label>
+					</node>
+				</node>
+			</node>
 		</node>
 		<node refinement="disjunctive">
 			<label>Steal Decrypted</label>
 			<node refinement="disjunctive">
-				<label>U1 Steal Decrypted</label>
+				<label>U3 Steal Decrypted</label>
 				<node refinement="conjunctive">
-					<label>U1 From Key Management Service</label>
+					<label>U3 From Key Management Service</label>
 					<node refinement="conjunctive">
-						<label>U1 Access</label>
+						<label>U3 Access</label>
 					</node>
 					<node refinement="conjunctive">
-						<label>U1 Attach Debugger</label>
+						<label>U3 Attach Debugger</label>
 					</node>
 				</node>
 			</node>
@@ -70,6 +91,18 @@
 					</node>
 					<node refinement="conjunctive">
 						<label>U2 Attach Debugger</label>
+					</node>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>U1 Steal Decrypted</label>
+				<node refinement="conjunctive">
+					<label>U1 From Key Management Service</label>
+					<node refinement="conjunctive">
+						<label>U1 Access</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U1 Attach Debugger</label>
 					</node>
 				</node>
 			</node>

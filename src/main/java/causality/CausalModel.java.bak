@@ -132,27 +132,6 @@ private void preemption(EndogenousVariable endogenousVariable, Set<User> users) 
         }
     }
 
-/**
-     * Find those variables in a causal model that do not appear in a formula of any other variable.
-     * @return
-     */
-    public Set<Variable> getRootVariables() {
-        Set<Variable> rootVariables = new HashSet<>();
-        for (Variable variable1 : this.variables) {
-            boolean isRoot = true;
-            for (Variable variable2 : this.variables) {
-                // check if variable1 is contained in the formula of variable2
-                if (variable1 != variable2 && variable2.containsVariable(variable1)) {
-                    isRoot = false;
-                    break;
-                }
-            }
-            // if isRoot flag has not set to false before, add current variable to root variables
-            if (isRoot)
-                rootVariables.add(variable1);
-        }
-        return rootVariables;
-    }
 
 
 	// convert formula from MEF/Open-PSA to causal model formula

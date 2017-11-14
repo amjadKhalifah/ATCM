@@ -8,6 +8,7 @@ import parser.XMLParser;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,7 +46,16 @@ public class UserParser {
         String ID = element.attributeValue("ID", null);
         String name = element.attributeValue("name", null);
         String role = element.attributeValue("role", null);
-        User user = new User(ID, name, role, null);
+        String scoreStr = element.attributeValue("score", "-1");
+
+        int score = -1;
+        try {
+            score = Integer.parseInt(scoreStr);
+        } catch (NumberFormatException e) {
+            System.err.println("Score of user " + name + " is not an integer. Setting it to -1.");
+        }
+
+        User user = new User(ID, name, role, score, null);
 
         // TODO attacks
         if (ID == null || name == null || role == null)
