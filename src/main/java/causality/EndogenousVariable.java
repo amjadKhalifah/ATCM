@@ -255,9 +255,8 @@ public class EndogenousVariable extends Variable {
 	 * @return
 	 */
 	private BooleanExpression getProp(String name) {
-		//TODO fix this !not and check when do we use - and ! and not
-		BooleanExpression operand = getParentByName(name.replace("!not", "")).getBindableProperty();
-		if (name.startsWith("!not")) {
+		BooleanExpression operand = getParentByName(name.replace("!", "")).getBindableProperty();
+		if (name.startsWith("!")) {
 			return operand.not();
 		}
 		return operand;

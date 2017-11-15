@@ -79,16 +79,16 @@ public abstract class Formula {
 				if (formulasStr.equals("")) {
 					// first formula does not need an operator on the left
 					// unless it was not
-					//TODO check this after merge
-					if (operator.getType() == OperatorType.not) {
-						formulasStr += operator.getType() ;
-					}
-					formulasStr += formula.printInnerFormula(parents);
+//					//TODO check this after merge
+//					if (operator.getType() == OperatorType.not) {
+//						 formulasStr += negated + operator.getType() ;
+//					}
+					formulasStr += negated +formula.printInnerFormula(parents);
 				} else
-					formulasStr += " " + operatorStr+ " " + formula.printInnerFormula(parents);
+					formulasStr += " " + operatorStr+ " " + negated + formula.printInnerFormula(parents);
 
 			}
-			return negated + "(" + formulasStr + ")";
+			return  "(" + formulasStr + ")";
 		} else if (this instanceof ImplyOperator) {
 			ImplyOperator imply = (ImplyOperator) this;
 			Formula formulaLeft = imply.getLeftFormula();
