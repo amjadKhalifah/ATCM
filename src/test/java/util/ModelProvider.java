@@ -367,7 +367,7 @@ public static CausalModel stealMasterKeyUnfoldedWithPreemption() {
                 (BasicBooleanOperator.OperatorType.and, Arrays.asList(u1GTP, u1GTK)));
 
         // Unfolded: U2 Decrypt The Key
-        ExogenousVariable u2FSExo = new ExogenousVariable("U2_From Script_exo");
+        ExogenousVariable u2FSExo = new ExogenousVariable("U2_From_Script_exo");
         EndogenousVariable u2FS = new EndogenousVariable("U2_From_Script", u2FSExo);
         ExogenousVariable u2FNExo = new ExogenousVariable("U2_From_Network_exo");
         EndogenousVariable u2FN = new EndogenousVariable("U2_From_Network", u2FNExo);
@@ -383,7 +383,7 @@ public static CausalModel stealMasterKeyUnfoldedWithPreemption() {
                 (BasicBooleanOperator.OperatorType.and, Arrays.asList(u2GTP, u2GTK)));
 
         // Unfolded: U3 Decrypt The Key
-        ExogenousVariable u3FSExo = new ExogenousVariable("U3_From Script_exo");
+        ExogenousVariable u3FSExo = new ExogenousVariable("U3_From_Script_exo");
         EndogenousVariable u3FS = new EndogenousVariable("U3_From_Script", u3FSExo);
         ExogenousVariable u3FNExo = new ExogenousVariable("U3_From_Network_exo");
         EndogenousVariable u3FN = new EndogenousVariable("U3_From_Network", u3FNExo);

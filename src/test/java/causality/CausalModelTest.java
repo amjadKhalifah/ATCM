@@ -26,7 +26,7 @@ public class CausalModelTest {
         billySuzyCausalModel = ModelProvider.billySuzyCausalModel();
         
         billySuzyCausalModelNoNegation = ModelProvider.billySuzyCausalModelRealNegation();
-stealMasterKeyXML = new File(this.getClass().getClassLoader()
+        stealMasterKeyXML = new File(this.getClass().getClassLoader()
                 .getResource("user_attribution/Steal_Master_Key_trimmed.adt").getPath()
                 .replaceAll("%20", " "));
 

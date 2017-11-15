@@ -131,6 +131,7 @@ public class EndogenousVariable extends Variable {
 			// convert the string representation in bindable structure
 			// e.gs (ST) (BH or SH) (BT and (not SH))
 			// trim, remove parantheses, split by space and loop with cases
+			
 			String clone = new String(formulaStr);
 			clone = clone.trim().replaceAll("\\(", "").replaceAll("\\)", "");
 			String[] tokens = clone.split(" ");
@@ -139,10 +140,11 @@ public class EndogenousVariable extends Variable {
 				this.setBindableFormula(Bindings.and(getProp(tokens[0]), TRUE));
 			} else // should be called for other than zero
 				this.setBindableFormula(createFormula(tokens, 1));
-
 		}
 		// we already calculated the formula
-		// now we set the value to the formula and bind it
+		// now we set the value to the formula and bind it//??????
+		// there are cases with the preemption where the formula was already bound so we reset it by unbinding it
+		this.getBindableProperty().unbind();
 		this.bindableProperty.set(this.getBindableFormula().getValue());
 		this.getBindableProperty().bind(bindableFormula);
 	}
@@ -229,7 +231,7 @@ public class EndogenousVariable extends Variable {
 		assert (token.equals("or") || token.equals("and"));
 		if (j < tokens.length - 2) // should exclude the last operator
 		{
-
+			
 			if (token.equals("or"))
 				return Bindings.or(getProp(tokens[j - 1]), createFormula(tokens, j + 2));
 			if (token.equals("and"))
@@ -253,8 +255,9 @@ public class EndogenousVariable extends Variable {
 	 * @return
 	 */
 	private BooleanExpression getProp(String name) {
-		BooleanExpression operand = getParentByName(name.replace("not", "")).getBindableProperty();
-		if (name.startsWith("not")) {
+		//TODO fix this !not and check when do we use - and ! and not
+		BooleanExpression operand = getParentByName(name.replace("!not", "")).getBindableProperty();
+		if (name.startsWith("!not")) {
 			return operand.not();
 		}
 		return operand;
