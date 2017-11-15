@@ -68,7 +68,8 @@ public abstract class Formula {
 		else if (this instanceof BasicBooleanOperator) {
 			BasicBooleanOperator operator = (BasicBooleanOperator) this;
 			List<Formula> formulas = operator.getFormulas();
-String negated = operator.getType() == BasicBooleanOperator.OperatorType.not ? "!" : "";
+			
+			String negated = operator.getType() == BasicBooleanOperator.OperatorType.not ? "!" : "";
             String operatorStr = operator.getType() == BasicBooleanOperator.OperatorType.not ?
                     BasicBooleanOperator.OperatorType.and.toString() : operator.getType().toString();
 
@@ -78,15 +79,16 @@ String negated = operator.getType() == BasicBooleanOperator.OperatorType.not ? "
 				if (formulasStr.equals("")) {
 					// first formula does not need an operator on the left
 					// unless it was not
+					//TODO check this after merge
 					if (operator.getType() == OperatorType.not) {
 						formulasStr += operator.getType() ;
 					}
 					formulasStr += formula.printInnerFormula(parents);
 				} else
-					formulasStr += " " + operator.getType() + " " + formula.printInnerFormula(parents);
+					formulasStr += " " + operatorStr+ " " + formula.printInnerFormula(parents);
 
 			}
- return negated + "(" + formulasStr + ")";
+			return negated + "(" + formulasStr + ")";
 		} else if (this instanceof ImplyOperator) {
 			ImplyOperator imply = (ImplyOperator) this;
 			Formula formulaLeft = imply.getLeftFormula();
@@ -162,4 +164,4 @@ String negated = operator.getType() == BasicBooleanOperator.OperatorType.not ? "
     }
 }
 
-}
+
