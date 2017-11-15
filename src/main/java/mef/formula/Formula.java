@@ -70,12 +70,12 @@ public abstract class Formula {
             for (Formula formula : formulas) {
                 if (formulasStr.equals(""))
                     // first formula does not need an operator on the left
-                    formulasStr += formula.printInnerFormula();
+                    formulasStr += negated + formula.printInnerFormula();
                 else
-                    formulasStr += " " + operatorStr + " " + formula.printInnerFormula();
+                    formulasStr += " " + operatorStr + " " + negated + formula.printInnerFormula();
             }
 
-            return negated + "(" + formulasStr + ")";
+            return "(" + formulasStr + ")";
         } else if (this instanceof ImplyOperator) {
             ImplyOperator imply = (ImplyOperator) this;
             Formula formulaLeft = imply.getLeftFormula();
