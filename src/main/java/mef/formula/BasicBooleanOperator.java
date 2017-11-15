@@ -2,6 +2,7 @@ package mef.formula;
 
 import org.dom4j.Element;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class BasicBooleanOperator extends BooleanOperator{
