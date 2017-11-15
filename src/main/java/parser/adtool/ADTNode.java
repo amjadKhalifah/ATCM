@@ -18,6 +18,7 @@ public class ADTNode {
         CONJUNCTIVE, DISJUNCTIVE
     }
 
+    public static final String USER_ATTRIBUTION_SEPARATOR = " ";
     private String ID;
     private String label;
     private List<ADTNode> children;
@@ -83,7 +84,7 @@ public class ADTNode {
 
     private ADTNode annotate(String annotation) {
         // prefix current label with annotation
-        this.label = annotation + " " + this.label;
+        this.label = annotation + USER_ATTRIBUTION_SEPARATOR + this.label;
         if (this.children != null) {
             // prefix all children
             for (ADTNode child : this.children) {

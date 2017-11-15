@@ -5,6 +5,7 @@ import mef.faulttree.*;
 import mef.formula.*;
 import mef.general.Constant;
 import mef.general.FloatConstant;
+import parser.adtool.ADTNode;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -105,7 +106,7 @@ public class CausalModel {
                 Example: User U1, non-user-specific variable VAR -> we search for 'U1 VAR'
                  */
                 EndogenousVariable currentUserVar = endogenousVariables.stream().filter(v -> v.getName()
-                        .startsWith(user.getName() + " ")).findFirst().get();
+                        .startsWith(user.getName() + ADTNode.USER_ATTRIBUTION_SEPARATOR)).findFirst().get();
                 // get those users that have a higher score than the current user
                 Set<User> usersWithHigherScore = users.stream().filter(u -> u.getScore() > user.getScore())
                         .collect(Collectors.toSet());
@@ -115,7 +116,7 @@ public class CausalModel {
                     // find the user-specific variables for the users with a higher score
                     for (User u : usersWithHigherScore) {
                         EndogenousVariable userVar = endogenousVariables.stream().filter(v -> v.getName()
-                                .startsWith(u.getName() + " ")).findFirst().get();
+                                .startsWith(u.getName() + ADTNode.USER_ATTRIBUTION_SEPARATOR)).findFirst().get();
                         negatedVariables.add(userVar);
                     }
                     // create a new NOT-operator
