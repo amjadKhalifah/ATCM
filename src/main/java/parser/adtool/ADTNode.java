@@ -18,7 +18,7 @@ public class ADTNode {
         CONJUNCTIVE, DISJUNCTIVE
     }
 
-    public static final String USER_ATTRIBUTION_SEPARATOR = " ";
+    public static final String USER_ATTRIBUTION_SEPARATOR = "_";
     private String ID;
     private String label;
     private List<ADTNode> children;
