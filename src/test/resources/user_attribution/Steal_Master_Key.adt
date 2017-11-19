@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <adtree>
 	<node refinement="disjunctive">
-		<label>Steal Master Key</label>
+		<label>Steal_Master_Key</label>
 		<node refinement="conjunctive">
-			<label>Decrypt The Key</label>
+			<label>Decrypt_The_Key</label>
 			<node refinement="disjunctive">
-				<label>Get The Passphrase</label>
+				<label>Get_The_Passphrase</label>
 				<node refinement="conjunctive">
-					<label>From Script</label>
+					<label>From_Script</label>
 				</node>
 				<node refinement="conjunctive">
-					<label>From Network</label>
+					<label>From_Network</label>
 				</node>
 			</node>
 			<node refinement="disjunctive">
-				<label>Get The Key</label>
+				<label>Get_The_Key</label>
 				<node refinement="conjunctive">
-					<label>From File</label>
+					<label>From_File</label>
 				</node>
 				<node refinement="conjunctive">
-					<label>From DB</label>
+					<label>From_DB</label>
 				</node>
 			</node>
 		</node>
 		<node refinement="disjunctive">
-			<label>Steal Decrypted</label>
+			<label>Steal_Decrypted</label>
 			<node refinement="conjunctive">
-				<label>From Key Management Service</label>
+				<label>From_Key_Management_Service</label>
 				<node refinement="conjunctive">
 					<label>Access</label>
 				</node>
 				<node refinement="conjunctive">
-					<label>Attach Debugger</label>
+					<label>Attach_Debugger</label>
 				</node>
 			</node>
 		</node>

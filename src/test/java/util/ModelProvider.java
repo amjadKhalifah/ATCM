@@ -222,51 +222,51 @@ public class ModelProvider {
          */
 
         // Unfolded: U1 Decrypt The Key
-        ExogenousVariable u1FSExo = new ExogenousVariable("U1_From Script_exo");
-        EndogenousVariable u1FS = new EndogenousVariable("U1_From Script", u1FSExo);
-        ExogenousVariable u1FNExo = new ExogenousVariable("U1_From Network_exo");
-        EndogenousVariable u1FN = new EndogenousVariable("U1_From Network", u1FNExo);
-        ExogenousVariable u1FFExo = new ExogenousVariable("U1_From File_exo");
-        EndogenousVariable u1FF = new EndogenousVariable("U1_From File", u1FFExo);
-        ExogenousVariable u1FDExo = new ExogenousVariable("U1_From DB_exo");
-        EndogenousVariable u1FD = new EndogenousVariable("U1_From DB", u1FDExo);
-        EndogenousVariable u1GTP = new EndogenousVariable("U1_Get The Passphrase", new BasicBooleanOperator
+        ExogenousVariable u1FSExo = new ExogenousVariable("U1_From_Script_exo");
+        EndogenousVariable u1FS = new EndogenousVariable("U1_From_Script", u1FSExo);
+        ExogenousVariable u1FNExo = new ExogenousVariable("U1_From_Network_exo");
+        EndogenousVariable u1FN = new EndogenousVariable("U1_From_Network", u1FNExo);
+        ExogenousVariable u1FFExo = new ExogenousVariable("U1_From_File_exo");
+        EndogenousVariable u1FF = new EndogenousVariable("U1_From_File", u1FFExo);
+        ExogenousVariable u1FDExo = new ExogenousVariable("U1_From_DB_exo");
+        EndogenousVariable u1FD = new EndogenousVariable("U1_From_DB", u1FDExo);
+        EndogenousVariable u1GTP = new EndogenousVariable("U1_Get_The_Passphrase", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u1FS, u1FN)));
-        EndogenousVariable u1GTK = new EndogenousVariable("U1_Get The Key", new BasicBooleanOperator
+        EndogenousVariable u1GTK = new EndogenousVariable("U1_Get_The_Key", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u1FF, u1FD)));
-        EndogenousVariable u1DTK = new EndogenousVariable("U1_Decrypt The Key", new BasicBooleanOperator
+        EndogenousVariable u1DTK = new EndogenousVariable("U1_Decrypt_The_Key", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.and, Arrays.asList(u1GTP, u1GTK)));
 
         // Unfolded: U2 Decrypt The Key
-        ExogenousVariable u2FSExo = new ExogenousVariable("U2_From Script_exo");
-        EndogenousVariable u2FS = new EndogenousVariable("U2_From Script", u2FSExo);
-        ExogenousVariable u2FNExo = new ExogenousVariable("U2_From Network_exo");
-        EndogenousVariable u2FN = new EndogenousVariable("U2_From Network", u2FNExo);
-        ExogenousVariable u2FFExo = new ExogenousVariable("U2_From File_exo");
-        EndogenousVariable u2FF = new EndogenousVariable("U2_From File", u2FFExo);
-        ExogenousVariable u2FDExo = new ExogenousVariable("U2_From DB_exo");
-        EndogenousVariable u2FD = new EndogenousVariable("U2_From DB", u2FDExo);
-        EndogenousVariable u2GTP = new EndogenousVariable("U2_Get The Passphrase", new BasicBooleanOperator
+        ExogenousVariable u2FSExo = new ExogenousVariable("U2_From_Script_exo");
+        EndogenousVariable u2FS = new EndogenousVariable("U2_From_Script", u2FSExo);
+        ExogenousVariable u2FNExo = new ExogenousVariable("U2_From_Network_exo");
+        EndogenousVariable u2FN = new EndogenousVariable("U2_From_Network", u2FNExo);
+        ExogenousVariable u2FFExo = new ExogenousVariable("U2_From_File_exo");
+        EndogenousVariable u2FF = new EndogenousVariable("U2_From_File", u2FFExo);
+        ExogenousVariable u2FDExo = new ExogenousVariable("U2_From_DB_exo");
+        EndogenousVariable u2FD = new EndogenousVariable("U2_From_DB", u2FDExo);
+        EndogenousVariable u2GTP = new EndogenousVariable("U2_Get_The_Passphrase", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u2FS, u2FN)));
-        EndogenousVariable u2GTK = new EndogenousVariable("U2_Get The Key", new BasicBooleanOperator
+        EndogenousVariable u2GTK = new EndogenousVariable("U2_Get_The_Key", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u2FF, u2FD)));
-        EndogenousVariable u2DTK = new EndogenousVariable("U2_Decrypt The Key", new BasicBooleanOperator
+        EndogenousVariable u2DTK = new EndogenousVariable("U2_Decrypt_The_Key", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.and, Arrays.asList(u2GTP, u2GTK)));
 
         // Unfolded: U3 Decrypt The Key
-        ExogenousVariable u3FSExo = new ExogenousVariable("U3_From Script_exo");
-        EndogenousVariable u3FS = new EndogenousVariable("U3_From Script", u3FSExo);
-        ExogenousVariable u3FNExo = new ExogenousVariable("U3_From Network_exo");
-        EndogenousVariable u3FN = new EndogenousVariable("U3_From Network", u3FNExo);
-        ExogenousVariable u3FFExo = new ExogenousVariable("U3_From File_exo");
-        EndogenousVariable u3FF = new EndogenousVariable("U3_From File", u3FFExo);
-        ExogenousVariable u3FDExo = new ExogenousVariable("U3_From DB_exo");
-        EndogenousVariable u3FD = new EndogenousVariable("U3_From DB", u3FDExo);
-        EndogenousVariable u3GTP = new EndogenousVariable("U3_Get The Passphrase", new BasicBooleanOperator
+        ExogenousVariable u3FSExo = new ExogenousVariable("U3_From_Script_exo");
+        EndogenousVariable u3FS = new EndogenousVariable("U3_From_Script", u3FSExo);
+        ExogenousVariable u3FNExo = new ExogenousVariable("U3_From_Network_exo");
+        EndogenousVariable u3FN = new EndogenousVariable("U3_From_Network", u3FNExo);
+        ExogenousVariable u3FFExo = new ExogenousVariable("U3_From_File_exo");
+        EndogenousVariable u3FF = new EndogenousVariable("U3_From_File", u3FFExo);
+        ExogenousVariable u3FDExo = new ExogenousVariable("U3_From_DB_exo");
+        EndogenousVariable u3FD = new EndogenousVariable("U3_From_DB", u3FDExo);
+        EndogenousVariable u3GTP = new EndogenousVariable("U3_Get_The_Passphrase", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u3FS, u3FN)));
-        EndogenousVariable u3GTK = new EndogenousVariable("U3_Get The Key", new BasicBooleanOperator
+        EndogenousVariable u3GTK = new EndogenousVariable("U3_Get_The_Key", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u3FF, u3FD)));
-        EndogenousVariable u3DTK = new EndogenousVariable("U3_Decrypt The Key", new BasicBooleanOperator
+        EndogenousVariable u3DTK = new EndogenousVariable("U3_Decrypt_The_Key", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.and, Arrays.asList(u3GTP, u3GTK)));
 
         // Preemption Decrypt The Key
@@ -282,31 +282,31 @@ public class ModelProvider {
         // Unfolded: U1 Steal Decrypted
         ExogenousVariable u1AExo = new ExogenousVariable("U1_Access_exo");
         EndogenousVariable u1A = new EndogenousVariable("U1_Access", u1AExo);
-        ExogenousVariable u1ADExo = new ExogenousVariable("U1_Attach Debugger_exo");
-        EndogenousVariable u1AD = new EndogenousVariable("U1_Attach Debugger", u1ADExo);
-        EndogenousVariable u1FKMS = new EndogenousVariable("U1_From Key Management Service", new
+        ExogenousVariable u1ADExo = new ExogenousVariable("U1_Attach_Debugger_exo");
+        EndogenousVariable u1AD = new EndogenousVariable("U1_Attach_Debugger", u1ADExo);
+        EndogenousVariable u1FKMS = new EndogenousVariable("U1_From_Key_Management_Service", new
                 BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, Arrays.asList(u1A, u1AD)));
-        EndogenousVariable u1SD = new EndogenousVariable("U1_Steal Decrypted", new BasicBooleanOperator
+        EndogenousVariable u1SD = new EndogenousVariable("U1_Steal_Decrypted", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u1FKMS)));
 
         // Unfolded: U2 Steal Decrypted
         ExogenousVariable u2AExo = new ExogenousVariable("U2_Access_exo");
         EndogenousVariable u2A = new EndogenousVariable("U2_Access", u2AExo);
-        ExogenousVariable u2ADExo = new ExogenousVariable("U2_Attach Debugger_exo");
-        EndogenousVariable u2AD = new EndogenousVariable("U2_Attach Debugger", u2ADExo);
-        EndogenousVariable u2FKMS = new EndogenousVariable("U2_From Key Management Service", new
+        ExogenousVariable u2ADExo = new ExogenousVariable("U2_Attach_Debugger_exo");
+        EndogenousVariable u2AD = new EndogenousVariable("U2_Attach_Debugger", u2ADExo);
+        EndogenousVariable u2FKMS = new EndogenousVariable("U2_From_Key_Management_Service", new
                 BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, Arrays.asList(u2A, u2AD)));
-        EndogenousVariable u2SD = new EndogenousVariable("U2_Steal Decrypted", new BasicBooleanOperator
+        EndogenousVariable u2SD = new EndogenousVariable("U2_Steal_Decrypted", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u2FKMS)));
 
         // Unfolded: U1 Steal Decrypted
         ExogenousVariable u3AExo = new ExogenousVariable("U3_Access_exo");
         EndogenousVariable u3A = new EndogenousVariable("U3_Access", u3AExo);
-        ExogenousVariable u3ADExo = new ExogenousVariable("U3_Attach Debugger_exo");
-        EndogenousVariable u3AD = new EndogenousVariable("U3_Attach Debugger", u3ADExo);
-        EndogenousVariable u3FKMS = new EndogenousVariable("U3_From Key Management Service", new
+        ExogenousVariable u3ADExo = new ExogenousVariable("U3_Attach_Debugger_exo");
+        EndogenousVariable u3AD = new EndogenousVariable("U3_Attach_Debugger", u3ADExo);
+        EndogenousVariable u3FKMS = new EndogenousVariable("U3_From_Key_Management_Service", new
                 BasicBooleanOperator(BasicBooleanOperator.OperatorType.and, Arrays.asList(u3A, u3AD)));
-        EndogenousVariable u3SD = new EndogenousVariable("U3_Steal Decrypted", new BasicBooleanOperator
+        EndogenousVariable u3SD = new EndogenousVariable("U3_Steal_Decrypted", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u3FKMS)));
 
         // Preemption Steal Decrypted
@@ -320,11 +320,11 @@ public class ModelProvider {
                 Arrays.asList(u3SD.getFormula(), not4)));
 
         // Non-user-specific
-        EndogenousVariable dtk = new EndogenousVariable("Decrypt The Key", new BasicBooleanOperator
+        EndogenousVariable dtk = new EndogenousVariable("Decrypt_The_Key", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u1DTK, u2DTK, u3DTK)));
-        EndogenousVariable sd = new EndogenousVariable("Steal Decrypted", new BasicBooleanOperator
+        EndogenousVariable sd = new EndogenousVariable("Steal_Decrypted", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(u1SD, u2SD, u3SD)));
-        EndogenousVariable smk = new EndogenousVariable("Steal Master Key", new BasicBooleanOperator
+        EndogenousVariable smk = new EndogenousVariable("Steal_Master_Key", new BasicBooleanOperator
                 (BasicBooleanOperator.OperatorType.or, Arrays.asList(dtk, sd)));
 
         // all variables
@@ -336,7 +336,7 @@ public class ModelProvider {
                 u2A, u2AExo, u2AD, u2ADExo, u2FKMS, u2SD,
                 u3A, u3AExo, u3AD, u3ADExo, u3FKMS, u3SD,
                 dtk, sd, smk));
-        CausalModel causalModel = new CausalModel("Steal Master Key", variables);
+        CausalModel causalModel = new CausalModel("Steal_Master_Key", variables);
         return causalModel;
     }
 }
