@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <emfta:FTAModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:emfta="http://cmu.edu/emfta"
                 root="//@events.0" >
-    <events name="Transfer Money out of account" probability="0.997" description="">
+    <events name="Transfer_Money_out_of_account" probability="0.997" description="">
         <gate events="//@events.1 //@events.2 //@events.3"/>
     </events>
-    <events name="obtain online" probability="0.995" description=""/>
-    <events name="hijack bank server" probability="0.1045"/>
-    <events name="initial transfer via debit card" probability="0.35"/>
+    <events name="obtain_online" probability="0.995" description=""/>
+    <events name="hijack_bank_server" probability="0.1045"/>
+    <events name="initial_transfer_via_debit_card" probability="0.35"/>
 </emfta:FTAModel>
