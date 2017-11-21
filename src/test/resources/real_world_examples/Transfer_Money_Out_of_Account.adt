@@ -1,70 +1,70 @@
 <?xml version='1.0'?>
 <adtree>
 	<node refinement="disjunctive">
-		<label>Transfer Money Out of Account</label>
+		<label>Transfer_Money_Out_of_Account</label>
 		<node refinement="disjunctive">
-			<label>Obtain Online Access to Account</label>
+			<label>Obtain_Online_Access_to_Account</label>
 			<node refinement="disjunctive">
-				<label>Guess ID and Password</label>
+				<label>Guess_ID_and_Password</label>
 				<node refinement="conjunctive">
-					<label>Dictionary Attack</label>
+					<label>Dictionary_Attack</label>
 					<node refinement="conjunctive">
-						<label>Guess ID</label>
+						<label>Guess_ID</label>
 						<parameter domainId="ProbSucc1" category="basic">0.7</parameter>
 					</node>
 					<node refinement="conjunctive">
-						<label>Guess Password</label>
+						<label>Guess_Password</label>
 						<parameter domainId="ProbSucc1" category="basic">0.1</parameter>
 					</node>
 				</node>
 				<node refinement="conjunctive">
-					<label>Brute Force Attack</label>
+					<label>Brute_Force_Attack</label>
 					<node refinement="conjunctive">
-						<label>Guess ID</label>
+						<label>Guess_ID</label>
 						<parameter domainId="ProbSucc1" category="basic">0.7</parameter>
 					</node>
 					<node refinement="conjunctive">
-						<label>Brute Force Password</label>
+						<label>Brute_Force_Password</label>
 						<parameter domainId="ProbSucc1" category="basic">0.5</parameter>
 					</node>
 				</node>
 			</node>
 			<node refinement="disjunctive">
-				<label>Steal ID and Password</label>
+				<label>Steal_ID_and_Password</label>
 				<node refinement="disjunctive">
-					<label>Social Engineering</label>
+					<label>Social_Engineering</label>
 					<node refinement="conjunctive">
-						<label>Phishing Attack</label>
+						<label>Phishing_Attack</label>
 						<parameter domainId="ProbSucc1" category="basic">0.5</parameter>
 					</node>
 					<node refinement="conjunctive">
-						<label>Obtain via Phone Call WIth User</label>
+						<label>Obtain_via_Phone_Call_WIth_User</label>
 						<parameter domainId="ProbSucc1" category="basic">0.05</parameter>
 					</node>
 					<node refinement="conjunctive">
-						<label>Shoulder Surfing</label>
+						<label>Shoulder_Surfing</label>
 						<parameter domainId="ProbSucc1" category="basic">0.1</parameter>
 					</node>
 				</node>
 				<node refinement="disjunctive">
-					<label>Man in the Middle Attack</label>
+					<label>Man_in_the_Middle_Attack</label>
 					<node refinement="conjunctive">
-						<label>Evil Twin Wireless</label>
+						<label>Evil_Twin_Wireless</label>
 						<parameter domainId="ProbSucc1" category="basic">0.2</parameter>
 					</node>
 					<node refinement="conjunctive">
-						<label>On Network</label>
+						<label>On_Network</label>
 						<parameter domainId="ProbSucc1" category="basic">0.5</parameter>
 					</node>
 				</node>
 				<node refinement="disjunctive">
-					<label>Buy ID or Password Set</label>
+					<label>Buy_ID_or_Password_Set</label>
 					<node refinement="conjunctive">
-						<label>From Organized Crime</label>
+						<label>From_Organized_Crime</label>
 						<parameter domainId="ProbSucc1" category="basic">0.5</parameter>
 					</node>
 					<node refinement="conjunctive">
-						<label>From Insider</label>
+						<label>From_Insider</label>
 						<parameter domainId="ProbSucc1" category="basic">0.9</parameter>
 					</node>
 				</node>
@@ -75,28 +75,28 @@
 			</node>
 		</node>
 		<node refinement="disjunctive">
-			<label>Highjack Bank Server</label>
+			<label>Highjack_Bank_Server</label>
 			<node refinement="conjunctive">
-				<label>Inside Attack</label>
+				<label>Inside_Attack</label>
 				<parameter domainId="ProbSucc1" category="basic">0.1</parameter>
 			</node>
 			<node refinement="conjunctive">
-				<label>Outside Attack</label>
+				<label>Outside_Attack</label>
 				<parameter domainId="ProbSucc1" category="basic">0.005</parameter>
 			</node>
 		</node>
 		<node refinement="conjunctive">
-			<label>Initiate Transfer via Debit Card</label>
+			<label>Initiate_Transfer_via_Debit_Card</label>
 			<node refinement="conjunctive">
-				<label>Obtain Debit Card Number</label>
+				<label>Obtain_Debit_Card_Number</label>
 				<parameter domainId="ProbSucc1" category="basic">0.5</parameter>
 			</node>
 			<node refinement="conjunctive">
-				<label>Obtain Pin</label>
+				<label>Obtain_Pin</label>
 				<parameter domainId="ProbSucc1" category="basic">0.7</parameter>
 			</node>
 			<node refinement="conjunctive">
-				<label>Access Transfer Network</label>
+				<label>Access_Transfer_Network</label>
 				<parameter domainId="ProbSucc1" category="basic">0.1</parameter>
 			</node>
 		</node>

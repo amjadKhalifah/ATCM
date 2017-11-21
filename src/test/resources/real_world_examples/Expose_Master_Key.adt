@@ -1,15 +1,15 @@
 <?xml version='1.0'?>
 <adtree>
 	<node refinement="disjunctive">
-		<label>Expose Master Key</label>
+		<label>Expose_Master_Key</label>
 		<node refinement="conjunctive">
-			<label>Decrypt the key</label>
+			<label>Decrypt_the_key</label>
 			<node refinement="disjunctive">
-				<label>Obtain the encrypted key</label>
+				<label>Obtain_the_encrypted_key</label>
 				<node refinement="conjunctive">
-					<label>From DB</label>
+					<label>From_DB</label>
 					<node refinement="conjunctive">
-						<label>File access</label>
+						<label>File_access</label>
 					</node>
 					<node refinement="conjunctive">
 						<label>Login</label>
@@ -19,13 +19,13 @@
 					<label>Network</label>
 				</node>
 				<node refinement="conjunctive">
-					<label>From KMS memory</label>
+					<label>From_KMS_memory</label>
 				</node>
 			</node>
 			<node refinement="disjunctive">
-				<label>Obtain the passphrase</label>
+				<label>Obtain_the_passphrase</label>
 				<node refinement="conjunctive">
-					<label>From KMS memory</label>
+					<label>From_KMS_memory</label>
 				</node>
 				<node refinement="conjunctive">
 					<label>Others</label>
@@ -33,9 +33,9 @@
 			</node>
 		</node>
 		<node refinement="conjunctive">
-			<label>Obtain the key from memory</label>
+			<label>Obtain_the_key_from_memory</label>
 			<node refinement="conjunctive">
-				<label>From KMS memory</label>
+				<label>From_KMS_memory</label>
 			</node>
 		</node>
 	</node>

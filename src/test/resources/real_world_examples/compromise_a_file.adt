@@ -1,61 +1,53 @@
 <?xml version='1.0'?>
 <adtree>
 	<node refinement="disjunctive">
-		<label>compromise a tree
-</label>
+		<label>compromise_a_tree</label>
 		<node refinement="disjunctive">
-			<label>delete a file
-</label>
+			<label>delete_a_file</label>
 			<node refinement="disjunctive">
-				<label>delete on disk
-</label>
+				<label>delete_on_disk</label>
 				<node refinement="conjunctive">
-					<label>root access</label>
+					<label>root_access</label>
 				</node>
 				<node refinement="conjunctive">
-					<label>impersionate an admin
-</label>
+					<label>impersionate_an_admin</label>
 				</node>
 			</node>
 		</node>
 		<node refinement="disjunctive">
-			<label>tamper with a file
-</label>
+			<label>tamper_with_a_file</label>
 			<node refinement="conjunctive">
-				<label>on client
-</label>
+				<label>on_client</label>
 			</node>
 			<node refinement="conjunctive">
-				<label>internal communication</label>
+				<label>internal_communication</label>
 			</node>
 			<node refinement="disjunctive">
-				<label>blocker memory</label>
+				<label>blocker_memory</label>
 			</node>
 			<node refinement="disjunctive">
 				<label>disk</label>
 				<node refinement="disjunctive">
-					<label>decrypted file</label>
+					<label>decrypted_file</label>
 					<node refinement="disjunctive">
-						<label>obtain master key</label>
+						<label>obtain_master_key</label>
 					</node>
 				</node>
 				<node refinement="disjunctive">
-					<label>encrypted file</label>
+					<label>encrypted_file</label>
 				</node>
 			</node>
 		</node>
 		<node refinement="disjunctive">
-			<label>read a file</label>
+			<label>read_a_file</label>
 			<node refinement="conjunctive">
-				<label>client
-</label>
+				<label>client</label>
 			</node>
 			<node refinement="conjunctive">
-				<label>internal communication</label>
+				<label>internal_communication</label>
 			</node>
 			<node refinement="conjunctive">
-				<label>blocker memory
-</label>
+				<label>blocker_memory</label>
 			</node>
 			<node refinement="disjunctive">
 				<label>N_27</label>
@@ -68,17 +60,16 @@
 				<node refinement="conjunctive">
 					<label>decrypt</label>
 					<node refinement="disjunctive">
-						<label>obtain the master key</label>
+						<label>obtain_the_master_key</label>
 					</node>
 					<node refinement="disjunctive">
-						<label>decrypt the file</label>
+						<label>decrypt_the_file</label>
 					</node>
 				</node>
 			</node>
 		</node>
 		<node refinement="disjunctive">
-			<label>copy a file
-</label>
+			<label>copy_a_file</label>
 		</node>
 	</node>
 </adtree>

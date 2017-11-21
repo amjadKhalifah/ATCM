@@ -1,23 +1,23 @@
 <?xml version='1.0'?>
 <adtree>
 	<node refinement="disjunctive">
-		<label>Get Free TV From Electronics Store</label>
+		<label>Get_Free_TV_From_Electronics_Store</label>
 		<node refinement="conjunctive">
-			<label>Steal TV From Customer</label>
+			<label>Steal_TV_From_Customer</label>
 			<node refinement="conjunctive">
-				<label>Follow Customer Who Purchased TV</label>
+				<label>Follow_Customer_Who_Purchased_TV</label>
 			</node>
 			<node refinement="conjunctive">
-				<label>Grab TV From Customer</label>
+				<label>Grab_TV_From_Customer</label>
 			</node>
 		</node>
 		<node refinement="disjunctive">
-			<label>Steal TV From Store</label>
+			<label>Steal_TV_From_Store</label>
 			<node refinement="conjunctive">
-				<label>Steal From Shelf</label>
+				<label>Steal_From_Shelf</label>
 			</node>
 			<node refinement="conjunctive">
-				<label>Steal From Delivery Truck</label>
+				<label>Steal_From_Delivery_Truck</label>
 			</node>
 		</node>
 	</node>
