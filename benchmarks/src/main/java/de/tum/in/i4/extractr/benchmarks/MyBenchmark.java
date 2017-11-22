@@ -29,16 +29,47 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.sample;
+package de.tum.in.i4.extractr.benchmarks;
 
-import org.openjdk.jmh.annotations.Benchmark;
+import attacker_attribution.User;
+import attacker_attribution.UserParser;
+import causality.CausalModel;
+import mef.faulttree.FaultTreeDefinition;
+import org.openjdk.jmh.annotations.*;
+import parser.adtool.ADTParser;
+
+import java.io.File;
+import java.util.Set;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class MyBenchmark {
 
+    @State(Scope.Benchmark)
+    public static class MyState {
+        ADTParser adtParser;
+        File users;
+        File stealMasterKeyXML;
+
+        @Setup(Level.Invocation)
+        public void doSetup() {
+            String projectRoot = System.getProperty("user.dir") + "/";
+
+            adtParser = new ADTParser();
+            users = new File(projectRoot + "../src/test/resources/user_attribution/users.xml");
+            stealMasterKeyXML = new File(projectRoot + "../src/test/resources/user_attribution/Steal_Master_Key.adt");
+            System.out.println("Do Setup");
+        }
+    }
+
     @Benchmark
-    public void testMethod() {
-        // This is a demo/sample template for building your JMH benchmarks. Edit as needed.
-        // Put your benchmark code here.
+    @Warmup(iterations = 3, time = 10, timeUnit = MILLISECONDS)
+    @Measurement(iterations = 3, time = 10, timeUnit = MILLISECONDS)
+    @BenchmarkMode(Mode.All)
+    public void testMethod(MyState state) {
+        Set<User> users = UserParser.parse(state.users);
+        FaultTreeDefinition stealMasterKeyMEF = state.adtParser.toMEF(state.stealMasterKeyXML, users);
+        CausalModel.fromMEF(stealMasterKeyMEF, users);
     }
 
 }
