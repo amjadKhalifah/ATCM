@@ -1,9 +1,11 @@
 package causality;
 
+import attacker_attribution.User;
 import mef.faulttree.*;
 import mef.formula.*;
 import mef.general.Constant;
 import mef.general.FloatConstant;
+import parser.adtool.ADTNode;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -53,6 +55,102 @@ public class CausalModel {
         // create causal model using all the previously created variables
         CausalModel causalModel = new CausalModel(name, new HashSet<>(variables.values()));
         return causalModel;
+    }
+
+    public static CausalModel fromMEF(FaultTreeDefinition faultTreeDefinition, Set<User> users) {
+        CausalModel causalModel = fromMEF(faultTreeDefinition);
+        // TODO special case that tree consists of root node only
+        
+        // since a tree has exactly one root, we can safely assume that there is exactly one root variable
+        EndogenousVariable rootVariable = (EndogenousVariable) causalModel.getRootVariables().stream().findFirst().get();
+        if (rootVariable.getFormula() instanceof EndogenousVariable) {
+            EndogenousVariable endogenousVariable = (EndogenousVariable) rootVariable.getFormula();
+            // no branch
+            causalModel.preemption(endogenousVariable, users);
+        } else if (rootVariable.getFormula() instanceof BasicBooleanOperator) {
+            // branch exists
+            BasicBooleanOperator basicBooleanOperator = (BasicBooleanOperator) rootVariable.getFormula();
+            for (Formula formula: basicBooleanOperator.getFormulas()) {
+                if (formula instanceof EndogenousVariable) {
+                    EndogenousVariable endogenousVariable = (EndogenousVariable) formula;
+                    causalModel.preemption(endogenousVariable, users);
+                }
+            }
+        }
+
+        return causalModel;
+    }
+
+    private void preemption(EndogenousVariable endogenousVariable, Set<User> users) {
+        /*
+        We assume that the passed endogenousVariable opens a branch that holds the respective user-specific subtrees
+         */
+        if (endogenousVariable.getFormula() instanceof BasicBooleanOperator) {
+            BasicBooleanOperator basicBooleanOperator = (BasicBooleanOperator) endogenousVariable.getFormula();
+            /*
+            we assume that the operator contains endogenous variables only, but we filter just to make sure.
+            Furthermore, we assume that those variables are the ones which we want to connect with each other using
+            preeption relations.
+             */
+            Set<EndogenousVariable> endogenousVariables = basicBooleanOperator.getFormulas().stream()
+                    .filter(f -> f instanceof EndogenousVariable).map(f -> (EndogenousVariable) f)
+                    .collect(Collectors.toSet());
+
+            /*
+            For each user, we determine those users who have a higher score than the current one. Then we no, that
+            the user-specific variable of the current user is preempted by the other users.
+             */
+            for (User user : users) {
+                /*
+                get the user-specific variable for the current user.
+                Example: User U1, non-user-specific variable VAR -> we search for 'U1 VAR'
+                 */
+                EndogenousVariable currentUserVar = endogenousVariables.stream().filter(v -> v.getName()
+                        .startsWith(user.getName() + ADTNode.USER_ATTRIBUTION_SEPARATOR)).findFirst().get();
+                // get those users that have a higher score than the current user
+                Set<User> usersWithHigherScore = users.stream().filter(u -> u.getScore() > user.getScore())
+                        .collect(Collectors.toSet());
+                // only add preemption if there exist users with a higher score
+                if (usersWithHigherScore.size() > 0) {
+                    List<Formula> negatedVariables = new ArrayList<>();
+                    // find the user-specific variables for the users with a higher score
+                    for (User u : usersWithHigherScore) {
+                        EndogenousVariable userVar = endogenousVariables.stream().filter(v -> v.getName()
+                                .startsWith(u.getName() + ADTNode.USER_ATTRIBUTION_SEPARATOR)).findFirst().get();
+                        negatedVariables.add(userVar);
+                    }
+                    // create a new NOT-operator
+                    BasicBooleanOperator not = new BasicBooleanOperator(BasicBooleanOperator.OperatorType.not, negatedVariables);
+                /*
+                update the formula of the current variable by adding and AND NOT (user-specific vars with higher score
+                 */
+                    currentUserVar.setFormula(new BasicBooleanOperator(BasicBooleanOperator.OperatorType.and,
+                            Arrays.asList(currentUserVar.getFormula(), not)));
+                }
+            }
+        }
+    }
+
+    /**
+     * Find those variables in a causal model that do not appear in a formula of any other variable.
+     * @return
+     */
+    public Set<Variable> getRootVariables() {
+        Set<Variable> rootVariables = new HashSet<>();
+        for (Variable variable1 : this.variables) {
+            boolean isRoot = true;
+            for (Variable variable2 : this.variables) {
+                // check if variable1 is contained in the formula of variable2
+                if (variable1 != variable2 && variable2.containsVariable(variable1)) {
+                    isRoot = false;
+                    break;
+                }
+            }
+            // if isRoot flag has not set to false before, add current variable to root variables
+            if (isRoot)
+                rootVariables.add(variable1);
+        }
+        return rootVariables;
     }
 
     // convert formula from MEF/Open-PSA to causal model formula

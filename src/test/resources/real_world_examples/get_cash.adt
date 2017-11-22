@@ -1,98 +1,98 @@
 <?xml version='1.0'?>
 <adtree>
 	<node refinement="disjunctive">
-		<label>get cash</label>
+		<label>get_cash</label>
 		<node refinement="conjunctive">
-			<label>get cash at ATM</label>
+			<label>get_cash_at_ATM</label>
 			<node refinement="disjunctive">
-				<label>goto ATM</label>
+				<label>goto_ATM</label>
 			</node>
 			<node refinement="disjunctive">
-				<label>get card and pin and input cash at ATM</label>
+				<label>get_card_and_pin_and_input_cash_at_ATM</label>
 				<node refinement="disjunctive">
-					<label>get Charlies credentials and perform action</label>
+					<label>get_Charlies_credentials_and_perform_action</label>
 					<node refinement="disjunctive">
-						<label>innput cash at ATM</label>
+						<label>innput_cash_at_ATM</label>
 						<node refinement="disjunctive">
-							<label>in cash at ATM</label>
+							<label>in_cash_at_ATM</label>
 						</node>
 					</node>
 				</node>
 				<node refinement="conjunctive">
-					<label>get Alices credentials and perform action</label>
+					<label>get_Alices_credentials_and_perform_action</label>
 					<node refinement="conjunctive">
-						<label>get credentials</label>
+						<label>get_credentials</label>
 						<node refinement="conjunctive">
-							<label>get card</label>
+							<label>get_card</label>
 							<node refinement="conjunctive">
-								<label>goto Home</label>
+								<label>goto_Home</label>
 								<node refinement="conjunctive">
-									<label>goto Door and get trust</label>
+									<label>goto_Door_and_get_trust</label>
 									<node refinement="disjunctive">
-										<label>SE Alice move Door</label>
+										<label>SE_Alice_move_Door</label>
 									</node>
 									<node refinement="disjunctive">
-										<label>move Door</label>
+										<label>move_Door</label>
 									</node>
 								</node>
 								<node refinement="disjunctive">
-									<label>move Home</label>
+									<label>move_Home</label>
 								</node>
 							</node>
 							<node refinement="disjunctive">
-								<label>perform in at Alice</label>
+								<label>perform_in_at_Alice</label>
 								<node refinement="disjunctive">
-									<label>in card at Alice</label>
+									<label>in_card_at_Alice</label>
 								</node>
 								<node refinement="disjunctive">
-									<label>SE Alice in Card</label>
+									<label>SE_Alice_in_Card</label>
 								</node>
 							</node>
 						</node>
 						<node refinement="conjunctive">
-							<label>get pin</label>
+							<label>get_pin</label>
 							<node refinement="conjunctive">
-								<label>goto Home</label>
+								<label>goto_Home</label>
 								<node refinement="conjunctive">
-									<label>goto Door and get trust</label>
+									<label>goto_Door_and_get_trust</label>
 									<node refinement="disjunctive">
-										<label>SE Alice move Door</label>
+										<label>SE_Alice_move_Door</label>
 									</node>
 									<node refinement="conjunctive">
-										<label>move Door</label>
+										<label>move_Door</label>
 									</node>
 								</node>
 								<node refinement="disjunctive">
-									<label>move Home</label>
+									<label>move_Home</label>
 								</node>
 							</node>
 							<node refinement="disjunctive">
-								<label>perform in at Alice</label>
+								<label>perform_in_at_Alice</label>
 								<node refinement="disjunctive">
-									<label>SE Alice in Pin</label>
+									<label>SE_Alice_in_Pin</label>
 								</node>
 								<node refinement="conjunctive">
-									<label>get card</label>
+									<label>get_card</label>
 									<node refinement="disjunctive">
-										<label>perform in at Alice</label>
+										<label>perform_in_at_Alice</label>
 										<node refinement="disjunctive">
-											<label>in card at Alice</label>
+											<label>in_card_at_Alice</label>
 										</node>
 										<node refinement="disjunctive">
-											<label>SE Alice in Card</label>
+											<label>SE_Alice_in_Card</label>
 										</node>
 									</node>
 									<node refinement="disjunctive">
-										<label>in pin at card</label>
+										<label>in_pin_at_card</label>
 									</node>
 								</node>
 							</node>
 						</node>
 					</node>
 					<node refinement="disjunctive">
-						<label>input cash at ATM</label>
+						<label>input_cash_at_ATM</label>
 						<node refinement="disjunctive">
-							<label>in cash at ATM</label>
+							<label>in_cash_at_ATM</label>
 						</node>
 					</node>
 				</node>

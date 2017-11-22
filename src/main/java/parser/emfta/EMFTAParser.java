@@ -11,6 +11,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import parser.Parser;
 import parser.XMLParser;
+import attacker_attribution.User;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -131,7 +132,7 @@ public class EMFTAParser extends Parser {
      * @return
      */
     @Override
-    public FaultTreeDefinition toMEF(File file, File users) {
+    public FaultTreeDefinition toMEF(File file, Set<User> users) {
         // get object representation of EMFTA file
         EMFTAFTAModel emftaftaModel = fromEMFTA(file);
 

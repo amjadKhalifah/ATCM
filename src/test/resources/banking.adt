@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <adtree>
   <node refinement="disjunctive">
-    <label>Transfer Money out of account</label>
+    <label>Transfer_Money_out_of_account</label>
     <node refinement="conjunctive">
-      <label>obtain online</label>
+      <label>obtain_online</label>
       <node refinement="disjunctive">
-        <label>get password</label>
+        <label>get_password</label>
       </node>
       <node refinement="disjunctive">
-        <label>get tan</label>
+        <label>get_tan</label>
       </node>
     </node>
     <node refinement="disjunctive">
-      <label>hijack bank server</label>
+      <label>hijack_bank_server</label>
     </node>
     <node refinement="disjunctive">
-      <label>initial transfer via debit card</label>
+      <label>initial_transfer_via_debit_card</label>
     </node>
   </node>
 </adtree>

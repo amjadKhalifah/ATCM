@@ -1,6 +1,8 @@
 package main;
 
 
+import attacker_attribution.User;
+import attacker_attribution.UserParser;
 import causality.CausalModel;
 import graph.GraphBuilder;
 import mef.faulttree.FaultTreeDefinition;
@@ -11,6 +13,7 @@ import parser.Parser;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 public class ArgsHandler {
     public static void handle(String[] args) {
@@ -36,9 +39,10 @@ public class ArgsHandler {
             if (!f.exists() || f.isDirectory())
                 throw new ParseException("Specified File '" + f.getPath() + "' does not exist or is directory.");
 
-            File users = null;
+            Set<User> users = null;
             if (line.hasOption("u")) {
-                users = new File(line.getOptionValue("u"));
+                File usersFile = new File(line.getOptionValue("u"));
+                users = UserParser.parse(usersFile);
             }
 
             // convert passed file to Open-PSA fault tree def
@@ -49,7 +53,13 @@ public class ArgsHandler {
             }
 
             // convert fault tree representation to causal model
-            CausalModel causalModel = CausalModel.fromMEF(faultTreeDefinition);
+            CausalModel causalModel;
+            if (users != null)
+                causalModel = CausalModel.fromMEF(faultTreeDefinition, users);
+            else
+                causalModel = CausalModel.fromMEF(faultTreeDefinition);
+
+
 
             // convert causal model to report and print it
             String report = causalModel.toReport();
