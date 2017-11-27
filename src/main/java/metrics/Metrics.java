@@ -2,6 +2,7 @@ package metrics;
 
 import causality.CausalModel;
 import causality.EndogenousVariable;
+import causality.ExogenousVariable;
 import causality.Variable;
 import mef.formula.BasicBooleanOperator;
 import mef.formula.Formula;
@@ -10,25 +11,30 @@ import parser.adtool.ADTNode;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Metrics {
     private int nodes;
     private int edges;
+    private int leafs;
 
-    public Metrics(int nodes, int edges) {
+    public Metrics(int nodes, int edges, int leafs) {
         this.nodes = nodes;
         this.edges = edges;
+        this.leafs = leafs;
     }
 
     public Metrics(ADTNode node) {
         this.nodes = this.getNumberOfNodes(node);
         this.edges = this.nodes - 1;
+        this.leafs = this.getNumberOfLeafs(node);
     }
 
     public Metrics (CausalModel causalModel) {
-        // TODO
         this.nodes = causalModel.getVariables().size();
         this.edges = getNumberOfEdges(causalModel.getVariables());
+        this.leafs = causalModel.getVariables().stream().filter(v -> v instanceof ExogenousVariable)
+                .collect(Collectors.toSet()).size();
     }
 
     private int getNumberOfNodes(ADTNode node) {
@@ -39,6 +45,14 @@ public class Metrics {
         else
             // else, sum up the number of nodes of all children
             return 1 + children.stream().mapToInt(this::getNumberOfNodes).sum();
+    }
+
+    private int getNumberOfLeafs(ADTNode node) {
+        if (node.getChildren() == null || node.getChildren().size() == 0) {
+            return 1;
+        } else {
+            return node.getChildren().stream().mapToInt(this::getNumberOfLeafs).sum();
+        }
     }
 
     private int getNumberOfEdges(Set<Variable> variables) {
@@ -77,13 +91,15 @@ public class Metrics {
         Metrics metrics = (Metrics) o;
 
         if (nodes != metrics.nodes) return false;
-        return edges == metrics.edges;
+        if (edges != metrics.edges) return false;
+        return leafs == metrics.leafs;
     }
 
     @Override
     public int hashCode() {
         int result = nodes;
         result = 31 * result + edges;
+        result = 31 * result + leafs;
         return result;
     }
 
