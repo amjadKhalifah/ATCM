@@ -1,8 +1,16 @@
 package metrics;
 
+import causality.CausalModel;
+import causality.EndogenousVariable;
+import causality.ExogenousVariable;
+import causality.Variable;
+import mef.formula.BasicBooleanOperator;
+import mef.formula.Formula;
 import parser.adtool.ADTNode;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Metrics {
     private int nodes;
@@ -18,6 +26,12 @@ public class Metrics {
         this.edges = this.nodes - 1;
     }
 
+    public Metrics (CausalModel causalModel) {
+        // TODO
+        this.nodes = causalModel.getVariables().size();
+        this.edges = getNumberOfEdges(causalModel.getVariables());
+    }
+
     private int getNodes(ADTNode node) {
         List<ADTNode> children = node.getChildren();
         if (children == null)
@@ -26,6 +40,34 @@ public class Metrics {
         else
             // else, sum up the number of nodes of all children
             return 1 + children.stream().mapToInt(this::getNodes).sum();
+    }
+
+    private int getNumberOfEdges(Set<Variable> variables) {
+        int edges = 0;
+        for (Variable variable : variables) {
+            if (variable instanceof EndogenousVariable) {
+                edges += getInvolvedVariables(((EndogenousVariable) variable).getFormula()).size();
+            }
+        }
+        return edges;
+    }
+
+    /**
+     * This is a helper method that returns the number of variables in a formula that defines a variable. So, the
+     * passed formula parameter is assumed to define a variable. It returns a set such that variables used multiple
+     * times in a formula are returned only once
+     * @param formula
+     * @return
+     */
+    private Set<Variable> getInvolvedVariables(Formula formula) {
+        Set<Variable> variables = new HashSet<>();
+        if (formula instanceof Variable) {
+            variables.add((Variable) formula);
+        } else if (formula instanceof BasicBooleanOperator) {
+            BasicBooleanOperator operator = (BasicBooleanOperator) formula;
+            operator.getFormulas().forEach(f -> variables.addAll(getInvolvedVariables(f)));
+        }
+        return  variables;
     }
 
     @Override
@@ -44,5 +86,13 @@ public class Metrics {
         int result = nodes;
         result = 31 * result + edges;
         return result;
+    }
+
+    public int getNodes() {
+        return nodes;
+    }
+
+    public int getEdges() {
+        return edges;
     }
 }
