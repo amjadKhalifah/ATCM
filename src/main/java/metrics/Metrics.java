@@ -2,7 +2,6 @@ package metrics;
 
 import causality.CausalModel;
 import causality.EndogenousVariable;
-import causality.ExogenousVariable;
 import causality.Variable;
 import mef.formula.BasicBooleanOperator;
 import mef.formula.Formula;
@@ -22,7 +21,7 @@ public class Metrics {
     }
 
     public Metrics(ADTNode node) {
-        this.nodes = this.getNodes(node);
+        this.nodes = this.getNumberOfNodes(node);
         this.edges = this.nodes - 1;
     }
 
@@ -32,14 +31,14 @@ public class Metrics {
         this.edges = getNumberOfEdges(causalModel.getVariables());
     }
 
-    private int getNodes(ADTNode node) {
+    private int getNumberOfNodes(ADTNode node) {
         List<ADTNode> children = node.getChildren();
         if (children == null)
             // if node does not have any children return 1, i.e. count the node
             return 1;
         else
             // else, sum up the number of nodes of all children
-            return 1 + children.stream().mapToInt(this::getNodes).sum();
+            return 1 + children.stream().mapToInt(this::getNumberOfNodes).sum();
     }
 
     private int getNumberOfEdges(Set<Variable> variables) {
@@ -88,7 +87,7 @@ public class Metrics {
         return result;
     }
 
-    public int getNodes() {
+    public int getNumberOfNodes() {
         return nodes;
     }
 
