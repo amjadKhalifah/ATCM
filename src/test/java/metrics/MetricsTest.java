@@ -45,28 +45,28 @@ public class MetricsTest {
 
     @Test
     public void should_ReturnMetrics_For_StealMasterKeyAttackTree() throws Exception {
-        Metrics metrics = new Metrics(12, 11, 6);
+        Metrics metrics = new Metrics(12, 11, 6, 2, 4);
         Metrics metricsActual = new Metrics(stealMasterKey);
         assertEquals(metrics, metricsActual);
     }
 
     @Test
     public void should_ReturnMetrics_For_StealMasterKeyUnfoldedAttackTree() throws Exception {
-        Metrics metrics = new Metrics(36, 35, 18);
+        Metrics metrics = new Metrics(36, 35, 18, 6, 12);
         Metrics metricsActual = new Metrics(stealMasterKeyUnfolded);
         assertEquals(metrics, metricsActual);
     }
 
     @Test
     public void should_ReturnMetrics_For_StealMasterKeyCausalModel() throws Exception {
-        Metrics metrics = new Metrics(18, 17, 6);
+        Metrics metrics = new Metrics(18, 17, 6, 2, 4);
         Metrics metricsActual = new Metrics(causalModelStealMasterKey);
         assertEquals(metrics, metricsActual);
     }
 
     @Test
     public void should_ReturnMetrics_For_StealMasterKeyUnfoldedCausalModel() throws Exception {
-        Metrics metrics = new Metrics(54, 59, 18);
+        Metrics metrics = new Metrics(54, 59, 18, 10,12);
         Metrics metricsActual = new Metrics(causalModelStealMasterKeyUnfolded);
         assertEquals(metrics, metricsActual);
     }

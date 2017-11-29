@@ -17,17 +17,23 @@ public class Metrics {
     private int nodes;
     private int edges;
     private int leafs;
+    private int ands;
+    private int ors;
 
-    public Metrics(int nodes, int edges, int leafs) {
+    public Metrics(int nodes, int edges, int leafs, int ands, int ors) {
         this.nodes = nodes;
         this.edges = edges;
         this.leafs = leafs;
+        this.ands = ands;
+        this.ors = ors;
     }
 
     public Metrics(ADTNode node) {
         this.nodes = this.getNumberOfNodes(node);
         this.edges = this.nodes - 1;
         this.leafs = this.getNumberOfLeafs(node);
+        this.ands = this.getNumberOfranchType(node, ADTNode.Refinement.CONJUNCTIVE);
+        this.ors = this.getNumberOfranchType(node, ADTNode.Refinement.DISJUNCTIVE);
     }
 
     public Metrics (CausalModel causalModel) {
@@ -35,6 +41,10 @@ public class Metrics {
         this.edges = getNumberOfEdges(causalModel.getVariables());
         this.leafs = causalModel.getVariables().stream().filter(v -> v instanceof ExogenousVariable)
                 .collect(Collectors.toSet()).size();
+        this.ands = causalModel.getVariables().stream()
+                .mapToInt(v -> this.getNumberOfOperatorTypes(v, BasicBooleanOperator.OperatorType.and)).sum();
+        this.ors = causalModel.getVariables().stream()
+                .mapToInt(v -> this.getNumberOfOperatorTypes(v, BasicBooleanOperator.OperatorType.or)).sum();
     }
 
     private int getNumberOfNodes(ADTNode node) {
@@ -52,6 +62,16 @@ public class Metrics {
             return 1;
         } else {
             return node.getChildren().stream().mapToInt(this::getNumberOfLeafs).sum();
+        }
+    }
+
+    private int getNumberOfranchType(ADTNode node, ADTNode.Refinement refinement) {
+        if (node.getChildren() == null || node.getChildren().size() == 0) {
+            return 0;
+        } else {
+            int numberOfAndsChildren = node.getChildren().stream()
+                    .mapToInt(c -> this.getNumberOfranchType(c, refinement)).sum();
+            return (node.getRefinement() == refinement ? 1 : 0) + numberOfAndsChildren;
         }
     }
 
@@ -83,6 +103,22 @@ public class Metrics {
         return  variables;
     }
 
+    private int getNumberOfOperatorTypes(Formula formula, BasicBooleanOperator.OperatorType operatorType) {
+        if (formula instanceof ExogenousVariable) {
+            return 0;
+        } else if (formula instanceof EndogenousVariable){
+            EndogenousVariable endogenousVariable = (EndogenousVariable) formula;
+            return getNumberOfOperatorTypes(endogenousVariable.getFormula(), operatorType);
+        } else if (formula instanceof BasicBooleanOperator) {
+            BasicBooleanOperator operator = (BasicBooleanOperator) formula;
+            return (operator.getType() == operatorType ? 1 : 0) + operator.getFormulas().stream()
+                    .filter(f -> f instanceof BasicBooleanOperator)
+                    .mapToInt(f -> this.getNumberOfOperatorTypes(f, operatorType)).sum();
+        } else {
+            return 0;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,7 +128,9 @@ public class Metrics {
 
         if (nodes != metrics.nodes) return false;
         if (edges != metrics.edges) return false;
-        return leafs == metrics.leafs;
+        if (leafs != metrics.leafs) return false;
+        if (ands != metrics.ands) return false;
+        return ors == metrics.ors;
     }
 
     @Override
@@ -100,6 +138,8 @@ public class Metrics {
         int result = nodes;
         result = 31 * result + edges;
         result = 31 * result + leafs;
+        result = 31 * result + ands;
+        result = 31 * result + ors;
         return result;
     }
 
