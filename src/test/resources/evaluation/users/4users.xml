@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+    <user ID="1" name="U1" role="admin" score="3">
+    </user>
+    <user ID="2" name="U2" role="admin" score="2">
+    </user>
+    <user ID="3" name="U3" role="admin" score="1">
+    </user>
+    <user ID="4" name="U4" role="admin" score="0">
+    </user>
+</users>
