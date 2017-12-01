@@ -1,0 +1,18 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="conjunctive">
+		<label>Copy Sensitive Information to USB</label>
+		<node refinement="disjunctive">
+			<label>Log On</label>
+		</node>
+		<node refinement="disjunctive">
+			<label>Insert USB</label>
+		</node>
+		<node refinement="disjunctive">
+			<label>Navigate to Files</label>
+		</node>
+		<node refinement="disjunctive">
+			<label>Copy Files To Device</label>
+		</node>
+	</node>
+</adtree>
