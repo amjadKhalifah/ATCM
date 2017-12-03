@@ -47,6 +47,17 @@ public class Metrics {
                 .mapToInt(v -> this.getNumberOfOperatorTypes(v, BasicBooleanOperator.OperatorType.or)).sum();
     }
 
+    @Override
+    public String toString() {
+        return "Metrics{" +
+                "nodes=" + nodes +
+                ", edges=" + edges +
+                ", leafs=" + leafs +
+                ", ands=" + ands +
+                ", ors=" + ors +
+                '}';
+    }
+
     private int getNumberOfNodes(ADTNode node) {
         List<ADTNode> children = node.getChildren();
         if (children == null)
