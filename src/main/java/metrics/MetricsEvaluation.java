@@ -4,10 +4,12 @@ import attacker_attribution.User;
 import attacker_attribution.UserParser;
 import causality.CausalModel;
 import mef.faulttree.FaultTreeDefinition;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import parser.adtool.ADTNode;
 import parser.adtool.ADTParser;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +25,8 @@ public class MetricsEvaluation {
     public static final File USERS_2 = new File(USER_FILE_PATH + "2users.xml");
     public static final File USERS_4 = new File(USER_FILE_PATH + "4users.xml");
     public static final File USERS_8 = new File(USER_FILE_PATH + "8users.xml");
+
+    private static final String CSV_FILE = System.getProperty("user.home") + "/Desktop/evaluation.csv";
 
     private static CausalModel generateCausalModel(File attackTree, Set<User> users, boolean preemption) {
         FaultTreeDefinition tree = ADT_PARSER.toMEF(attackTree, users);
@@ -53,36 +57,50 @@ public class MetricsEvaluation {
         return Arrays.asList(becomeRootUser1, becomeRootUser2, copySensitiveInformation, stealMasterKey);
     }
 
-    private static List<Metrics> computeAndPrintMetrics(File file, List<Set<User>> userSets) {
+    private static List<String> toCSVEntry(String type, String name, boolean attribution, boolean preemption,
+                                            int users, Metrics metrics) {
+        List<String> csvEntry = Arrays.asList(type, name, Boolean.toString(attribution), Boolean.toString(preemption),
+                Integer.toString(users), Integer.toString(metrics.getNodes()), Integer.toString(metrics.getLeafs()),
+                Integer.toString(metrics.getLeafs()), Integer.toString(metrics.getAnds()),
+                Integer.toString(metrics.getOrs()));
+        return csvEntry;
+    }
+
+    private static List<Metrics> computeAndExportMetrics(File file, List<Set<User>> userSets, CSVPrinter csvPrinter) throws IOException {
         List<Metrics> metrics = new ArrayList<>();
 
         ADTNode attackTreeNoUserAttribution = generateAttackTree(file, null);
         Metrics attackTreeMetricsNoUserAttribution = new Metrics(attackTreeNoUserAttribution);
-        System.out.println("[AttackTree;'" + file.getName() + "';attribution=false] " + attackTreeMetricsNoUserAttribution);
+        csvPrinter.printRecord(toCSVEntry("AttackTree", file.getName(), false, false, 0,
+                attackTreeMetricsNoUserAttribution));
+
         CausalModel causalModelNoUserAttribution = generateCausalModel(file, null, false);
         Metrics causalModelMetricsNoUserAttribution = new Metrics(causalModelNoUserAttribution);
-        System.out.println("[CausalModel;'" + file.getName() + "'; attribution=false; preemption=false] " + causalModelMetricsNoUserAttribution);
+        csvPrinter.printRecord(toCSVEntry("CausalModel", file.getName(), false, false, 0,
+                causalModelMetricsNoUserAttribution));
 
         metrics.addAll(Arrays.asList(attackTreeMetricsNoUserAttribution, causalModelMetricsNoUserAttribution));
 
         for (Set<User> users : userSets) {
             ADTNode attackTree = generateAttackTree(file, users);
             Metrics attackTreeMetrics = new Metrics(attackTree);
-            System.out.println("[AttackTree;'" + file.getName() + "'; attribution=true; users=" +users.size()+"] " +
-                    attackTreeMetrics);
+            csvPrinter.printRecord(toCSVEntry("AttackTree", file.getName(), true, false, users.size(),
+                    attackTreeMetrics));
 
             CausalModel causalModelWithoutPreemption = generateCausalModel(file, users, false);
             Metrics causalModelMetricsWithoutPreemption = new Metrics(causalModelWithoutPreemption);
-            System.out.println("[CausalModel;'" + file.getName() + "'; attribution=true; preemption=false; users="
-                    +users.size()+"] " + causalModelMetricsWithoutPreemption);
+            csvPrinter.printRecord(toCSVEntry("CausalModel", file.getName(), true, false, users.size(),
+                    causalModelMetricsWithoutPreemption));
+
             CausalModel causalModelWitPreemption = generateCausalModel(file, users, true);
             Metrics causalModelMetricsWithPreemption = new Metrics(causalModelWitPreemption);
-            System.out.println("[CausalModel;'" + file.getName() + "'; attribution=true; preemption=true; users="
-                    +users.size()+"] " + causalModelMetricsWithPreemption);
+            csvPrinter.printRecord(toCSVEntry("CausalModel", file.getName(), true, true, users.size(),
+                    causalModelMetricsWithPreemption));
 
             metrics.addAll(Arrays.asList(attackTreeMetrics, causalModelMetricsWithoutPreemption,
                     causalModelMetricsWithPreemption));
         }
+
         return metrics;
     }
 
@@ -90,6 +108,31 @@ public class MetricsEvaluation {
         List<Set<User>> userSets = getUserSets();
         List<File> attackTrees = getAttackTrees();
 
-        attackTrees.forEach(f -> computeAndPrintMetrics(f, userSets));
+        FileWriter writer = null;
+        CSVPrinter csvPrinter = null;
+
+        List<Metrics> metrics = new ArrayList<>();
+        try {
+            // clear file
+            new PrintWriter(CSV_FILE).close();
+            writer = new FileWriter(CSV_FILE, true);
+            csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+                    .withHeader("Type", "Name", "Attribution", "Preemption", "Users", "Nodes", "Edges", "Leafs",
+                            "Ands", "Ors"));
+            for (File attackTree : attackTrees) {
+                metrics.addAll(computeAndExportMetrics(attackTree, userSets, csvPrinter));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                writer.flush();
+                writer.close();
+                csvPrinter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

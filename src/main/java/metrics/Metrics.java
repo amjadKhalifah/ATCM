@@ -29,7 +29,7 @@ public class Metrics {
     }
 
     public Metrics(ADTNode node) {
-        this.nodes = this.getNumberOfNodes(node);
+        this.nodes = this.getNodes(node);
         this.edges = this.nodes - 1;
         this.leafs = this.getNumberOfLeafs(node);
         this.ands = this.getNumberOfranchType(node, ADTNode.Refinement.CONJUNCTIVE);
@@ -58,14 +58,14 @@ public class Metrics {
                 '}';
     }
 
-    private int getNumberOfNodes(ADTNode node) {
+    private int getNodes(ADTNode node) {
         List<ADTNode> children = node.getChildren();
         if (children == null)
             // if node does not have any children return 1, i.e. count the node
             return 1;
         else
             // else, sum up the number of nodes of all children
-            return 1 + children.stream().mapToInt(this::getNumberOfNodes).sum();
+            return 1 + children.stream().mapToInt(this::getNodes).sum();
     }
 
     private int getNumberOfLeafs(ADTNode node) {
@@ -154,11 +154,23 @@ public class Metrics {
         return result;
     }
 
-    public int getNumberOfNodes() {
+    public int getNodes() {
         return nodes;
     }
 
     public int getEdges() {
         return edges;
+    }
+
+    public int getLeafs() {
+        return leafs;
+    }
+
+    public int getAnds() {
+        return ands;
+    }
+
+    public int getOrs() {
+        return ors;
     }
 }
