@@ -64,7 +64,7 @@ public class MetricsEvaluation {
     private static List<String> toCSVEntry(String type, String name, boolean attribution, boolean preemption,
                                             int users, Metrics metrics) {
         List<String> csvEntry = Arrays.asList(type, name, Boolean.toString(attribution), Boolean.toString(preemption),
-                Integer.toString(users), Integer.toString(metrics.getNodes()), Integer.toString(metrics.getLeafs()),
+                Integer.toString(users), Integer.toString(metrics.getNodes()), Integer.toString(metrics.getEdges()),
                 Integer.toString(metrics.getLeafs()), Integer.toString(metrics.getAnds()),
                 Integer.toString(metrics.getOrs()));
         return csvEntry;
