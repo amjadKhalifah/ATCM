@@ -16,7 +16,7 @@
 					<label>Add scheduled event</label>
 				</node>
 				<node refinement="conjunctive">
-					<label>Wait until event loads command prompt; terminate explorer_exe</label>
+					<label>Wait until event loads command prompt and terminate explorer_exe</label>
 				</node>
 				<node refinement="conjunctive">
 					<label>Restart explorer_exe</label>
