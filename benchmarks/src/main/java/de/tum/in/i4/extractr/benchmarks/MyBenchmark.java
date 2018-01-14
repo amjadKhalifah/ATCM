@@ -33,6 +33,8 @@ package de.tum.in.i4.extractr.benchmarks;
 
 import attacker_attribution.User;
 import attacker_attribution.UserParser;
+import causality.CausalModel;
+import mef.faulttree.FaultTreeDefinition;
 import org.openjdk.jmh.annotations.*;
 import parser.adtool.ADTNode;
 import parser.adtool.ADTParser;
@@ -54,13 +56,14 @@ public class MyBenchmark {
         Set<User> users4 = UserParser.parse(new File(PROJECT_ROOT + "../src/test/resources/evaluation/users/4users.xml"));
         Set<User> users8 = UserParser.parse(new File(PROJECT_ROOT + "../src/test/resources/evaluation/users/8users.xml"));
 
+        File stealMasterKeyXML = new File(PROJECT_ROOT +
+                "../src/test/resources/user_attribution/Steal_Master_Key.adt");
         ADTNode stealMasterKeyAttackTree;
 
         // will be executed for every benchmark method call
         @Setup(Level.Invocation)
         public void doSetupInvocation() {
-            stealMasterKeyAttackTree = adtParser.fromAD(new File(PROJECT_ROOT +
-                    "../src/test/resources/user_attribution/Steal_Master_Key.adt"));
+            stealMasterKeyAttackTree = adtParser.fromAD(stealMasterKeyXML);
         }
     }
 
@@ -71,6 +74,20 @@ public class MyBenchmark {
     @BenchmarkMode(Mode.All)
     public void benchmarkUnfoldStealMasterKey(MyState state) {
         unfold(state.stealMasterKeyAttackTree, state.users2);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkStealMasterKey(MyState state) {
+        complete(state.stealMasterKeyXML, state.users2, state.adtParser);
+    }
+
+    private void complete(File attackTree, Set<User> users, ADTParser adtParser) {
+        FaultTreeDefinition tree = adtParser.toMEF(attackTree, users);
+        CausalModel causalModel = CausalModel.fromMEF(tree, users);
     }
 
     /**
