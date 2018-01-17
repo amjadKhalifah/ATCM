@@ -57,8 +57,10 @@ public class MetricsEvaluation {
         File dummyTree2branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_2branches.xml");
         File dummyTree4branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_4branches.xml");
         File dummyTree8branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_8branches.xml");
+        File dummyTree16branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_16branches.xml");
+        File dummyTree48branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_48branches.xml");
         return Arrays.asList(becomeRootUser1, becomeRootUser2, copySensitiveInformation, stealMasterKey,
-                dummyTree2branches, dummyTree4branches, dummyTree8branches);
+                dummyTree2branches, dummyTree4branches, dummyTree8branches, dummyTree16branches, dummyTree48branches);
     }
 
     private static List<String> toCSVEntry(String type, String name, boolean attribution, boolean preemption,
