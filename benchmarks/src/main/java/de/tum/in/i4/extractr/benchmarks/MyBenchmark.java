@@ -58,6 +58,8 @@ public class MyBenchmark {
 
         File stealMasterKeyXML = new File(PROJECT_ROOT +
                 "../src/test/resources/user_attribution/Steal_Master_Key.adt");
+        File dummyTree48 = new File(PROJECT_ROOT +
+                "../src/test/resources/evaluation/dummy_trees/tree_48branches.xml");
         ADTNode stealMasterKeyAttackTree;
 
         // will be executed for every benchmark method call
@@ -83,6 +85,15 @@ public class MyBenchmark {
     @BenchmarkMode(Mode.All)
     public void benchmarkStealMasterKey(MyState state) {
         complete(state.stealMasterKeyXML, state.users2, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkDummyTree48Branches(MyState state) {
+        complete(state.dummyTree48, state.users2, state.adtParser);
     }
 
     private void complete(File attackTree, Set<User> users, ADTParser adtParser) {
