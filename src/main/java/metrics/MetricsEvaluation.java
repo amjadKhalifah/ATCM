@@ -50,6 +50,7 @@ public class MetricsEvaluation {
     }
 
     private static List<File> getAttackTrees() {
+        File billySuzy = new File(TREE_FILE_PATH + "evaluation/BillySuzy.xml");
         File becomeRootUser1 = new File(TREE_FILE_PATH + "evaluation/Become_Root_User_1.xml");
         File becomeRootUser2 = new File(TREE_FILE_PATH + "evaluation/Become_Root_User_2.xml");
         File copySensitiveInformation = new File(TREE_FILE_PATH + "evaluation/Copy_Sensitive_Information_to_USB.xml");
@@ -59,7 +60,7 @@ public class MetricsEvaluation {
         File dummyTree8branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_8branches.xml");
         File dummyTree16branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_16branches.xml");
         File dummyTree48branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_48branches.xml");
-        return Arrays.asList(becomeRootUser1, becomeRootUser2, copySensitiveInformation, stealMasterKey,
+        return Arrays.asList(billySuzy, becomeRootUser1, becomeRootUser2, copySensitiveInformation, stealMasterKey,
                 dummyTree2branches, dummyTree4branches, dummyTree8branches, dummyTree16branches, dummyTree48branches);
     }
 
