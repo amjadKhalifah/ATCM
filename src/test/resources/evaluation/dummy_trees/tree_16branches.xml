@@ -338,26 +338,5 @@
 				</node>
 			</node>
 		</node>
-		<node refinement="conjunctive">
-			<label>N_42</label>
-			<node refinement="disjunctive">
-				<label>N_60</label>
-				<node refinement="conjunctive">
-					<label>N_96</label>
-				</node>
-				<node refinement="conjunctive">
-					<label>N_97</label>
-				</node>
-			</node>
-			<node refinement="disjunctive">
-				<label>N_61</label>
-				<node refinement="conjunctive">
-					<label>N_98</label>
-				</node>
-				<node refinement="conjunctive">
-					<label>N_99</label>
-				</node>
-			</node>
-		</node>
 	</node>
 </adtree>
