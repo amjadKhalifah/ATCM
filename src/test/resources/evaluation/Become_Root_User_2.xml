@@ -16,7 +16,7 @@
 					<label>Use explorer_exe to connect to malicious</label>
 				</node>
 				<node refinement="disjunctive">
-					<label>Allow payload to run; establish service; connect to external host</label>
+					<label>Allow payload to run and establish service and connect to external host</label>
 				</node>
 			</node>
 			<node refinement="disjunctive">
