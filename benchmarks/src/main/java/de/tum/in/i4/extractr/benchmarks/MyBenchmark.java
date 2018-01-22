@@ -44,8 +44,8 @@ import java.util.Set;
 
 public class MyBenchmark {
     private static final int FORKS = 1;
-    private static final int WARMUP_ITERATIONS = 3;
-    private static final int ITERATIONS = 3;
+    private static final int WARMUP_ITERATIONS = 0;
+    private static final int ITERATIONS = 1;
 
     @State(Scope.Benchmark)
     public static class MyState {
@@ -56,8 +56,18 @@ public class MyBenchmark {
         Set<User> users4 = UserParser.parse(new File(PROJECT_ROOT + "../src/test/resources/evaluation/users/4users.xml"));
         Set<User> users8 = UserParser.parse(new File(PROJECT_ROOT + "../src/test/resources/evaluation/users/8users.xml"));
 
+        File arsonistsXML = new File(PROJECT_ROOT +
+                "../src/test/resources/evaluation/arsonists.xml");
+        File billySuzyXML = new File(PROJECT_ROOT +
+                "../src/test/resources/evaluation/BillySuzy.xml");
         File stealMasterKeyXML = new File(PROJECT_ROOT +
                 "../src/test/resources/user_attribution/Steal_Master_Key.adt");
+        File becomeRootUser1XML = new File(PROJECT_ROOT +
+                "../src/test/resources/evaluation/Become_Root_User_1.xml");
+        File becomeRootUser2XML = new File(PROJECT_ROOT +
+                "../src/test/resources/evaluation/Become_Root_User_2.xml");
+        File dummyTree16 = new File(PROJECT_ROOT +
+                "../src/test/resources/evaluation/dummy_trees/tree_16branches.xml");
         File dummyTree48 = new File(PROJECT_ROOT +
                 "../src/test/resources/evaluation/dummy_trees/tree_48branches.xml");
         ADTNode stealMasterKeyAttackTree;
@@ -74,8 +84,8 @@ public class MyBenchmark {
     @Measurement(iterations = ITERATIONS)
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
-    public void benchmarkUnfoldStealMasterKey(MyState state) {
-        unfold(state.stealMasterKeyAttackTree, state.users2);
+    public void benchmarkArsonists_2Users(MyState state) {
+        complete(state.arsonistsXML, state.users2, state.adtParser);
     }
 
     @Benchmark
@@ -83,7 +93,16 @@ public class MyBenchmark {
     @Measurement(iterations = ITERATIONS)
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
-    public void benchmarkStealMasterKey(MyState state) {
+    public void benchmarkBillySuzy_2Users(MyState state) {
+        complete(state.billySuzyXML, state.users2, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkStealMasterKey_2Users(MyState state) {
         complete(state.stealMasterKeyXML, state.users2, state.adtParser);
     }
 
@@ -92,8 +111,125 @@ public class MyBenchmark {
     @Measurement(iterations = ITERATIONS)
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
-    public void benchmarkDummyTree48Branches(MyState state) {
+    public void benchmarkStealMasterKey_4Users(MyState state) {
+        complete(state.stealMasterKeyXML, state.users4, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkStealMasterKey_8Users(MyState state) {
+        complete(state.stealMasterKeyXML, state.users8, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkBecomeRootUser1_2Users(MyState state) {
+        complete(state.becomeRootUser1XML, state.users2, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkBecomeRootUser1_4Users(MyState state) {
+        complete(state.becomeRootUser1XML, state.users4, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkBecomeRootUser1_8Users(MyState state) {
+        complete(state.becomeRootUser1XML, state.users8, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkBecomeRootUser2_2Users(MyState state) {
+        complete(state.becomeRootUser2XML, state.users2, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkBecomeRootUser2_4Users(MyState state) {
+        complete(state.becomeRootUser2XML, state.users4, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkBecomeRootUser2_8Users(MyState state) {
+        complete(state.becomeRootUser2XML, state.users8, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkDummyTree16Branches_2Users(MyState state) {
+        complete(state.dummyTree16, state.users2, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkDummyTree16Branches_4Users(MyState state) {
+        complete(state.dummyTree16, state.users4, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkDummyTree16Branches_8Users(MyState state) {
+        complete(state.dummyTree16, state.users8, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkDummyTree48Branches_2Users(MyState state) {
         complete(state.dummyTree48, state.users2, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkDummyTree48Branches_4Users(MyState state) {
+        complete(state.dummyTree48, state.users4, state.adtParser);
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkDummyTree48Branches_8Users(MyState state) {
+        complete(state.dummyTree48, state.users8, state.adtParser);
     }
 
     private void complete(File attackTree, Set<User> users, ADTParser adtParser) {
