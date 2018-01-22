@@ -50,6 +50,7 @@ public class MetricsEvaluation {
     }
 
     private static List<File> getAttackTrees() {
+        File arsonists = new File(TREE_FILE_PATH + "evaluation/arsonists.xml");
         File billySuzy = new File(TREE_FILE_PATH + "evaluation/BillySuzy.xml");
         File becomeRootUser1 = new File(TREE_FILE_PATH + "evaluation/Become_Root_User_1.xml");
         File becomeRootUser2 = new File(TREE_FILE_PATH + "evaluation/Become_Root_User_2.xml");
@@ -60,8 +61,9 @@ public class MetricsEvaluation {
         File dummyTree8branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_8branches.xml");
         File dummyTree16branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_16branches.xml");
         File dummyTree48branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_48branches.xml");
-        return Arrays.asList(billySuzy, becomeRootUser1, becomeRootUser2, copySensitiveInformation, stealMasterKey,
-                dummyTree2branches, dummyTree4branches, dummyTree8branches, dummyTree16branches, dummyTree48branches);
+        return Arrays.asList(arsonists, billySuzy, becomeRootUser1, becomeRootUser2, copySensitiveInformation,
+                stealMasterKey, dummyTree2branches, dummyTree4branches, dummyTree8branches, dummyTree16branches,
+                dummyTree48branches);
     }
 
     private static List<String> toCSVEntry(String type, String name, boolean attribution, boolean preemption,
