@@ -67,6 +67,7 @@ public class ADTNode {
         return allNodes;
     }
 
+    @Deprecated
     public ADTNode unfold(Set<User> users) {
         List<ADTNode> userNodes = new ArrayList<>();
         for (User user : users) {
@@ -76,6 +77,28 @@ public class ADTNode {
         }
         // connect user nodes at correct position such that tree is properly unfolded
         this.connect(userNodes);
+        ADTNode unfolded = new ADTNode(this.ID, this.label, this.children, Refinement.DISJUNCTIVE, 0);
+        // set again unique IDs; before they are not unique as the nodes in the user trees may have the same ones
+        unfolded.setIDs(unfolded.ID);
+        return unfolded;
+    }
+
+    public ADTNode unfold(Set<User> users, int[] unfoldLevels) {
+        List<ADTNode> userNodes = new ArrayList<>();
+        for (User user : users) {
+            ADTNode userNode = new ADTNode(this);
+            userNode.annotate(user.getName());
+            userNodes.add(userNode);
+        }
+        // connect user nodes at correct position such that tree is properly unfolded
+        if (unfoldLevels.length != this.children.size()) {
+            // if config is invalid, just start unfolding at the very top of the tree, i.e. at the first children
+            this.connect(userNodes, 0);
+        } else {
+            for (int i=0; i<unfoldLevels.length; i++) {
+                this.children.get(i).connect(userNodes, unfoldLevels[i]);
+            }
+        }
         ADTNode unfolded = new ADTNode(this.ID, this.label, this.children, Refinement.DISJUNCTIVE, 0);
         // set again unique IDs; before they are not unique as the nodes in the user trees may have the same ones
         unfolded.setIDs(unfolded.ID);
@@ -94,6 +117,7 @@ public class ADTNode {
         return this;
     }
 
+    @Deprecated
     private void connect(List<ADTNode> userNodes) {
         if (this.children == null || this.children.size() == 0) {
             // if node has no children at all, just connect all userNodes to current node
@@ -116,6 +140,30 @@ public class ADTNode {
                 // set children of current childNode to new children, i.e. the user-specific ones
                 childNode.children = childUserNodes;
             }
+        }
+    }
+
+    private void connect(List<ADTNode> userNodes, int unfoldLevel) {
+        if (unfoldLevel == 0) {
+            /*
+             * Loop through all children and find matching subtrees in userNodes
+             * Connect those subtrees to the current child. On that way, we properly unfold the tree.
+             */
+            for (ADTNode childNode : this.children) {
+                // set gate to OR
+                childNode.refinement = Refinement.DISJUNCTIVE;
+                List<ADTNode> childUserNodes = new ArrayList<>();
+                // get user-specific subtrees that fit, i.e. those that have the current childNode as root
+                for (ADTNode userNode : userNodes) {
+                    ADTNode node = userNode.getByID(childNode.ID);
+                    // add to list of child user nodes
+                    childUserNodes.add(node);
+                }
+                // set children of current childNode to new children, i.e. the user-specific ones
+                childNode.children = childUserNodes;
+            }
+        } else {
+            this.children.forEach(c -> c.connect(userNodes, unfoldLevel - 1));
         }
     }
 

@@ -1,0 +1,99 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="disjunctive">
+		<label>Steal_Master_Key</label>
+		<node refinement="conjunctive">
+			<label>Decrypt_The_Key</label>
+			<node refinement="disjunctive">
+				<label>Get_The_Passphrase</label>
+				<node refinement="disjunctive">
+					<label>U3_Get_The_Passphrase</label>
+					<node refinement="conjunctive">
+						<label>U3_From_Script</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U3_From_Network</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>U2_Get_The_Passphrase</label>
+					<node refinement="conjunctive">
+						<label>U2_From_Script</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U2_From_Network</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>U1_Get_The_Passphrase</label>
+					<node refinement="conjunctive">
+						<label>U1_From_Script</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U1_From_Network</label>
+					</node>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Get_The_Key</label>
+				<node refinement="disjunctive">
+					<label>U3_Get_The_Key</label>
+					<node refinement="conjunctive">
+						<label>U3_From_File</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U3_From_DB</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>U2_Get_The_Key</label>
+					<node refinement="conjunctive">
+						<label>U2_From_File</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U2_From_DB</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>U1_Get_The_Key</label>
+					<node refinement="conjunctive">
+						<label>U1_From_File</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U1_From_DB</label>
+					</node>
+				</node>
+			</node>
+		</node>
+		<node refinement="disjunctive">
+			<label>Steal_Decrypted</label>
+			<node refinement="conjunctive">
+				<label>From_Key_Management_Service</label>
+				<node refinement="disjunctive">
+					<label>Access</label>
+					<node refinement="conjunctive">
+						<label>U3_Access</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U2_Access</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U1_Access</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>Attach_Debugger</label>
+					<node refinement="conjunctive">
+						<label>U3_Attach_Debugger</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U2_Attach_Debugger</label>
+					</node>
+					<node refinement="conjunctive">
+						<label>U1_Attach_Debugger</label>
+					</node>
+				</node>
+			</node>
+		</node>
+	</node>
+</adtree>

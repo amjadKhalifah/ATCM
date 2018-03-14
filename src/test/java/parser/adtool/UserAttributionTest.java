@@ -16,6 +16,7 @@ import static junit.framework.TestCase.*;
 public class UserAttributionTest {
     File stealMasterKeyXML;
     File stealMasterKeyUnfoldedXML;
+    File stealMasterKeyUnfoldedNewXML;
     File usersXML;
     ADTParser ADTParser;
     Set<User> users;
@@ -27,6 +28,9 @@ public class UserAttributionTest {
                 .replaceAll("%20", " "));
         stealMasterKeyUnfoldedXML = new File(this.getClass().getClassLoader()
                 .getResource("user_attribution/Steal_Master_Key_unfolded.adt").getPath()
+                .replaceAll("%20", " "));
+        stealMasterKeyUnfoldedNewXML = new File(this.getClass().getClassLoader()
+                .getResource("user_attribution/Steal_Master_Key_unfolded_new.adt").getPath()
                 .replaceAll("%20", " "));
         usersXML = new File(this.getClass().getClassLoader()
                 .getResource("user_attribution/users.xml").getPath().replaceAll("%20", " "));
@@ -49,6 +53,30 @@ public class UserAttributionTest {
     }
 
     @Test
+    public void shouldUnfoldTreeNew() throws Exception {
+        ADTNode tree = ADTParser.fromAD(stealMasterKeyXML);
+        ADTNode treeUnfolded = ADTParser.fromAD(stealMasterKeyUnfoldedNewXML);
+        ADTNode treeUnfoldedActual = tree.unfold(users, new int[] {0,1});
+        assertEquals(treeUnfolded, treeUnfoldedActual);
+
+        // compare strings; helpful if previous assertion fails
+        String treeUnfoldedStr = treeUnfolded.toXML().asXML();
+        treeUnfoldedStr = treeUnfoldedStr
+                .replace(" ", "")
+                .replace("\n", "")
+                .replace(">", ">\n")
+                .replace("<label>\n", "<label>").trim();
+        String treeUnfoldedActualStr = treeUnfoldedActual.toXML().asXML();
+        treeUnfoldedActualStr = treeUnfoldedActualStr
+                .replace(" ", "")
+                .replace("\n", "")
+                .replace(">", ">\n")
+                .replace("<label>\n", "<label>").trim();
+        assertEquals(treeUnfoldedStr, treeUnfoldedActualStr);
+    }
+
+    @Test
+    @Deprecated
     public void shouldUnfoldTree() throws Exception {
         ADTNode tree = ADTParser.fromAD(stealMasterKeyXML);
         ADTNode treeUnfolded = ADTParser.fromAD(stealMasterKeyUnfoldedXML);
