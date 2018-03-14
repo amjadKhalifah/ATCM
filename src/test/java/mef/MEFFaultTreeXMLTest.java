@@ -45,7 +45,7 @@ public class MEFFaultTreeXMLTest {
         faultTree1 = ModelProvider.faultTree1();
         faultTree2 = ModelProvider.faultTree2();
         billySuzy = ModelProvider.billySuzyMEF();
-        billySuzyNoProb = (new EMFTAParser()).toMEF(new File(urlBillySuzyNoProbEMFTA.getPath()), null);
+        billySuzyNoProb = (new EMFTAParser()).toMEF(new File(urlBillySuzyNoProbEMFTA.getPath().replaceAll("%20", " ")), null);
     }
 
     @After

@@ -1,0 +1,342 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="conjunctive">
+		<label>R</label>
+		<node refinement="conjunctive">
+			<label>A</label>
+			<node refinement="disjunctive">
+				<label>1</label>
+				<node refinement="conjunctive">
+					<label>N_92</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_2</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>2</label>
+				<node refinement="conjunctive">
+					<label>N_3</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_4</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>B</label>
+			<node refinement="disjunctive">
+				<label>3</label>
+				<node refinement="conjunctive">
+					<label>N_5</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_6</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>4</label>
+				<node refinement="conjunctive">
+					<label>N_7</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_8</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>C</label>
+			<node refinement="disjunctive">
+				<label>5</label>
+				<node refinement="conjunctive">
+					<label>N_9</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_10</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>6</label>
+				<node refinement="conjunctive">
+					<label>N_11</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_12</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>D</label>
+			<node refinement="disjunctive">
+				<label>7</label>
+				<node refinement="conjunctive">
+					<label>N_13</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_14</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>8</label>
+				<node refinement="conjunctive">
+					<label>N_16</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_17</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>E</label>
+			<node refinement="disjunctive">
+				<label>9</label>
+				<node refinement="conjunctive">
+					<label>N_18</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_19</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>10</label>
+				<node refinement="conjunctive">
+					<label>N_20</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_21</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>F</label>
+			<node refinement="disjunctive">
+				<label>11</label>
+				<node refinement="conjunctive">
+					<label>N_22</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_23</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>12</label>
+				<node refinement="conjunctive">
+					<label>N_24</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_25</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>G</label>
+			<node refinement="disjunctive">
+				<label>13</label>
+				<node refinement="conjunctive">
+					<label>N_26</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_27</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>14</label>
+				<node refinement="conjunctive">
+					<label>N_28</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_29</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>H</label>
+			<node refinement="disjunctive">
+				<label>15</label>
+				<node refinement="conjunctive">
+					<label>N_30</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_31</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>16</label>
+				<node refinement="conjunctive">
+					<label>N_32</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_33</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>N_34</label>
+			<node refinement="disjunctive">
+				<label>N_43</label>
+				<node refinement="conjunctive">
+					<label>N_62</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_63</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>N_44</label>
+				<node refinement="conjunctive">
+					<label>N_64</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_65</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>N_35</label>
+			<node refinement="disjunctive">
+				<label>N_45</label>
+				<node refinement="conjunctive">
+					<label>N_66</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_67</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>N_46</label>
+				<node refinement="conjunctive">
+					<label>N_68</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_69</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>N_36</label>
+			<node refinement="disjunctive">
+				<label>N_47</label>
+				<node refinement="conjunctive">
+					<label>N_70</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_71</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>N_48</label>
+				<node refinement="conjunctive">
+					<label>N_72</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_73</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>N_37</label>
+			<node refinement="disjunctive">
+				<label>N_49</label>
+				<node refinement="conjunctive">
+					<label>N_74</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_75</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>N_50</label>
+				<node refinement="conjunctive">
+					<label>N_76</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_77</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>N_38</label>
+			<node refinement="disjunctive">
+				<label>N_51</label>
+				<node refinement="conjunctive">
+					<label>N_78</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_79</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>N_52</label>
+				<node refinement="conjunctive">
+					<label>N_80</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_81</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>N_39</label>
+			<node refinement="disjunctive">
+				<label>N_53</label>
+				<node refinement="conjunctive">
+					<label>N_82</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_83</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>N_54</label>
+				<node refinement="conjunctive">
+					<label>N_84</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_85</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>N_40</label>
+			<node refinement="disjunctive">
+				<label>N_56</label>
+				<node refinement="conjunctive">
+					<label>N_86</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_87</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>N_57</label>
+				<node refinement="conjunctive">
+					<label>N_88</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_89</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>N_41</label>
+			<node refinement="disjunctive">
+				<label>N_58</label>
+				<node refinement="conjunctive">
+					<label>N_90</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_91</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>N_59</label>
+				<node refinement="conjunctive">
+					<label>N_94</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_95</label>
+				</node>
+			</node>
+		</node>
+	</node>
+</adtree>

@@ -1,0 +1,36 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="disjunctive">
+		<label>Become Root User</label>
+		<node refinement="disjunctive">
+			<label>Escalate from less privileged user</label>
+			<node refinement="conjunctive">
+				<label>Login as User locally</label>
+				<node refinement="conjunctive">
+					<label>Logon as local user trough graphical login</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Execute code as User</label>
+				<node refinement="conjunctive">
+					<label>Use explorer_exe to connect to malicious</label>
+				</node>
+				<node refinement="disjunctive">
+					<label>Allow payload to run and establish service and connect to external host</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Login as User remotely</label>
+				<node refinement="disjunctive">
+					<label>Load meterpreter session from external machine</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Execute code through remote shell</label>
+				<node refinement="disjunctive">
+					<label>Permissions escalate through named pipe impersonation</label>
+				</node>
+			</node>
+		</node>
+	</node>
+</adtree>

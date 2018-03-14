@@ -1,0 +1,48 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="conjunctive">
+		<label>R</label>
+		<node refinement="conjunctive">
+			<label>A</label>
+			<node refinement="disjunctive">
+				<label>1</label>
+				<node refinement="conjunctive">
+					<label>N_1</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_2</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>2</label>
+				<node refinement="conjunctive">
+					<label>N_3</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_4</label>
+				</node>
+			</node>
+		</node>
+		<node refinement="conjunctive">
+			<label>B</label>
+			<node refinement="disjunctive">
+				<label>3</label>
+				<node refinement="conjunctive">
+					<label>N_5</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_6</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>4</label>
+				<node refinement="conjunctive">
+					<label>N_7</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>N_8</label>
+				</node>
+			</node>
+		</node>
+	</node>
+</adtree>

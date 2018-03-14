@@ -1,0 +1,27 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="disjunctive">
+		<label>Become Root User</label>
+		<node refinement="disjunctive">
+			<label>Escalate from less privileged user</label>
+			<node refinement="conjunctive">
+				<label>Login as User locally</label>
+				<node refinement="conjunctive">
+					<label>Logon as local user trough graphical login</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Execute code as User</label>
+				<node refinement="conjunctive">
+					<label>Add scheduled event</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>Wait until event loads command prompt and terminate explorer_exe</label>
+				</node>
+				<node refinement="conjunctive">
+					<label>Restart explorer_exe</label>
+				</node>
+			</node>
+		</node>
+	</node>
+</adtree>
