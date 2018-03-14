@@ -163,6 +163,7 @@ public class ADTNode {
                 childNode.children = childUserNodes;
             }
         } else {
+            // call method recursively for all children
             this.children.forEach(c -> c.connect(userNodes, unfoldLevel - 1));
         }
     }
