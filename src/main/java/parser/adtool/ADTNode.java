@@ -91,7 +91,7 @@ public class ADTNode {
             userNodes.add(userNode);
         }
         // connect user nodes at correct position such that tree is properly unfolded
-        if (unfoldLevels.length != this.children.size()) {
+        if (unfoldLevels == null || unfoldLevels.length != this.children.size()) {
             // if config is invalid, just start unfolding at the very top of the tree, i.e. at the first children
             this.connect(userNodes, 0);
         } else {
