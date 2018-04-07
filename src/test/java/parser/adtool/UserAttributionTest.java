@@ -73,6 +73,15 @@ public class UserAttributionTest {
                 .replace(">", ">\n")
                 .replace("<label>\n", "<label>").trim();
         assertEquals(treeUnfoldedStr, treeUnfoldedActualStr);
+
+        /*
+        if config is invalid (or empty as in this case), the unfolding should be equal to the old version, i.e.
+        unfold at the very top
+         */
+        ADTNode tree2 = ADTParser.fromAD(stealMasterKeyXML);
+        ADTNode treeUnfolded2 = ADTParser.fromAD(stealMasterKeyUnfoldedXML);
+        ADTNode treeUnfoldedActual2 = tree2.unfold(users, new int[] {});
+        assertEquals(treeUnfolded2, treeUnfoldedActual2);
     }
 
     @Test
