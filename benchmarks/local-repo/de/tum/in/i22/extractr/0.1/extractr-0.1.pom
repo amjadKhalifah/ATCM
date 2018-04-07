@@ -5,4 +5,5 @@
   <groupId>de.tum.in.i22</groupId>
   <artifactId>extractr</artifactId>
   <version>0.1</version>
+  <description>POM was created from install:install-file</description>
 </project>
