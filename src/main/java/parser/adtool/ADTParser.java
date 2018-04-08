@@ -33,6 +33,7 @@ public class ADTParser extends Parser {
      * @return
      */
     @Override
+    @Deprecated
     public FaultTreeDefinition toMEF(File file, Set<User> users) {
         FaultTreeDefinition faultTreeDefinition = null;
         ADTNode adtree = fromAD(file);
@@ -40,6 +41,31 @@ public class ADTParser extends Parser {
         if (users != null) {
             // TODO use new unfold method
             adtree.unfold(users);
+        }
+
+        if (adtree.getLabel() != null) {
+            // get name of the tree
+            String name = adtree.getLabel().replace("\n","").replace("\r","");
+            // parse the definitions in the attack tree to element definitions
+            List<ElementDefinition> elementDefinitions = parseNodeToElementDefinition(adtree);
+            // create new fault tree
+            faultTreeDefinition = new FaultTreeDefinition(name, null, null, elementDefinitions);
+        }
+        return faultTreeDefinition;
+    }
+
+    /**
+     * Convert ADT file to FaultTreeDefinition.
+     * @param file
+     * @return
+     */
+    public FaultTreeDefinition toMEF(File file, Set<User> users, int[] unfoldLevels) {
+        FaultTreeDefinition faultTreeDefinition = null;
+        ADTNode adtree = fromAD(file);
+
+        if (users != null) {
+            // TODO use new unfold method
+            adtree.unfold(users, unfoldLevels);
         }
 
         if (adtree.getLabel() != null) {
