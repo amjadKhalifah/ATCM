@@ -10,10 +10,7 @@ import parser.adtool.ADTNode;
 import parser.adtool.ADTParser;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,6 +35,14 @@ public class MetricsEvaluation {
     private static File dummyTree8branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_8branches.xml");
     private static File dummyTree16branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_16branches.xml");
     private static File dummyTree48branches = new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_48branches.xml");
+    private static File dummyTree2branches8levels =
+            new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_2branches_8levels.xml");
+    private static File dummyTree4branches8levels =
+            new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_4branches_8levels.xml");
+    private static File dummyTree8branches8levels =
+            new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_8branches_8levels.xml");
+    private static File dummyTree16branches8levels =
+            new File(TREE_FILE_PATH + "evaluation/dummy_trees/tree_16branches_8levels.xml");
 
     private static final String CSV_FILE = System.getProperty("user.home") + "/Desktop/evaluation.csv";
 
@@ -185,7 +190,6 @@ public class MetricsEvaluation {
 
     public static void main(String[] args) {
         List<Set<User>> userSets = getUserSets();
-        List<File> attackTrees = getAttackTrees();
 
         FileWriter writer = null;
         CSVPrinter csvPrinter = null;
@@ -201,10 +205,29 @@ public class MetricsEvaluation {
                     new int[] {1,0}, new int[] {1,1});
             metrics.addAll(computeAndExportMetricsNew(stealMasterKey, userSets, unfoldConfigsStealMasterKey,
                     csvPrinter));
-            // TODO artificial trees
+
+            List<File> artificialTrees = Arrays.asList(dummyTree2branches8levels, dummyTree4branches8levels,
+                    dummyTree8branches8levels, dummyTree16branches8levels);
+            int[] branches = new int[] {2,4,8,16};
+
+            for (int i = 0; i < artificialTrees.size(); i++) {
+                File artificialTree = artificialTrees.get(i);
+                List<int[]> unfoldConfigs = new ArrayList<>(Arrays.asList(new int[] {}));
+                int[] unfoldLevelsZero = new int[branches[i]];
+                Arrays.fill(unfoldLevelsZero, 0);
+                int[] unfoldLevelsThree = new int[branches[i]];
+                Arrays.fill(unfoldLevelsThree, 3);
+                int[] unfoldLevelsFive = new int[branches[i]];
+                Arrays.fill(unfoldLevelsFive, 5);
+                unfoldConfigs.addAll(Arrays.asList(unfoldLevelsZero, unfoldLevelsThree, unfoldLevelsFive));
+
+                metrics.addAll(computeAndExportMetricsNew(artificialTree, userSets, unfoldConfigs,
+                        csvPrinter));
+            }
 
             // uncomment to generate metrics for old unfold method
-            /*csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+            /*List<File> attackTrees = getAttackTrees();
+            csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
                     .withHeader("Type", "Name", "Attribution", "Preemption", "Users", "Nodes", "Edges", "Leafs",
                             "Ands", "Ors"));
             for (File attackTree : attackTrees) {
