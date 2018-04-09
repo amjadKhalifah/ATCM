@@ -51,6 +51,30 @@ public class ADTNode {
         this.probability = adtNode.probability;
     }
 
+    /**
+     * Creates a dummy ADTNode with specified number of branches and specified number of levels. All sub-trees have
+     * branch size 2
+     * @param branches
+     * @param levels
+     */
+    public ADTNode(int branches, int levels) {
+        this.ID = "-1";
+        this.label = "-1";
+        this.refinement = Refinement.DISJUNCTIVE;
+        this.probability = 0;
+        this.children = new ArrayList<>();
+
+        if (levels > 0) {
+            for (int i = 0; i < branches; i++) {
+                ADTNode adtNode = generateTree(2, levels - 1);
+                this.children.add(adtNode);
+            }
+        }
+
+        this.setIDs("1");
+        this.setLabels();
+    }
+
     public ADTNode getByID(String ID) {
         Set<ADTNode> allNodes = this.getAllNodes();
         for (ADTNode node : allNodes) {
@@ -176,6 +200,11 @@ public class ADTNode {
         }
     }
 
+    private void setLabels() {
+        this.label = this.ID.replace(".", "_");
+        this.children.forEach(ADTNode::setLabels);
+    }
+
     public Document toXML() {
         Document document = DocumentHelper.createDocument();
         Element root = document.addElement("adtree");
@@ -195,6 +224,20 @@ public class ADTNode {
         }
 
         return node;
+    }
+
+    private ADTNode generateTree(int branches, int levels) {
+        ADTNode adtNodeRoot = null;
+        if (levels > 0) {
+            adtNodeRoot = new ADTNode("", "" , new ArrayList<>(),
+                    Refinement.DISJUNCTIVE, 0);
+            for (int i = 0; i < branches; i++) {
+                ADTNode adtNode = generateTree(branches, levels - 1);
+                if (adtNode != null)
+                    adtNodeRoot.children.add(adtNode);
+            }
+        }
+        return adtNodeRoot;
     }
 
     @Override
