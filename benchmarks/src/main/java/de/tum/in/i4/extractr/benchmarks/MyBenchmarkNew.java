@@ -36,12 +36,9 @@ import attacker_attribution.UserParser;
 import causality.CausalModel;
 import mef.faulttree.FaultTreeDefinition;
 import org.openjdk.jmh.annotations.*;
-import parser.adtool.ADTNode;
 import parser.adtool.ADTParser;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 public class MyBenchmarkNew {
@@ -60,10 +57,8 @@ public class MyBenchmarkNew {
 
         File stealMasterKeyXML = new File(PROJECT_ROOT +
                 "../src/test/resources/user_attribution/Steal_Master_Key.adt");
-        File dummyTree16 = new File(PROJECT_ROOT +
+        File dummyTree12branches8levels = new File(PROJECT_ROOT +
                 "../src/test/resources/evaluation/dummy_trees/tree_2branches_8levels.xml");
-        File dummyTree48 = new File(PROJECT_ROOT +
-                "../src/test/resources/evaluation/dummy_trees/tree_48branches.xml");
     }
 
     @Benchmark
@@ -72,7 +67,7 @@ public class MyBenchmarkNew {
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
     public void benchmarkStealMasterKey_2Users_UnfoldAtTop(MyState state) {
-        complete(state.stealMasterKeyXML, state.users2, state.adtParser, new int[] {});
+        complete(state.stealMasterKeyXML, state.users2, state.adtParser, new int[]{});
     }
 
     @Benchmark
@@ -81,7 +76,7 @@ public class MyBenchmarkNew {
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
     public void benchmarkStealMasterKey_2Users_Unfold00(MyState state) {
-        complete(state.stealMasterKeyXML, state.users2, state.adtParser, new int[] {0,0});
+        complete(state.stealMasterKeyXML, state.users2, state.adtParser, new int[]{0, 0});
     }
 
     @Benchmark
@@ -90,7 +85,7 @@ public class MyBenchmarkNew {
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
     public void benchmarkStealMasterKey_2Users_Unfold11(MyState state) {
-        complete(state.stealMasterKeyXML, state.users2, state.adtParser, new int[] {1,1});
+        complete(state.stealMasterKeyXML, state.users2, state.adtParser, new int[]{1, 1});
     }
 
     @Benchmark
@@ -99,7 +94,7 @@ public class MyBenchmarkNew {
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
     public void benchmarkStealMasterKey_8Users_UnfoldAtTop(MyState state) {
-        complete(state.stealMasterKeyXML, state.users8, state.adtParser, new int[] {});
+        complete(state.stealMasterKeyXML, state.users8, state.adtParser, new int[]{});
     }
 
     @Benchmark
@@ -108,7 +103,7 @@ public class MyBenchmarkNew {
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
     public void benchmarkStealMasterKey_8Users_Unfold00(MyState state) {
-        complete(state.stealMasterKeyXML, state.users8, state.adtParser, new int[] {0,0});
+        complete(state.stealMasterKeyXML, state.users8, state.adtParser, new int[]{0, 0});
     }
 
     @Benchmark
@@ -117,16 +112,7 @@ public class MyBenchmarkNew {
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
     public void benchmarkStealMasterKey_8Users_Unfold11(MyState state) {
-        complete(state.stealMasterKeyXML, state.users8, state.adtParser, new int[] {1,1});
-    }
-
-    /*@Benchmark
-    @Warmup(iterations = WARMUP_ITERATIONS)
-    @Measurement(iterations = ITERATIONS)
-    @Fork(FORKS)
-    @BenchmarkMode(Mode.All)
-    public void benchmarkDummyTree16Branches_2Users(MyState state) {
-        complete(state.dummyTree16, state.users2, state.adtParser);
+        complete(state.stealMasterKeyXML, state.users8, state.adtParser, new int[]{1, 1});
     }
 
     @Benchmark
@@ -134,8 +120,8 @@ public class MyBenchmarkNew {
     @Measurement(iterations = ITERATIONS)
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
-    public void benchmarkDummyTree16Branches_4Users(MyState state) {
-        complete(state.dummyTree16, state.users4, state.adtParser);
+    public void benchmarkDummyTree2Branches8Levels_2Users_UnfoldAtTop(MyState state) {
+        complete(state.dummyTree12branches8levels, state.users2, state.adtParser, new int[]{});
     }
 
     @Benchmark
@@ -143,8 +129,8 @@ public class MyBenchmarkNew {
     @Measurement(iterations = ITERATIONS)
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
-    public void benchmarkDummyTree16Branches_8Users(MyState state) {
-        complete(state.dummyTree16, state.users8, state.adtParser);
+    public void benchmarkDummyTree2Branches8Levels_2Users_Unfold00(MyState state) {
+        complete(state.dummyTree12branches8levels, state.users2, state.adtParser, new int[]{0, 0});
     }
 
     @Benchmark
@@ -152,8 +138,8 @@ public class MyBenchmarkNew {
     @Measurement(iterations = ITERATIONS)
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
-    public void benchmarkDummyTree48Branches_2Users(MyState state) {
-        complete(state.dummyTree48, state.users2, state.adtParser);
+    public void benchmarkDummyTree2Branches8Levels_2Users_Unfold22(MyState state) {
+        complete(state.dummyTree12branches8levels, state.users2, state.adtParser, new int[]{2, 2});
     }
 
     @Benchmark
@@ -161,8 +147,8 @@ public class MyBenchmarkNew {
     @Measurement(iterations = ITERATIONS)
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
-    public void benchmarkDummyTree48Branches_4Users(MyState state) {
-        complete(state.dummyTree48, state.users4, state.adtParser);
+    public void benchmarkDummyTree2Branches8Levels_2Users_Unfold55(MyState state) {
+        complete(state.dummyTree12branches8levels, state.users2, state.adtParser, new int[]{5, 5});
     }
 
     @Benchmark
@@ -170,9 +156,36 @@ public class MyBenchmarkNew {
     @Measurement(iterations = ITERATIONS)
     @Fork(FORKS)
     @BenchmarkMode(Mode.All)
-    public void benchmarkDummyTree48Branches_8Users(MyState state) {
-        complete(state.dummyTree48, state.users8, state.adtParser);
-    }*/
+    public void benchmarkDummyTree2Branches8Levels_8Users_UnfoldAtTtop(MyState state) {
+        complete(state.dummyTree12branches8levels, state.users8, state.adtParser, new int[]{});
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkDummyTree2Branches8Levels_8Users_Unfold00(MyState state) {
+        complete(state.dummyTree12branches8levels, state.users8, state.adtParser, new int[]{0, 0});
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkDummyTree2Branches8Levels_8Users_Unfold22(MyState state) {
+        complete(state.dummyTree12branches8levels, state.users8, state.adtParser, new int[]{2, 2});
+    }
+
+    @Benchmark
+    @Warmup(iterations = WARMUP_ITERATIONS)
+    @Measurement(iterations = ITERATIONS)
+    @Fork(FORKS)
+    @BenchmarkMode(Mode.All)
+    public void benchmarkDummyTree2Branches8Levels_8Users_Unfold55(MyState state) {
+        complete(state.dummyTree12branches8levels, state.users8, state.adtParser, new int[]{5, 5});
+    }
 
     private void complete(File attackTree, Set<User> users, ADTParser adtParser, int[] unfoldLevels) {
         FaultTreeDefinition tree = adtParser.toMEF(attackTree, users, unfoldLevels);
